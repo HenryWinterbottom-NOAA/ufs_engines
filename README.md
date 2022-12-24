@@ -3,8 +3,8 @@
 
 ![Linux](https://img.shields.io/badge/linux-ubuntu%7Ccentos-black)
 
-[![Dependencies](https://img.shields.io/badge/dependencies-ufs__pyutils-yellow)](https://github.com/HenryWinterbottom-NOAA/ufs_pyutils)
-[![Dependencies](https://img.shields.io/badge/dependencies-cylc__flow__7.9.3-yellow)](https://github.com/cylc/cylc-flow/releases/tag/7.9.3)
+[![Dependencies](https://img.shields.io/badge/dependencies-ufs__pyutils-blueviolet)](https://github.com/HenryWinterbottom-NOAA/ufs_pyutils)
+[![Dependencies](https://img.shields.io/badge/dependencies-cylc__flow__7.9.3-blueviolet)](https://github.com/cylc/cylc-flow/releases/tag/7.9.3)
 
 # Disclaimer
 
