@@ -23,8 +23,15 @@ CYLCinterval: 21600
 # workflow.
 CYLCexptname: CYLC_DEMO
 
+# Define the path to where the generated Cylc workflow is to be
+# placed.
+CYLCworkpath: /path/to/cylc_workflow
+
+# Define the path to the Cylc workflow graph.
+CYLCgraph: /path/to/graph.rc
+
 # Define the path to the platform configuration file.
-CYLCplatform: /paths/to/platform.yaml
+CYLCplatform: /path/to/platform.yaml
 
 # Define the path to the workflow tasks configuration file.
 CYLCtasks: /path/to/tasks.yaml
