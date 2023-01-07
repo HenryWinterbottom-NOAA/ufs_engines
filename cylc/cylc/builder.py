@@ -141,12 +141,23 @@ class CylcBuilder:
 
         if env_yaml is not None:
 
-            # Parse the YAML-formatted file and proceed accordingly.
-            env_dict = YAML().read_yaml(yaml_file=env_yaml)
+            # Check that the YAML-formatted file exists; proceed
+            # accordingly.
+            exist = fileio_interface.fileexist(path=env_yaml)
+            if exist:
 
-            for (env_item, _) in env_dict.items():
-                instruct_dict[env_item] = parser_interface.dict_key_value(
-                    dict_in=env_dict, key=env_item, no_split=True)
+                # Parse the YAML-formatted file and proceed accordingly.
+                env_dict = YAML().read_yaml(yaml_file=env_yaml)
+
+                for (env_item, _) in env_dict.items():
+                    instruct_dict[env_item] = parser_interface.dict_key_value(
+                        dict_in=env_dict, key=env_item, no_split=True)
+
+            if not exist:
+                msg = (f"The environment variable file {env_yaml} does not exist "
+                       "and will not be processed."
+                       )
+                self.logger.warn(msg=msg)
 
         # Build the Cylc experiment.rc file for the respective experiment.
         filename = os.path.join(self.path, "experiment.rc")
