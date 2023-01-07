@@ -215,9 +215,12 @@ class CylcBuilder:
         # Build the Cylc platform.rc file for the respective
         # experiment.
         filename = os.path.join(self.path, "platform.rc")
-        msg = f"Attempting to build Cylc input file {filename}."
+        msg = f"Building Cylc experiment file {filename}."
         self.logger.info(msg=msg)
 
+        print(instruct_dict)
+        quit()
+        
         jinja2_interface.write_jinja2(
             jinja2_file=filename, in_dict=instruct_dict)
 
