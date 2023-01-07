@@ -172,14 +172,37 @@ class CylcBuilder:
         jinja2_interface.write_jinja2(
             jinja2_file=filename, in_dict=instruct_dict)
 
-    def build_platform_rc(self) -> None:
+    def build_platform_rc(self) -> object:
         """
         Description
         -----------
 
         This method builds the Cylc suite input file platform.rc; this
-        file contains the platform-specific directives for the UFS-RNR
-        experiment host; the output file is Jinja2 formatted.
+        file contains the platform-specific directives for the
+        respective Cylc experiment host; the output file is Jinja2
+        formatted.
+
+        Returns
+        -------
+
+        platform_obj: object
+
+            A Python object containing the respective Cylc experiment
+            host attributes.
+
+        Raises
+        ------
+
+        CylcEngineError:
+
+            * raised if the SCHEDULER attribute cannot be determined
+              from the YAML-formatted file specified by the
+              CYLCplatform attribute in the Cylc experiment
+              configuration file.
+
+            * raised if the batch scheduler defined in the
+              YAML-formatted file specified by the CYLCplatform
+              attribute is not supported.
 
         """
 
@@ -222,7 +245,9 @@ class CylcBuilder:
         jinja2_interface.write_jinja2(
             jinja2_file=filename, in_dict=instruct_dict)
 
-    def build_tasks_rc(self):
+        return platform_obj
+
+    def build_tasks_rc(self, platform_obj: object) -> None:
         """
         Description
         -----------
@@ -243,34 +268,63 @@ class CylcBuilder:
         path = os.path.join(self.path, "directives")
         fileio_interface.dirtree_path(path=path)
 
-        try:
-            yaml_file = self.tasks_config
-            kwargs = {'yaml_file': yaml_file, 'return_dict': True}
-            tasks_dict = cylcutil.yaml_interface.read_yaml(**kwargs)
-            instruct_dict = dict()
-            for (key, values) in tasks_dict.items():
-                filename = os.path.join(directives_path, '%s.task' % key)
-                msg = ('Creating task directives file %s.' % filename)
-                self.logger.info(msg=msg)
-                with open(filename, 'w') as f:
-                    for value in values:
-                        if value == 'ntasks':
-                            instruct_dict['%s_%s' % (key, value)] = \
-                                tasks_dict[key][value]
-                        if self.scheduler_obj.slurm:
-                            if value == 'cpus-per-task':
-                                instruct_dict['%s_nthreads' % key] = \
-                                    tasks_dict[key][value]
-                        f.write('--%s = %s\n' %
-                                (value, tasks_dict[key][value]))
-            filename = os.path.join(self.path, 'tasks.rc')
-            kwargs = {'filename': filename, 'instruct_dict': instruct_dict}
-            self.write_jinja2(**kwargs)
-            msg = ('Creation of Cylc input file %s succeeded.' % filename)
+        # Collect all task attributes defined for the respective Cylc
+        # experiment and application; proceed accordingly.
+        tasks_dict = YAML().read_yaml(yaml_file=self.yaml_obj.CYLCtasks)
+
+        instruct_dict = {}
+        for (key, value) in tasks_dict.items():
+            filename = os.path.join(path, f"{key}.task")
+            msg = f"Creating task directive file {filename}."
             self.logger.info(msg=msg)
-        except Exception:
-            msg = ('The task files could not be constructed; Aborting!!!')
-            raise self.exception(msg=msg)
+
+            # Build the attributes for the respective Cylc experiment
+            # task.
+            with open(filename, "w", encoding="utf-8") as file:
+                for value in values:
+                    if value.lower() == "ntasks":
+                        instruct_dict[f"{key}_{value}"] = tasks_dict[key_value]
+
+                    if platform_obj.SCHEDULER.lower() == "slurm":
+                        if value == "cpus-per-task":
+                            instruct_dict[f"{key}_nthreads"] = \
+                                tasks_dict[key][value]
+
+                    file.write(f"--{value} = {tasks_dict[key][value]}")
+
+        # Write the Jinja2-formatted file containing the Cylc
+        # experiment tasks attributes.
+        jinja2_interface.write(filename=os.path.join(self.path, "tasks.rc"),
+                               instruct_dict=instruct_dict)
+
+#        try:
+#            yaml_file = self.tasks_config
+#            kwargs = {'yaml_file': yaml_file, 'return_dict': True}
+#            tasks_dict = cylcutil.yaml_interface.read_yaml(**kwargs)
+#            instruct_dict = dict()
+#            for (key, values) in tasks_dict.items():
+#                filename = os.path.join(directives_path, '%s.task' % key)
+#                msg = ('Creating task directives file %s.' % filename)
+#                self.logger.info(msg=msg)
+#                with open(filename, 'w') as f:
+#                    for value in values:
+#                        if value == 'ntasks':
+#                            instruct_dict['%s_%s' % (key, value)] = \
+#                                tasks_dict[key][value]
+#                        if self.scheduler_obj.slurm:
+#                            if value == 'cpus-per-task':
+#                                instruct_dict['%s_nthreads' % key] = \
+#                                    tasks_dict[key][value]
+#                        f.write('--%s = %s\n' %
+#                                (value, tasks_dict[key][value]))
+#            filename = os.path.join(self.path, 'tasks.rc')
+#            kwargs = {'filename': filename, 'instruct_dict': instruct_dict}
+#            self.write_jinja2(**kwargs)
+#            msg = ('Creation of Cylc input file %s succeeded.' % filename)
+#            self.logger.info(msg=msg)
+#        except Exception:
+#            msg = ('The task files could not be constructed; Aborting!!!')
+#            raise self.exception(msg=msg)
 
     def configure_cylc(self):
         """
@@ -329,8 +383,10 @@ class CylcBuilder:
 
         # Build the Cylc experiment suite experiment.rc file.
         self.build_expt_rc()
-        self.build_platform_rc()
-        # self.build_tasks_rc()
+
+        # Build the Cylc experiment suite platform.rc file.
+        platform_obj = self.build_platform_rc()
+        self.build_tasks_rc(platform_obj=platform_obj)
 
         #suite_path = self.configure_cylc()
         # return suite_path
