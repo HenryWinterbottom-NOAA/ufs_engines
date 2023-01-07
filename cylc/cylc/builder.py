@@ -283,7 +283,7 @@ class CylcBuilder:
             with open(filename, "w", encoding="utf-8") as file:
                 for value in values:
                     if value.lower() == "ntasks":
-                        instruct_dict[f"{key}_{value}"] = tasks_dict[key_value]
+                        instruct_dict[f"{key}_{value}"] = tasks_dict[key][value]
 
                     if platform_obj.SCHEDULER.lower() == "slurm":
                         if value == "cpus-per-task":
