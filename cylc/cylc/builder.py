@@ -85,19 +85,19 @@ class CylcBuilder:
         # additional environment variable, relative to the respective
         # experiment, will be collected when build the respective
         # experiment Cylc configuration file.
-        self.envvar_list = ["CYLCemail", "CYLCmailevents", "CYLCworkpath"]
+        self.envvar_list = ["CYLCemail", "CYLCexptname",
+                            "CYLCmailevents", "CYLCworkpath"]
 
     def build_expt_rc(self) -> None:
         """
         Description
         -----------
 
-        This method builds the Cylc suite input file experiment.rc;
-        this file contains the directives describing the cycling start
-        and stop time, the cycling interval, the UFS-RNR paths and
-        experiment name, and the total number of ensemble members for
-        the respective UFS-RNR experiment; the output file is Jinja2
-        formatted.
+        This method builds the Cylc suite Jinja2-formatted
+        experiment.rc file; this file contains the directives
+        describing the cycling start and stop time, the cycling
+        interval, and any other environment variables specified within
+        the Cylc experiment configurtion attributes.
 
         """
 
@@ -169,20 +169,6 @@ class CylcBuilder:
         jinja2_interface.write_jinja2(
             jinja2_file=filename, in_dict=instruct_dict)
 
-        quit()
-
-        # envvar_list = ['EMAILrnr', 'HOMErnr', 'MAILEVENTSrnr', 'NOSCRUBrnr',
-        #               'WORKrnr', 'YAMLrnr']
-
-        #instruct_dict['CYLCrnr'] = self.path
-        #filename = os.path.join(self.path, 'experiment.rc')
-        #msg = ('Attempting to build Cylc input file %s.' % filename)
-        # self.logger.info(msg=msg)
-        #kwargs = {'filename': filename, 'instruct_dict': instruct_dict}
-        # self.write_jinja2(**kwargs)
-        #msg = ('Creation of Cylc input file %s succeeded.' % filename)
-        # self.logger.info(msg=msg)
-
     def build_platform_rc(self):
         """
         Description
@@ -217,7 +203,7 @@ class CylcBuilder:
                 msg = ('The batch system scheduler could not be determined from '
                        'the user experiment configuration. Aborting!!!')
                 raise self.exception(msg=msg)
-            for item in self.scheduler_opts:
+            for item in self.scheduler_opts:  # NEED TO ADD SCHEDULER TO YAML FILE
                 if scheduler.lower() == item:
                     setattr(self.scheduler_obj, item, True)
             instruct_dict = dict()
@@ -254,11 +240,14 @@ class CylcBuilder:
         necessary).
 
         """
-        directives_path = os.path.join(self.path, 'directives')
-        if not os.path.isdir(directives_path):
-            msg = ('Creating path %s.' % directives_path)
-            self.logger.info(msg=msg)
-            os.makedirs(directives_path)
+
+        # Build the directory tree for the job scheduler directives.
+        path = os.path.join(self.path, "directives")
+        fileio_interface.dirtree_path(path=path)
+
+        print(self.tasks_config)
+        quit()
+
         try:
             yaml_file = self.tasks_config
             kwargs = {'yaml_file': yaml_file, 'return_dict': True}
@@ -318,39 +307,6 @@ class CylcBuilder:
         suite_path = os.path.join(expt_path, 'cylc', 'suite.rc')
         return suite_path
 
-    def write_jinja2(self, filename, instruct_dict):
-        """
-        Description
-        -----------
-
-        This method writes a Jinja2 formatted file containing the
-        variable declarations provided by the user.
-
-        Parameters
-        ----------
-
-        filename: str
-
-            A Python string specifying the Jinja2-formatted file to be
-            written.
-
-        instruct_dict: dict
-
-            A Python dictionary containing key and value pairs
-            describing the variable declarations to be written to the
-            Jinja2-formatted file.
-
-        """
-        with open(filename, 'wt') as f:
-            f.write('#!Jinja2\n')
-            for key in instruct_dict.keys():
-                value = instruct_dict[key]
-                if type(value) is str:
-                    string = 'set {0} = "{1}"'.format(key, value)
-                else:
-                    string = 'set {0} = {1}'.format(key, value)
-                f.write('{%% %s %%}\n' % string)
-
     def run(self):
         """ 
         Description
@@ -375,8 +331,11 @@ class CylcBuilder:
             for the user-specified UFS-RNR Cylc suite.
 
         """
+
+        # Build the Cylc experiment suite experiment.rc file.
         self.build_expt_rc()
         self.build_platform_rc()
         self.build_tasks_rc()
+
         suite_path = self.configure_cylc()
         return suite_path
