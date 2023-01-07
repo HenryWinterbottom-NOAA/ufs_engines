@@ -266,7 +266,7 @@ class CylcBuilder:
 
         # Build the directory tree for the job scheduler directives.
         path = os.path.join(self.path, "directives")
-        fileio_interface.dirtree_path(path=path)
+        fileio_interface.dirpath_tree(path=path)
 
         # Collect all task attributes defined for the respective Cylc
         # experiment and application; proceed accordingly.
