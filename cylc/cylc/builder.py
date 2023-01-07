@@ -88,6 +88,9 @@ class CylcBuilder:
         self.envvar_list = ["CYLCemail", "CYLCexptname",
                             "CYLCmailevents", "CYLCscheduler", "CYLCworkpath"]
 
+        # Define the supported platforms.
+        self.platform_list = ["slurm"]
+
     def build_expt_rc(self) -> None:
         """
         Description
@@ -188,9 +191,10 @@ class CylcBuilder:
 
         # Collect the Cylc experiment platform attributes; proceed
         # accordingly.
-        platform_dict = YAML().read_yaml(yaml_file=self.yaml_obj.CYLCplatform)
+        platform_obj = YAML().read_yaml(yaml_file=self.yaml_obj.CYLCplatform,
+                                        return_obj=True)
 
-        print(platform_dict)
+        print(platform_obj)
         quit()
 
         try:

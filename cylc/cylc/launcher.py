@@ -115,7 +115,6 @@ class CylcLauncher(CylcEngine):
             "CYLCgraph": str,
             "CYLCinterval": int,
             "CYLCplatform": str,
-            "CYLCscheduler": str,
             "CYLCstart": str,
             "CYLCstop": str,
             "CYLCtasks": str,
