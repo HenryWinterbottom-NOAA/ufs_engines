@@ -179,6 +179,10 @@ class CylcBuilder:
         experiment host; the output file is Jinja2 formatted.
 
         """
+
+        print(self.yaml_obj)
+        quit()
+
         for item in self.scheduler_opts:
             setattr(self.scheduler_obj, item, False)
         filename = os.path.join(self.path, 'platform.rc')
