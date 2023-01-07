@@ -1,0 +1,40 @@
+# Define the email address to which to send Cylc event triggers;
+# typically this is used to inform the user of failed tasks but may be
+# used for any Cylc related state.
+CYLCemail: Henry.Winterbottom@noaa.gov
+
+# Specify the events for which the user should be notified; for a
+# complete list of allowable values, please see
+# https://tinyurl.com/running-cylc-suite-tasks; comma delimited.
+CYLCmailevents: failed
+
+# Define the first forecast cycle; this timestamp is to be formatted
+# as (assuming the POSIX convention) %Y-%m-%d_%H:%M:%S.
+CYLCstart: 2016-01-01_00:00:00
+
+# Define the last forecast cycle; this timestamp is to be formatted as
+# (assuming the POSIX convention) %Y-%m-%d_%H:%M:%S.
+CYLCstop: 2016-01-01_12:00:00
+
+# Define the forecast cycle interval; units are seconds.
+CYLCinterval: 21600
+
+# Define an (unique) experiment name to be used to generate the Cylc
+# workflow.
+CYLCexptname: CYLC_DEMO_RDHPCS_HERA
+
+# Define the path to where the generated Cylc workflow is to be
+# placed.
+CYLCworkpath: /scratch2/BMC/gsienkf/Henry.Winterbottom/work
+
+# Define the path to the Cylc workflow graph.
+CYLCgraph: !ENV ${PWD}/parm/graph.rc
+
+# Define the path to the platform configuration file.
+CYLCplatform: !ENV ${PWD}/parm/platform.yaml
+
+# Define the path to the workflow tasks configuration file.
+CYLCtasks: !ENV ${PWD}/parm/tasks.yaml
+
+# Define the path to the environment variable configuration file.
+CYLCenv: !ENV ${PWD}/parm/env.yaml
