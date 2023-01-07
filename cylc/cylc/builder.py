@@ -180,14 +180,19 @@ class CylcBuilder:
 
         """
 
-        print(self.yaml_obj)
+        # Build the Cylc platform.rc file for the respective
+        # experiment.
+        filename = os.path.join(self.path, "platform.rc")
+        msg = f"Attempting to build Cylc input file {filename}."
+        self.logger.info(msg=msg)
+
+        # Collect the Cylc experiment platform attributes; proceed
+        # accordingly.
+        platform_dict = YAML().read_yaml(yaml_file=self.yaml_obj.CYLCplatform)
+
+        print(platform_dict)
         quit()
 
-        for item in self.scheduler_opts:
-            setattr(self.scheduler_obj, item, False)
-        filename = os.path.join(self.path, 'platform.rc')
-        msg = ('Attempting to build Cylc input file %s.' % filename)
-        self.logger.info(msg=msg)
         try:
             yaml_file = self.platform_config
             if yaml_file is None:
