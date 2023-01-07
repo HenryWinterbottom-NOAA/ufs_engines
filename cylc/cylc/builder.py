@@ -172,7 +172,7 @@ class CylcBuilder:
         jinja2_interface.write_jinja2(
             jinja2_file=filename, in_dict=instruct_dict)
 
-    def build_platform_rc(self):
+    def build_platform_rc(self) -> None:
         """
         Description
         -----------
@@ -194,6 +194,13 @@ class CylcBuilder:
         platform_obj = YAML().read_yaml(yaml_file=self.yaml_obj.CYLCplatform,
                                         return_obj=True)
 
+        if "SCHEDULER" not in vars(platform_obj.keys()):
+            msg = ("The SCHEDULER attribute could not be determine from the "
+                   f"YAML-formatted file path {self.yaml_obj.CYLCplatform}. "
+                   "Aborting!!!"
+                   )
+            __error__(msg=msg)
+
         print(platform_obj)
         quit()
 
@@ -209,11 +216,11 @@ class CylcBuilder:
             kwargs = {'yaml_file': self.platform_config}
             platform_obj = cylcutil.yaml_interface.read_yaml(**kwargs)
             try:
-                scheduler = platform_obj.SCHEDULER
+                scheduler=platform_obj.SCHEDULER
             except KeyError:
-                scheduler = None
+                scheduler=None
             if scheduler is None:
-                msg = ('The batch system scheduler could not be determined from '
+                msg=('The batch system scheduler could not be determined from '
                        'the user experiment configuration. Aborting!!!')
                 raise self.exception(msg=msg)
             for item in self.scheduler_opts:  # NEED TO ADD SCHEDULER TO YAML FILE
