@@ -183,17 +183,12 @@ class CylcBuilder:
 
         """
 
-        # Build the Cylc platform.rc file for the respective
-        # experiment.
-        filename = os.path.join(self.path, "platform.rc")
-        msg = f"Attempting to build Cylc input file {filename}."
-        self.logger.info(msg=msg)
-
-        # Collect the Cylc experiment platform attributes; proceed
-        # accordingly.
+        # Collect the Cylc experiment platform attributes.
         platform_obj = YAML().read_yaml(yaml_file=self.yaml_obj.CYLCplatform,
                                         return_obj=True)
 
+        # Check that the batch scheduler application is valid; proceed
+        # accordingly.
         if "SCHEDULER" not in vars(platform_obj):
             msg = ("The SCHEDULER attribute could not be determine from the "
                    f"YAML-formatted file path {self.yaml_obj.CYLCplatform}. "
@@ -207,48 +202,24 @@ class CylcBuilder:
                    )
             __error__(msg=msg)
 
-        print(platform_obj)
-        quit()
+        # Define the Cylc platform attributes.
+        for platform_attr in vars(platform_obj):
+            instruct_dict[platform_attr] = parser_interface.object_getattr(
+                object_in=platform_obj, key=platform_attr)
 
-        try:
-            yaml_file = self.platform_config
-            if yaml_file is None:
-                msg = ('The YAML-formatted file containing the platform attributes '
-                       'could not be determined from the command line arguments; '
-                       'Aborting!!!')
-                raise self.exception(msg=msg)
-            kwargs = {'yaml_file': yaml_file}
-            yaml_obj = cylcutil.yaml_interface.read_yaml(**kwargs)
-            kwargs = {'yaml_file': self.platform_config}
-            platform_obj = cylcutil.yaml_interface.read_yaml(**kwargs)
-            try:
-                scheduler = platform_obj.SCHEDULER
-            except KeyError:
-                scheduler = None
-            if scheduler is None:
-                msg = ('The batch system scheduler could not be determined from '
-                       'the user experiment configuration. Aborting!!!')
-                raise self.exception(msg=msg)
-            for item in self.scheduler_opts:  # NEED TO ADD SCHEDULER TO YAML FILE
-                if scheduler.lower() == item:
-                    setattr(self.scheduler_obj, item, True)
-            instruct_dict = dict()
-            for item in platform_obj.attr_list:
-                instruct_dict[item] = getattr(platform_obj, item)
-            if ('EXEC_RETRIES_COUNT' in platform_obj.attr_list) and \
-               ('EXEC_RETRIES_INTERVAL_SECONDS' in platform_obj.attr_list):
-                exec_retries = "%s*PT%sS" % (platform_obj.EXEC_RETRIES_COUNT,
-                                             platform_obj.EXEC_RETRIES_INTERVAL_SECONDS)
-            else:
-                exec_retries = "0*PT0S"
-            instruct_dict['EXEC_RETRIES'] = exec_retries
-            kwargs = {'filename': filename, 'instruct_dict': instruct_dict}
-            self.write_jinja2(**kwargs)
-        except Exception:
-            msg = ('The platform.rc file could not be constructed; Aborting!!!')
-            raise self.exception(msg=msg)
-        msg = ('Creation of Cylc input file %s succeeded.' % filename)
+        if ("EXEC_RETRIES_COUNT" in vars(platform_obj)) and \
+           ("EXEC_RETRIES_INTERVAL_SECONDS" in vars(platform_obj)):
+            instruct_dict["EXEC_RETRIES"] = \
+                f"{platform_obj.EXEC_RETRIES_COUNT}*PT{platform_obj.EXEC_RETRIES_INTERVAL_SECONDS}S"
+
+        # Build the Cylc platform.rc file for the respective
+        # experiment.
+        filename = os.path.join(self.path, "platform.rc")
+        msg = f"Attempting to build Cylc input file {filename}."
         self.logger.info(msg=msg)
+
+        jinja2_interface.write_jinja2(
+            jinja2_file=filename, in_dict=instruct_dict)
 
     def build_tasks_rc(self):
         """
@@ -361,7 +332,7 @@ class CylcBuilder:
         # Build the Cylc experiment suite experiment.rc file.
         self.build_expt_rc()
         self.build_platform_rc()
-        self.build_tasks_rc()
+        # self.build_tasks_rc()
 
-        suite_path = self.configure_cylc()
-        return suite_path
+        #suite_path = self.configure_cylc()
+        # return suite_path
