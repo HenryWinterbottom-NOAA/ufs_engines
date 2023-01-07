@@ -294,7 +294,7 @@ class CylcBuilder:
 
         # Write the Jinja2-formatted file containing the Cylc
         # experiment tasks attributes.
-        jinja2_interface.write_jinja2(filename=os.path.join(self.path, "tasks.rc"),
+        jinja2_interface.write_jinja2(jinja2_file=os.path.join(self.path, "tasks.rc"),
                                       instruct_dict=instruct_dict)
 
 #        try:
