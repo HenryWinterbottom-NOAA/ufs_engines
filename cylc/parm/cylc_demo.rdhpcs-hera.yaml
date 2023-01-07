@@ -36,5 +36,8 @@ CYLCplatform: !ENV ${PWD}/parm/platform.yaml
 # Define the path to the workflow tasks configuration file.
 CYLCtasks: !ENV ${PWD}/parm/tasks.yaml
 
+# Define the batch scheduler for the respective platform.
+CYLCscheduler: slurm
+
 # Define the path to the environment variable configuration file.
 CYLCenv: !ENV ${PWD}/parm/env.yaml
