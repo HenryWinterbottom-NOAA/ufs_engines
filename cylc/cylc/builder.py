@@ -203,6 +203,7 @@ class CylcBuilder:
             __error__(msg=msg)
 
         # Define the Cylc platform attributes.
+        instruct_dict = {}
         for platform_attr in vars(platform_obj):
             instruct_dict[platform_attr] = parser_interface.object_getattr(
                 object_in=platform_obj, key=platform_attr)
@@ -220,7 +221,7 @@ class CylcBuilder:
 
         print(instruct_dict)
         quit()
-        
+
         jinja2_interface.write_jinja2(
             jinja2_file=filename, in_dict=instruct_dict)
 
