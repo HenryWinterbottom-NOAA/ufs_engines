@@ -242,9 +242,6 @@ class CylcBuilder:
         path = os.path.join(self.path, "directives")
         fileio_interface.dirtree_path(path=path)
 
-        print(self.tasks_config)
-        quit()
-
         try:
             yaml_file = self.tasks_config
             kwargs = {'yaml_file': yaml_file, 'return_dict': True}
