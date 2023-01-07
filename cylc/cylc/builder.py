@@ -86,7 +86,7 @@ class CylcBuilder:
         # experiment, will be collected when build the respective
         # experiment Cylc configuration file.
         self.envvar_list = ["CYLCemail", "CYLCexptname",
-                            "CYLCmailevents", "CYLCworkpath"]
+                            "CYLCmailevents", "CYLCscheduler", "CYLCworkpath"]
 
     def build_expt_rc(self) -> None:
         """
