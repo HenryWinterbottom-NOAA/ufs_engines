@@ -128,7 +128,7 @@ class CylcLauncher(CylcEngine):
         # Build the working directory for the respective Cylc
         # application/experiment.
         self.run_dir = os.path.join(self.yaml_obj.CYLCworkpath,
-                                    self.yaml_obj.CYLCexptname, 'cylc')
+                                    self.yaml_obj.CYLCexptname)
         msg = ("The Cylc application/experiment will be executed from path "
                f"{self.run_dir}."
                )
