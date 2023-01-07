@@ -129,6 +129,10 @@ class CylcLauncher(CylcEngine):
         # application/experiment.
         self.run_dir = os.path.join(self.yaml_obj.CYLCworkpath,
                                     self.yaml_obj.CYLCexptname, 'cylc')
+        msg = ("The Cylc application/experiment will be executed from path "
+               f"{self.run_dir}."
+               )
+        self.logger.info(msg=msg)
         fileio_interface.dirpath_tree(path=self.run_dir)
 
         self.suite_path = os.path.join(self.run_dir, 'cylc', 'suite.rc')

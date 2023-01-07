@@ -1,0 +1,6 @@
+hello_world:
+     ntasks: 1
+     account: gsienkf
+     partition: service
+     time: '1:00'
+     exclusive: ''
