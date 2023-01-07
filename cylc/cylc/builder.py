@@ -81,10 +81,6 @@ class CylcBuilder:
         # Build the working directory for the Cylc experiment.
         fileio_interface.dirpath_tree(path=self.path)
 
-        print(self.path)
-
-        quit()
-
         # Define the run-time environment variable attributes; the
         # additional environment variable, relative to the respective
         # experiment, will be collected when build the respective
@@ -316,6 +312,14 @@ class CylcBuilder:
             for the user-specified UFS-RNR Cylc suite.
 
         """
+
+        configure_file_dict = {self.yaml_obj: None}
+
+        # NEED TO ADD AN APPLICATION HOME PATH (i.e., AN APPLICATION
+        # SUCH AS UFS-RNR) THAT CONTAINS THE CYLC ENGINE ATTRIBUTES.
+
+        quit()
+
         expt_path = os.path.join(self.WORKrnr, self.experiment_name)
         configure_file_list = ['environment.rc', 'runtime.rc', 'suite.rc']
         for configure_file in configure_file_list:
