@@ -29,6 +29,8 @@ __email__ = "henry.winterbottom@noaa.gov"
 
 # ----
 
+import os
+
 from confs import jinja2_interface
 from confs.yaml_interface import YAML
 from cylc import error as __error__
