@@ -219,9 +219,6 @@ class CylcBuilder:
         msg = f"Building Cylc experiment file {filename}."
         self.logger.info(msg=msg)
 
-        print(instruct_dict)
-        quit()
-
         jinja2_interface.write_jinja2(
             jinja2_file=filename, in_dict=instruct_dict)
 
