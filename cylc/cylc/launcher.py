@@ -74,6 +74,7 @@ import os
 
 from cylc import error as __error__
 from cylc import CylcEngine
+from cylc.builder import CylcBuilder
 from tools import fileio_interface
 from schema import Optional
 
@@ -128,12 +129,11 @@ class CylcLauncher(CylcEngine):
         # Build the working directory for the respective Cylc
         # application/experiment.
         self.run_dir = os.path.join(self.yaml_obj.CYLCworkpath,
-                                    self.yaml_obj.CYLCexptname)
+                                    self.yaml_obj.CYLCexptname, 'cylc')
         msg = ("The Cylc application/experiment will be executed from path "
                f"{self.run_dir}."
                )
-        self.logger.info(msg=msg)
-        fileio_interface.dirpath_tree(path=self.run_dir)
+        self.builder = CylcBuilder(yaml_obj=self.yaml_obj, path=self.run_dir)
 
         self.suite_path = os.path.join(self.run_dir, 'cylc', 'suite.rc')
 
@@ -245,6 +245,9 @@ class CylcLauncher(CylcEngine):
             respective experiment.
 
         """
+
+        # Build the Cylc experiment suite.
+        self.builder.run()
 
         # Register the Cylc experiment suite.
         self.register_suite()

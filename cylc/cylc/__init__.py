@@ -137,6 +137,37 @@ class CylcEngine:
             cls_opts = parser_interface.object_todict(object_in=self.yaml_obj)
             validate_opts(cls_schema=cls_schema, cls_opts=cls_opts)
 
+    def build_cylc(self):
+        """
+        Description
+        -----------
+
+        This method builds the respective experiment Cylc suite
+        components and defines the base-class attribute suite_path
+        which is the filename path for the respective experiment Cylc
+        suite.rc (e.g., Cylc suite) file.
+
+        Raises
+        ------
+
+        CylcRunError:
+
+            * raised if an exception is encountered while building the
+              respective experiment Cylc suite components.
+
+        """
+
+        # Build the experiment Cylc workflow orchestrator suite
+        # components; proceed accordingly.
+        try:
+            builder = suite_interface.CylcBuilder(yaml_obj=self.yaml_obj)
+            self.suite_path = builder.run()
+        except Exception as error:
+            msg = ('Building the respective experiment Cylc suite '
+                   f'components failed with error {error}. Aborting!!!'
+                   )
+            error(msg=msg)
+
     def get_cylc_app(self) -> None:
         """
         Description
