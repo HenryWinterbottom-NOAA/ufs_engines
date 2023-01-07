@@ -194,7 +194,7 @@ class CylcBuilder:
         platform_obj = YAML().read_yaml(yaml_file=self.yaml_obj.CYLCplatform,
                                         return_obj=True)
 
-        if "SCHEDULER" not in vars(platform_obj):
+        if "SCHEDULERR" not in vars(platform_obj):
             msg = ("The SCHEDULER attribute could not be determine from the "
                    f"YAML-formatted file path {self.yaml_obj.CYLCplatform}. "
                    "Aborting!!!"
@@ -218,7 +218,7 @@ class CylcBuilder:
             try:
                 scheduler = platform_obj.SCHEDULER
             except KeyError:
-                scheduler=None
+                scheduler = None
             if scheduler is None:
                 msg=('The batch system scheduler could not be determined from '
                        'the user experiment configuration. Aborting!!!')
