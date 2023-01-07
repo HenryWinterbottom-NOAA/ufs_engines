@@ -194,7 +194,7 @@ class CylcBuilder:
         platform_obj = YAML().read_yaml(yaml_file=self.yaml_obj.CYLCplatform,
                                         return_obj=True)
 
-        if "SCHEDULER" not in vars(platform_obj.keys()):
+        if "SCHEDULER" not in vars(platform_obj):
             msg = ("The SCHEDULER attribute could not be determine from the "
                    f"YAML-formatted file path {self.yaml_obj.CYLCplatform}. "
                    "Aborting!!!"
@@ -216,7 +216,7 @@ class CylcBuilder:
             kwargs = {'yaml_file': self.platform_config}
             platform_obj = cylcutil.yaml_interface.read_yaml(**kwargs)
             try:
-                scheduler=platform_obj.SCHEDULER
+                scheduler = platform_obj.SCHEDULER
             except KeyError:
                 scheduler=None
             if scheduler is None:
