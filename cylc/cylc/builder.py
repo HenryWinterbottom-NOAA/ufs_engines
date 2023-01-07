@@ -35,6 +35,7 @@ from cylc import error as __error__
 from cylc import CylcEngine
 from tools import datetime_interface
 from tools import fileio_interface
+from tools import parser_interface
 from utils import timestamp_interface
 from utils.logger_interface import Logger
 
@@ -167,7 +168,7 @@ class CylcBuilder:
         #kwargs = {'filename': filename, 'instruct_dict': instruct_dict}
         # self.write_jinja2(**kwargs)
         #msg = ('Creation of Cylc input file %s succeeded.' % filename)
-        #self.logger.info(msg=msg)
+        # self.logger.info(msg=msg)
 
     def build_platform_rc(self):
         """
