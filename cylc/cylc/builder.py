@@ -81,6 +81,10 @@ class CylcBuilder:
         # Build the working directory for the Cylc experiment.
         fileio_interface.dirpath_tree(path=self.path)
 
+        print(self.path)
+
+        quit()
+
         # Define the run-time environment variable attributes; the
         # additional environment variable, relative to the respective
         # experiment, will be collected when build the respective
@@ -252,15 +256,14 @@ class CylcBuilder:
         Description
         -----------
 
-        This method builds the Cylc suite ASCII-formatted file
-        containing the respective job scheduler directive(s); an
-        external file tasks/<task>.task will be created for each
-        application specified within the tasks YAML file regardless of
-        whether the respective task is a component of the respective
-        workflow suite; finally, this method also writes a Jinja2
-        formatted file containing the respective task attributes to be
-        referenced by the respective Cylc suite applications (when
-        necessary).
+        This method builds ASCII-formatted files containing the
+        respective Cylc experiment batch scheduler directive(s); for
+        each Cylc experiment application, a tasks/<task>.task will be
+        created regardless of whether the respective task is a
+        component of the Cylc experiment workflow graph; finally, this
+        method writes a Jinja2 formatted file containing the task
+        attributes to be referenced by the respective experiment Cylc
+        suite applications (when necessary).
 
         """
 
@@ -297,42 +300,12 @@ class CylcBuilder:
         jinja2_interface.write_jinja2(jinja2_file=os.path.join(self.path, "tasks.rc"),
                                       in_dict=instruct_dict)
 
-#        try:
-#            yaml_file = self.tasks_config
-#            kwargs = {'yaml_file': yaml_file, 'return_dict': True}
-#            tasks_dict = cylcutil.yaml_interface.read_yaml(**kwargs)
-#            instruct_dict = dict()
-#            for (key, values) in tasks_dict.items():
-#                filename = os.path.join(directives_path, '%s.task' % key)
-#                msg = ('Creating task directives file %s.' % filename)
-#                self.logger.info(msg=msg)
-#                with open(filename, 'w') as f:
-#                    for value in values:
-#                        if value == 'ntasks':
-#                            instruct_dict['%s_%s' % (key, value)] = \
-#                                tasks_dict[key][value]
-#                        if self.scheduler_obj.slurm:
-#                            if value == 'cpus-per-task':
-#                                instruct_dict['%s_nthreads' % key] = \
-#                                    tasks_dict[key][value]
-#                        f.write('--%s = %s\n' %
-#                                (value, tasks_dict[key][value]))
-#            filename = os.path.join(self.path, 'tasks.rc')
-#            kwargs = {'filename': filename, 'instruct_dict': instruct_dict}
-#            self.write_jinja2(**kwargs)
-#            msg = ('Creation of Cylc input file %s succeeded.' % filename)
-#            self.logger.info(msg=msg)
-#        except Exception:
-#            msg = ('The task files could not be constructed; Aborting!!!')
-#            raise self.exception(msg=msg)
-
-    def configure_cylc(self):
-        """
-        Description
+    def configure_cylc(self) -> str:
+        """Description
         -----------
 
-        This method copies the UFS-RNR Cylc configuration files to the
-        respective experiment location.
+        This method builds the respective Cylc experiment
+        configuration files.
 
         Returns
         -------
@@ -386,6 +359,8 @@ class CylcBuilder:
 
         # Build the Cylc experiment suite platform.rc file.
         platform_obj = self.build_platform_rc()
+
+        # Collect and define the the Cylc experiment task attributes.
         self.build_tasks_rc(platform_obj=platform_obj)
 
         quit()
