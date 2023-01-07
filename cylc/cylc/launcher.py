@@ -124,9 +124,9 @@ class CylcLauncher(CylcEngine):
 
         super().__init__(yaml_file=yaml_file, cls_schema=cls_schema)
 
-        self.suite_path = os.path.join(self.yaml_obj.CYLCworkpath,
-                                       self.yaml_obj.CYLCexptname,
-                                       'cylc')
+        self.run_dir = os.path.join(self.yaml_obj.CYLCworkpath,
+                                    self.yaml_obj.CYLCexptname, 'cylc')
+        self.suite_path = os.path.join(self.run_dir, 'cylc', 'suite.rc')
 
     def launch_suite(self) -> None:
         """
@@ -150,8 +150,8 @@ class CylcLauncher(CylcEngine):
 
         # Define the file paths for the standard output and standard
         # error.
-        errlog = os.path.join(self.yaml_obj.CYLCworkpath, "cylc_run.err")
-        outlog = os.path.join(self.yaml_obj.CYLCworkpath, "cylc_run.out")
+        errlog = os.path.join(self.run_dir, "cylc_run.err")
+        outlog = os.path.join(self.run_dir, "cylc_run.out")
 
         # Define the subprocess command string.
         cmd = ["run", self.yaml_obj.CYLCexptname]
@@ -193,8 +193,8 @@ class CylcLauncher(CylcEngine):
 
         # Define the file paths for the standard output and standard
         # error.
-        errlog = os.path.join(self.yaml_obj.CYLCworkpath, "cylc_register.err")
-        outlog = os.path.join(self.yaml_obj.CYLCworkpath, "cylc_register.out")
+        errlog = os.path.join(self.run_dir, "cylc_register.err")
+        outlog = os.path.join(self.run_dir, "cylc_register.out")
 
         # Define the subprocess command string.
         cmd = [
@@ -202,7 +202,7 @@ class CylcLauncher(CylcEngine):
             self.yaml_obj.CYLCexptname,
             self.suite_path,
             "--run-dir",
-            self.run_dir,
+            self.yaml_obj.,
         ]
 
         # Register the Cylc application suite; proceed accordingly.
