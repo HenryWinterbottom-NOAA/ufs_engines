@@ -273,7 +273,7 @@ class CylcBuilder:
         tasks_dict = YAML().read_yaml(yaml_file=self.yaml_obj.CYLCtasks)
 
         instruct_dict = {}
-        for (key, value) in tasks_dict.items():
+        for (key, values) in tasks_dict.items():
             filename = os.path.join(path, f"{key}.task")
             msg = f"Creating task directive file {filename}."
             self.logger.info(msg=msg)
