@@ -76,7 +76,7 @@ class CylcBuilder:
         self.logger = Logger()
 
         # Build the working directory for the Cylc experiment.
-        fileio_interface.dirtree_path(path=self.path)
+        fileio_interface.dirpath_tree(path=self.path)
 
         # Define the run-time environment variable attributes; the
         # additional environment variable, relative to the respective
@@ -165,7 +165,7 @@ class CylcBuilder:
         #msg = ('Attempting to build Cylc input file %s.' % filename)
         # self.logger.info(msg=msg)
         #kwargs = {'filename': filename, 'instruct_dict': instruct_dict}
-        #self.write_jinja2(**kwargs)
+        # self.write_jinja2(**kwargs)
         #msg = ('Creation of Cylc input file %s succeeded.' % filename)
         #self.logger.info(msg=msg)
 
