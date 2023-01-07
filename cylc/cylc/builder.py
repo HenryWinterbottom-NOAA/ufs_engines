@@ -290,7 +290,7 @@ class CylcBuilder:
                             instruct_dict[f"{key}_nthreads"] = \
                                 tasks_dict[key][value]
 
-                    file.write(f"--{value} = {tasks_dict[key][value]}")
+                    file.write(f"--{value} = {tasks_dict[key][value]}\n")
 
         # Write the Jinja2-formatted file containing the Cylc
         # experiment tasks attributes.
@@ -387,6 +387,8 @@ class CylcBuilder:
         # Build the Cylc experiment suite platform.rc file.
         platform_obj = self.build_platform_rc()
         self.build_tasks_rc(platform_obj=platform_obj)
+
+        quit()
 
         #suite_path = self.configure_cylc()
         # return suite_path
