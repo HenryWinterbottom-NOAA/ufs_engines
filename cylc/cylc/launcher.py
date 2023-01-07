@@ -74,6 +74,7 @@ import os
 
 from cylc import error as __error__
 from cylc import CylcEngine
+from tools import fileio_interface
 from schema import Optional
 
 # ----
@@ -124,8 +125,12 @@ class CylcLauncher(CylcEngine):
 
         super().__init__(yaml_file=yaml_file, cls_schema=cls_schema)
 
+        # Build the working directory for the respective Cylc
+        # application/experiment.
         self.run_dir = os.path.join(self.yaml_obj.CYLCworkpath,
                                     self.yaml_obj.CYLCexptname, 'cylc')
+        fileio_interface.dirpath_tree(path=self.run_dir)
+
         self.suite_path = os.path.join(self.run_dir, 'cylc', 'suite.rc')
 
     def launch_suite(self) -> None:
