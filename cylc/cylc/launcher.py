@@ -202,7 +202,7 @@ class CylcLauncher(CylcEngine):
             self.yaml_obj.CYLCexptname,
             self.suite_path,
             "--run-dir",
-            self.yaml_obj.,
+            self.run_dir
         ]
 
         # Register the Cylc application suite; proceed accordingly.
