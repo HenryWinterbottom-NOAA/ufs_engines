@@ -110,6 +110,7 @@ class CylcLauncher(CylcEngine):
         # Define the base-class attributes.
         cls_schema = {
             "CYLCexptname": str,
+            "CYLCgraph": str,
             "CYLCinterval": int,
             "CYLCplatform": str,
             "CYLCstart": str,
