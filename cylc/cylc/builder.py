@@ -326,7 +326,7 @@ class CylcBuilder:
 
         # Configure the Cylc application using the respective
         # experiment configuration attributes; proceed accordingly.
-        for (expt_file, cylc_file) in configure_file_dict.keys():
+        for (expt_file, cylc_file) in configure_file_dict.items():
             srcfile = expt_file
             dstfile = os.path.join(self.path, cylc_file)
 
@@ -348,7 +348,7 @@ class CylcBuilder:
         for configure_file in configure_file_list:
             srcfile = os.path.join(self.HOMErnr, 'cylc', 'parm',
                                    configure_file)
-            dstfile=os.path.join(expt_path, 'cylc', configure_file)
+            dstfile = os.path.join(expt_path, 'cylc', configure_file)
             shutil.copy(srcfile, dstfile)
         srcfile=self.CYLCrnr
         dstfile=os.path.join(expt_path, 'cylc', 'graph.rc')
