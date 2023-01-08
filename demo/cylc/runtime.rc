@@ -1,5 +1,5 @@
 [[hello_world]]
-	script = ${EXPThomepath}/demo/JUFS_HELLO_WORLD
+	script = sh ${EXPThomepath}/demo/JUFS_HELLO_WORLD
 	[[[job]]]
 	        batch system = {{ SCHEDULER }}
 	[[[directives]]]
