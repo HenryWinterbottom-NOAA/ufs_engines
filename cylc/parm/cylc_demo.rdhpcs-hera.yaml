@@ -38,7 +38,7 @@ EXPThomepath: !ENV ${PWD}/../
 
 EXPTruntime: !ENV ${PWD}/parm/runtime.rc
 
-EXPTenvironment: !ENV ${EXPThomepath}/demo/environment.rc
+#EXPTenvironment: !ENV ${EXPThomepath}/demo/environment.rc
 
 EXPTgraph: !ENV ${EXPThomepath}/demo/graph.rc
 
