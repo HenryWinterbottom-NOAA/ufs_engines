@@ -1,0 +1,35 @@
+#!Jinja2
+
+# Define the Cylc suite environment
+%include experiment.rc
+%include platform.rc
+%include tasks.rc
+
+# Define the Cylc timing attributes.
+[cylc]
+	UTC mode = True
+
+# Build the Cylc workflow period of interest and the application
+# dependency attributes.
+[scheduling]
+
+	# The experiment period of interest.	
+	initial cycle point = {{ INITIAL_CYCLE_POINT }}
+	final cycle point = {{ FINAL_CYCLE_POINT }}
+
+	# Include the user experiment applications and dependencies.
+	{% include 'graph.rc' %}
+
+# ----
+
+# Define the Cylc workflow tasks.
+[runtime]
+
+	# Define the environment variables to be inherited by all
+        # tasks.
+	[[root]]
+		[[[environment]]]
+			{% include 'environment.rc' %}
+
+	# Define all workflow tasks.
+	{% include 'runtime.rc' %}

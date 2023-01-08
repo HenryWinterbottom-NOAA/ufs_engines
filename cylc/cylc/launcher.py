@@ -119,9 +119,14 @@ class CylcLauncher(CylcEngine):
             "CYLCstop": str,
             "CYLCtasks": str,
             "CYLCworkpath": str,
+            "EXPTgraph": str,
+            "EXPThomepath": str,
+            "EXPTruntime": str,
+            "EXPTsuite": str,
+            "EXPTworkpath": str,
             Optional("CYLCemail"): str,
-            Optional("CYLCenv"): str,
-            Optional("CYLCmailevents"): str
+            Optional("CYLCmailevents"): str,
+            Optional("EXPTenv"): str
         }
 
         super().__init__(yaml_file=yaml_file, cls_schema=cls_schema)

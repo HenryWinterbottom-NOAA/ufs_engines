@@ -86,7 +86,8 @@ class CylcBuilder:
         # experiment, will be collected when build the respective
         # experiment Cylc configuration file.
         self.envvar_list = ["CYLCemail", "CYLCexptname",
-                            "CYLCmailevents", "CYLCscheduler", "CYLCworkpath"]
+                            "CYLCmailevents", "CYLCscheduler", "CYLCworkpath",
+                            "EXPTenv", "EXPThomepath", "EXPTworkpath"]
 
         # Define the supported platforms.
         self.platform_list = ["slurm"]
@@ -137,7 +138,7 @@ class CylcBuilder:
         # has specified additional run-time environment variables;
         # proceed accordingly.
         env_yaml = parser_interface.object_getattr(
-            object_in=self.yaml_obj, key="CYLCenv", force=True)
+            object_in=self.yaml_obj, key="EXPTenv", force=True)
         if env_yaml is None:
             msg = ("The respective Cylc experiment configuration has not specified "
                    "additional environment variables."

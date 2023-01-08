@@ -27,14 +27,27 @@ CYLCexptname: CYLC_DEMO_RDHPCS_HERA
 # placed.
 CYLCworkpath: /scratch2/BMC/gsienkf/Henry.Winterbottom/work
 
-# Define the path to the Cylc workflow graph.
-CYLCgraph: !ENV ${PWD}/parm/graph.rc
-
 # Define the path to the platform configuration file.
 CYLCplatform: !ENV ${PWD}/parm/platform.yaml
 
+# ----
+
+# Define the path to the respective application directory containing
+# the Cylc workflow engine task attributes.
+EXPThomepath: !ENV ${PWD}/../
+
+EXPTruntime: !ENV ${PWD}/parm/runtime.rc
+
+EXPTenvironment: !ENV ${EXPThomepath}/demo/environment.rc
+
+EXPTgraph: !ENV ${EXPThomepath}/demo/graph.rc
+
+EXPTsuite: !ENV ${PWD}/parm/suite.rc
+
 # Define the path to the workflow tasks configuration file.
-CYLCtasks: !ENV ${PWD}/parm/tasks.yaml
+ENVtasks: !ENV ${PWD}/parm/tasks.yaml
 
 # Define the path to the environment variable configuration file.
-CYLCenv: !ENV ${PWD}/parm/env.yaml
+EXPTenv: !ENV ${PWD}/parm/env.yaml
+
+EXPTworkpath: /scratch2/BMC/gsienkf/Henry.Winterbottom/work
