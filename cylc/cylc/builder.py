@@ -327,12 +327,17 @@ class CylcBuilder:
         # Configure the Cylc application using the respective
         # experiment configuration attributes; proceed accordingly.
         for (expt_file, _) in configure_file_dict.items():
-            srcfile = expt_file
+            srcfile = parser_interface.object_getattr(
+                object_in=self.yaml_obj, key=expt_file, no_split=True)
+
+            exist = fileio_interface.fileexist(path=srcfile)
+            if not exist:
+                msg = f"The filepath {expt_file} does not exist. Aborting!!!"
+                __error__(msg=msg)
+
             dstfile = os.path.join(self.path, parser_interface.dict_key_value(
                 dict_in=configure_file_dict, key=expt_file, no_split=True))
 
-#            msg = f"Copying file {srcfile} to {dstfile}."
-#            self.logger.info(msg=msg)
             fileio_interface.copyfile(srcfile=srcfile, dstfile=dstfile)
 
         quit()
@@ -354,7 +359,7 @@ class CylcBuilder:
         srcfile = self.CYLCrnr
         dstfile = os.path.join(expt_path, 'cylc', 'graph.rc')
         shutil.copy(srcfile, dstfile)
-        suite_path=os.path.join(expt_path, 'cylc', 'suite.rc')
+        suite_path = os.path.join(expt_path, 'cylc', 'suite.rc')
         return suite_path
 
     def run(self):
