@@ -346,7 +346,7 @@ class CylcBuilder:
         expt_path = os.path.join(self.WORKrnr, self.experiment_name)
         configure_file_list = ['environment.rc', 'runtime.rc', 'suite.rc']
         for configure_file in configure_file_list:
-            srcfile=os.path.join(self.HOMErnr, 'cylc', 'parm',
+            srcfile = os.path.join(self.HOMErnr, 'cylc', 'parm',
                                    configure_file)
             dstfile=os.path.join(expt_path, 'cylc', configure_file)
             shutil.copy(srcfile, dstfile)
@@ -389,6 +389,10 @@ class CylcBuilder:
 
         # Collect and define the the Cylc experiment task attributes.
         self.build_tasks_rc(platform_obj=platform_obj)
+
+        # Collect the experiment application configuration files and
+        # configure the Cylc experiment application accordingly.
+        suite_path = self.configure_cylc()
 
         quit()
 
