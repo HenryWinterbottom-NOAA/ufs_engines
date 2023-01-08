@@ -365,10 +365,10 @@ class CylcBuilder:
                     value = parser_interface.dict_key_value(dict_in=yaml_dict,
                                                             key=envvar, no_split=True)
 
-                    envfile.write(f"{envvar} = {value}\n")
+                    envfile.write(f"\n{envvar} = {value}")
 
         # Define the Jinja2-formatted Cylc engine workflow suite.
-        suite_path=os.path.join(self.path, 'suite.rc')
+        suite_path = os.path.join(self.path, 'suite.rc')
 
         return suite_path
 
