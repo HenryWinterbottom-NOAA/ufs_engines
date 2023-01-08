@@ -121,6 +121,7 @@ class CylcLauncher(CylcEngine):
             "EXPThomepath": str,
             "EXPTruntime": str,
             "EXPTsuite": str,
+            "EXPTtasks": str,
             "EXPTworkpath": str,
             Optional("CYLCemail"): str,
             Optional("CYLCmailevents"): str,

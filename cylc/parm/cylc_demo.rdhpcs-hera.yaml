@@ -45,7 +45,7 @@ EXPTgraph: !ENV ${EXPThomepath}/demo/graph.rc
 EXPTsuite: !ENV ${PWD}/parm/suite.rc
 
 # Define the path to the workflow tasks configuration file.
-ENVtasks: !ENV ${PWD}/parm/tasks.yaml
+EXPTtasks: !ENV ${PWD}/parm/tasks.yaml
 
 # Define the path to the environment variable configuration file.
 EXPTenv: !ENV ${PWD}/parm/env.yaml
