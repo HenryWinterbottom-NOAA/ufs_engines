@@ -36,18 +36,18 @@ CYLCplatform: !ENV ${PWD}/parm/platform.yaml
 # the Cylc workflow engine task attributes.
 EXPThomepath: !ENV ${PWD}/../
 
-EXPTruntime: !ENV ${EXPThomepath}/demo/cylc/runtime.rc
+EXPTruntime: !ENV ${PWD}/../demo/cylc/runtime.rc
 
-#EXPTenvironment: !ENV ${EXPThomepath}/demo/environment.rc
+#EXPTenvironment: !ENV ${PWD}/../demo/environment.rc
 
-EXPTgraph: !ENV ${EXPThomepath}/demo/cylc/graph.rc
+EXPTgraph: !ENV ${PWD}/../demo/cylc/graph.rc
 
-EXPTsuite: !ENV ${EXPThomepath}/demo/cylc/suite.rc
+EXPTsuite: !ENV ${PWD}/../demo/cylc/suite.rc
 
 # Define the path to the workflow tasks configuration file.
-EXPTtasks: !ENV ${EXPThomepath}/demo/cylc/tasks.yaml
+EXPTtasks: !ENV ${PWD}/../demo/cylc/tasks.yaml
 
 # Define the path to the environment variable configuration file.
-EXPTenv: !ENV ${EXPThomepath}/demo/cylc/env.yaml
+EXPTenv: !ENV ${PWD}/../demo/cylc/env.yaml
 
 EXPTworkpath: /scratch2/BMC/gsienkf/Henry.Winterbottom/work
