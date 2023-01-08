@@ -48,6 +48,6 @@ EXPTsuite: !ENV ${PWD}/../demo/cylc/suite.rc
 EXPTtasks: !ENV ${PWD}/../demo/cylc/tasks.yaml
 
 # Define the path to the environment variable configuration file.
-EXPTenv: !ENV ${PWD}/../demo/cylc/env.yaml
+EXPTenv: !ENV ${PWD}/../demo/cylc/environment.yaml
 
 EXPTworkpath: /scratch2/BMC/gsienkf/Henry.Winterbottom/work
