@@ -365,6 +365,11 @@ class CylcBuilder:
                     value = parser_interface.dict_key_value(dict_in=yaml_dict,
                                                             key=envvar, no_split=True)
 
+                    msg = (f"Updating file {exptenv_file} with experiment variable "
+                           f"{envvar} = {value}."
+                           )
+                    self.logger.info(msg=msg)
+
                     envfile.write(f"\n{envvar} = {value}")
 
         # Define the Jinja2-formatted Cylc engine workflow suite.
@@ -401,7 +406,7 @@ class CylcBuilder:
         self.build_expt_rc()
 
         # Build the Cylc experiment suite platform.rc file.
-        platform_obj=self.build_platform_rc()
+        platform_obj = self.build_platform_rc()
 
         # Collect and define the the Cylc experiment task attributes.
         self.build_tasks_rc(platform_obj=platform_obj)
