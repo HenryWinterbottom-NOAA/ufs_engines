@@ -345,14 +345,15 @@ class CylcBuilder:
 
                 fileio_interface.copyfile(srcfile=srcfile, dstfile=dstfile)
 
-        quit()
-
         # Append the Cylc engine environment variable file with the
         # experiment application environment variables; proceed
         # accordingly.
         if fileio_interface.fileexist(path=self.yaml_obj.EXPTenv):
 
             yaml_dict = YAML().read_yaml(yaml_file=self.yaml_obj.EXPTenv)
+
+            print(yaml_dict)
+            quit()
 
             # Define the environment variable file for the Cylc
             # application.
@@ -415,6 +416,6 @@ class CylcBuilder:
 
         # Collect the experiment application configuration files and
         # configure the Cylc experiment application accordingly.
-        suite_path=self.configure_cylc()
+        suite_path = self.configure_cylc()
 
         return suite_path
