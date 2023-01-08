@@ -345,6 +345,8 @@ class CylcBuilder:
 
                 fileio_interface.copyfile(srcfile=srcfile, dstfile=dstfile)
 
+        quit()
+
         # Append the Cylc engine environment variable file with the
         # experiment application environment variables; proceed
         # accordingly.
@@ -413,8 +415,6 @@ class CylcBuilder:
 
         # Collect and define the the Cylc experiment task attributes.
         self.build_tasks_rc(platform_obj=platform_obj)
-
-        quit()
 
         # Collect the experiment application configuration files and
         # configure the Cylc experiment application accordingly.
