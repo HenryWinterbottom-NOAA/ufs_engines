@@ -1,6 +1,6 @@
 # =========================================================================
 
-# Module: cylc/launcher.py
+# Module: cylc/builder.py
 
 # Author: Henry R. Winterbottom
 
@@ -18,6 +18,46 @@
 # =========================================================================
 
 """
+Module
+------
+
+    builder.py
+
+Description
+-----------
+
+    This module contains the base-class object to to build the Cylc
+    engine workflow components.
+
+Classes
+-------
+
+    CylcBuilder(yaml_obj, path)
+
+        This is the base-class object for all tasks required to build
+        a comprehensive suite file for the Cylc workflow manager.
+
+Note(s)
+-------
+
+    This module does not support Cylc 8.0.x; please download and
+    install the Cylc applications contained in
+    https://github.com/cylc/cylc-flow/archive/refs/tags/7.9.3.tar.gz.
+
+Requirements
+------------
+
+- cylc-flow; https://github.com/cylc/cylc-flow (49a1683)
+
+Author(s)
+---------
+
+    Henry R. Winterbottom; 08 January 2023
+
+History
+-------
+
+    2023-01-08: Henry Winterbottom -- Initial implementation.
 
 """
 
@@ -33,13 +73,11 @@ import os
 
 from confs import jinja2_interface
 from confs.yaml_interface import YAML
-from cylc import error as __error__
-from cylc import CylcEngine
-from tools import datetime_interface
-from tools import fileio_interface
-from tools import parser_interface
+from tools import datetime_interface, fileio_interface, parser_interface
 from utils import timestamp_interface
 from utils.logger_interface import Logger
+
+from cylc import error as __error__
 
 # ----
 
@@ -60,7 +98,12 @@ class CylcBuilder:
         A Python object containing the user options collected from
         experiment YAML-formatted configuration file.
 
+    path: str
 
+        A Python string specifying the location for the Cylc engine
+        workflow configuration; this is the path beneath which the
+        Cylc engine workflow suite will be written including the
+        respective Jinja2-formatted configuration files.
 
     """
 
@@ -85,8 +128,16 @@ class CylcBuilder:
         # additional environment variable, relative to the respective
         # experiment, will be collected when build the respective
         # experiment Cylc configuration file.
-        self.envvar_list = ["CYLCemail", "CYLCexptname",
-                            "CYLCmailevents", "CYLCscheduler", "CYLCworkpath"]
+        self.envvar_list = [
+            "CYLCemail",
+            "CYLCexptname",
+            "CYLCmailevents",
+            "CYLCscheduler",
+            "CYLCworkpath",
+            "EXPTenv",
+            "EXPThomepath",
+            "EXPTworkpath",
+        ]
 
         # Define the supported platforms.
         self.platform_list = ["slurm"]
@@ -106,26 +157,34 @@ class CylcBuilder:
 
         # Define the Cylc experiment time attributes.
         cycle_start = datetime_interface.datestrupdate(
-            datestr=self.yaml_obj.CYLCstart, in_frmttyp=timestamp_interface.GENERAL,
-            out_frmttyp=timestamp_interface.YmdTHMS)
+            datestr=self.yaml_obj.CYLCstart,
+            in_frmttyp=timestamp_interface.GENERAL,
+            out_frmttyp=timestamp_interface.YmdTHMS,
+        )
         cycle_stop = datetime_interface.datestrupdate(
-            datestr=self.yaml_obj.CYLCstop, in_frmttyp=timestamp_interface.GENERAL,
-            out_frmttyp=timestamp_interface.YmdTHMS)
+            datestr=self.yaml_obj.CYLCstop,
+            in_frmttyp=timestamp_interface.GENERAL,
+            out_frmttyp=timestamp_interface.YmdTHMS,
+        )
         cycle_interval = f"PT{self.yaml_obj.CYLCinterval}S"
 
         # Define the experiment configuration attributes; proceed
         # accordingly.
-        instruct_dict = {'INITIAL_CYCLE_POINT': cycle_start,
-                         'FINAL_CYCLE_POINT': cycle_stop,
-                         'CYCLE_INTERVAL': cycle_interval}
+        instruct_dict = {
+            "INITIAL_CYCLE_POINT": cycle_start,
+            "FINAL_CYCLE_POINT": cycle_stop,
+            "CYCLE_INTERVAL": cycle_interval,
+        }
 
         for envvar in self.envvar_list:
             value = parser_interface.object_getattr(
-                object_in=self.yaml_obj, key=envvar, force=True)
+                object_in=self.yaml_obj, key=envvar, force=True
+            )
             if value is None:
-                msg = (f"Cylc experiment variable {envvar} has not been specified "
-                       "and will not be defined for the respective Cylc experiment."
-                       )
+                msg = (
+                    f"Cylc experiment variable {envvar} has not been specified "
+                    "and will not be defined for the respective Cylc experiment."
+                )
                 self.logger.warn(msg=msg)
 
             if value is not None:
@@ -137,11 +196,13 @@ class CylcBuilder:
         # has specified additional run-time environment variables;
         # proceed accordingly.
         env_yaml = parser_interface.object_getattr(
-            object_in=self.yaml_obj, key="CYLCenv", force=True)
+            object_in=self.yaml_obj, key="EXPTenv", force=True
+        )
         if env_yaml is None:
-            msg = ("The respective Cylc experiment configuration has not specified "
-                   "additional environment variables."
-                   )
+            msg = (
+                "The respective Cylc experiment configuration has not specified "
+                "additional environment variables."
+            )
             self.logger.warn(msg=msg)
 
         if env_yaml is not None:
@@ -156,12 +217,14 @@ class CylcBuilder:
 
                 for (env_item, _) in env_dict.items():
                     instruct_dict[env_item] = parser_interface.dict_key_value(
-                        dict_in=env_dict, key=env_item, no_split=True)
+                        dict_in=env_dict, key=env_item, no_split=True
+                    )
 
             if not exist:
-                msg = (f"The environment variable file {env_yaml} does not exist "
-                       "and will not be processed."
-                       )
+                msg = (
+                    f"The environment variable file {env_yaml} does not exist "
+                    "and will not be processed."
+                )
                 self.logger.warn(msg=msg)
 
         # Build the Cylc experiment.rc file for the respective experiment.
@@ -169,8 +232,7 @@ class CylcBuilder:
         msg = f"Building Cylc experiment file {filename}."
         self.logger.info(msg=msg)
 
-        jinja2_interface.write_jinja2(
-            jinja2_file=filename, in_dict=instruct_dict)
+        jinja2_interface.write_jinja2(jinja2_file=filename, in_dict=instruct_dict)
 
     def build_platform_rc(self) -> object:
         """
@@ -207,34 +269,40 @@ class CylcBuilder:
         """
 
         # Collect the Cylc experiment platform attributes.
-        platform_obj = YAML().read_yaml(yaml_file=self.yaml_obj.CYLCplatform,
-                                        return_obj=True)
+        platform_obj = YAML().read_yaml(
+            yaml_file=self.yaml_obj.CYLCplatform, return_obj=True
+        )
 
         # Check that the batch scheduler application is valid; proceed
         # accordingly.
         if "SCHEDULER" not in vars(platform_obj):
-            msg = ("The SCHEDULER attribute could not be determine from the "
-                   f"YAML-formatted file path {self.yaml_obj.CYLCplatform}. "
-                   "Aborting!!!"
-                   )
+            msg = (
+                "The SCHEDULER attribute could not be determine from the "
+                f"YAML-formatted file path {self.yaml_obj.CYLCplatform}. "
+                "Aborting!!!"
+            )
             __error__(msg=msg)
 
         if platform_obj.SCHEDULER.lower() not in self.platform_list:
-            msg = (f"Batch scheduler application {platform_obj.SCHEDULER} is "
-                   "not supported. Aborting!!!"
-                   )
+            msg = (
+                f"Batch scheduler application {platform_obj.SCHEDULER} is "
+                "not supported. Aborting!!!"
+            )
             __error__(msg=msg)
 
         # Define the Cylc platform attributes.
         instruct_dict = {}
         for platform_attr in vars(platform_obj):
             instruct_dict[platform_attr] = parser_interface.object_getattr(
-                object_in=platform_obj, key=platform_attr)
+                object_in=platform_obj, key=platform_attr
+            )
 
-        if ("EXEC_RETRIES_COUNT" in vars(platform_obj)) and \
-           ("EXEC_RETRIES_INTERVAL_SECONDS" in vars(platform_obj)):
-            instruct_dict["EXEC_RETRIES"] = \
-                f"{platform_obj.EXEC_RETRIES_COUNT}*PT{platform_obj.EXEC_RETRIES_INTERVAL_SECONDS}S"
+        if ("EXEC_RETRIES_COUNT" in vars(platform_obj)) and (
+            "EXEC_RETRIES_INTERVAL_SECONDS" in vars(platform_obj)
+        ):
+            instruct_dict[
+                "EXEC_RETRIES"
+            ] = f"{platform_obj.EXEC_RETRIES_COUNT}*PT{platform_obj.EXEC_RETRIES_INTERVAL_SECONDS}S"
 
         # Build the Cylc platform.rc file for the respective
         # experiment.
@@ -242,8 +310,7 @@ class CylcBuilder:
         msg = f"Building Cylc experiment file {filename}."
         self.logger.info(msg=msg)
 
-        jinja2_interface.write_jinja2(
-            jinja2_file=filename, in_dict=instruct_dict)
+        jinja2_interface.write_jinja2(jinja2_file=filename, in_dict=instruct_dict)
 
         return platform_obj
 
@@ -269,7 +336,7 @@ class CylcBuilder:
 
         # Collect all task attributes defined for the respective Cylc
         # experiment and application; proceed accordingly.
-        tasks_dict = YAML().read_yaml(yaml_file=self.yaml_obj.CYLCtasks)
+        tasks_dict = YAML().read_yaml(yaml_file=self.yaml_obj.EXPTtasks)
 
         instruct_dict = {}
         for (key, values) in tasks_dict.items():
@@ -286,21 +353,22 @@ class CylcBuilder:
 
                     if platform_obj.SCHEDULER.lower() == "slurm":
                         if value == "cpus-per-task":
-                            instruct_dict[f"{key}_nthreads"] = \
-                                tasks_dict[key][value]
+                            instruct_dict[f"{key}_nthreads"] = tasks_dict[key][value]
 
                     file.write(f"--{value} = {tasks_dict[key][value]}\n")
 
         # Write the Jinja2-formatted file containing the Cylc
         # experiment tasks attributes.
-        jinja2_interface.write_jinja2(jinja2_file=os.path.join(self.path, "tasks.rc"),
-                                      in_dict=instruct_dict)
+        jinja2_interface.write_jinja2(
+            jinja2_file=os.path.join(self.path, "tasks.rc"), in_dict=instruct_dict
+        )
 
     def configure_cylc(self) -> str:
-        """Description
+        """
+        Description
         -----------
 
-        This method builds the respective Cylc experiment
+        This method deals with the respective Cylc experiment
         configuration files.
 
         Returns
@@ -308,33 +376,94 @@ class CylcBuilder:
 
         suite_path: str
 
-            A Python string specifying the path to the experiment path
-            for the user-specified UFS-RNR Cylc suite.
+            A Python string specifying the path to the Cylc engine
+            suite.
+
+        Raises
+        ------
+
+        CylcEngineError:
+
+            * raised if a Cylc engine Jinja-2 formatted file does not
+              exist.
 
         """
 
-        configure_file_dict = {self.yaml_obj: None}
+        # Define the Python dictionary containing the experiment
+        # attributes (keys) and the Cylc engine Jinja2-formatted files
+        # (values).
+        configure_file_dict = {
+            "EXPTenvironment": "environment.rc",
+            "EXPTgraph": "graph.rc",
+            "EXPTruntime": "runtime.rc",
+            "EXPTsuite": "suite.rc",
+        }
 
-        # NEED TO ADD AN APPLICATION HOME PATH (i.e., AN APPLICATION
-        # SUCH AS UFS-RNR) THAT CONTAINS THE CYLC ENGINE ATTRIBUTES.
+        # Configure the Cylc application using the respective
+        # experiment configuration attributes; proceed accordingly.
+        for (expt_file, _) in configure_file_dict.items():
+            srcfile = parser_interface.object_getattr(
+                object_in=self.yaml_obj, key=expt_file, force=True
+            )
+            dstfile = os.path.join(
+                self.path,
+                parser_interface.dict_key_value(
+                    dict_in=configure_file_dict, key=expt_file, no_split=True
+                ),
+            )
 
-        quit()
+            if srcfile is None:
 
-        expt_path = os.path.join(self.WORKrnr, self.experiment_name)
-        configure_file_list = ['environment.rc', 'runtime.rc', 'suite.rc']
-        for configure_file in configure_file_list:
-            srcfile = os.path.join(self.HOMErnr, 'cylc', 'parm',
-                                   configure_file)
-            dstfile = os.path.join(expt_path, 'cylc', configure_file)
-            shutil.copy(srcfile, dstfile)
-        srcfile = self.CYLCrnr
-        dstfile = os.path.join(expt_path, 'cylc', 'graph.rc')
-        shutil.copy(srcfile, dstfile)
-        suite_path = os.path.join(expt_path, 'cylc', 'suite.rc')
+                fileio_interface.touch(dstfile)
+
+            if srcfile is not None:
+                exist = fileio_interface.fileexist(path=srcfile)
+                if not exist:
+                    msg = f"The filepath {expt_file} does not exist. Aborting!!!"
+                    __error__(msg=msg)
+
+                fileio_interface.copyfile(srcfile=srcfile, dstfile=dstfile)
+
+        # Append the Cylc engine environment variable file with the
+        # experiment application environment variables; proceed
+        # accordingly.
+        if fileio_interface.fileexist(path=self.yaml_obj.EXPTenv):
+
+            yaml_dict = YAML().read_yaml(yaml_file=self.yaml_obj.EXPTenv)
+
+            # Define the environment variable file for the Cylc
+            # application.
+            exptenv_file = os.path.join(
+                self.path,
+                parser_interface.dict_key_value(
+                    dict_in=configure_file_dict, key="EXPTenvironment", no_split=True
+                ),
+            )
+
+            # Append the experiment application environment variables
+            # to Cylc engine environment variable file.
+            with open(exptenv_file, "a", encoding="utf-8") as envfile:
+                for (envvar, _) in yaml_dict.items():
+
+                    value = parser_interface.dict_key_value(
+                        dict_in=yaml_dict, key=envvar, no_split=True
+                    )
+
+                    msg = (
+                        f"Updating file {exptenv_file} with experiment variable "
+                        f"{envvar} = {value}."
+                    )
+                    self.logger.info(msg=msg)
+
+                    envfile.write(f"\n{envvar} = {value}")
+
+        # Define the Jinja2-formatted Cylc engine workflow suite.
+        suite_path = os.path.join(self.path, "suite.rc")
+
         return suite_path
 
-    def run(self):
-        """ 
+    def run(self) -> str:
+        """
         Description
         -----------
 
@@ -367,7 +496,8 @@ class CylcBuilder:
         # Collect and define the the Cylc experiment task attributes.
         self.build_tasks_rc(platform_obj=platform_obj)
 
-        quit()
+        # Collect the experiment application configuration files and
+        # configure the Cylc experiment application accordingly.
+        suite_path = self.configure_cylc()
 
-        #suite_path = self.configure_cylc()
-        # return suite_path
+        return suite_path

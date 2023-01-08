@@ -1,0 +1,4 @@
+CYCLE = $(cylc cyclepoint --template=%Y%m%d%H%M%S)
+EXPThomepath = {{ EXPThomepath }}
+CYLCemail = {{ CYLCemail }}
+CYLCmailevents = {{ CYLCmailevents }}

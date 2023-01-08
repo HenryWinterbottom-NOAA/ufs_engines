@@ -56,9 +56,7 @@ from utils.error_interface import Error
 # ----
 
 # Define all available attributes.
-__all__ = [
-    "CylcEngineError"
-]
+__all__ = ["CylcEngineError"]
 
 # ----
 

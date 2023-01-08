@@ -77,14 +77,14 @@ import os
 from typing import Tuple
 
 from confs.yaml_interface import YAML
-from cylc.exceptions import CylcEngineError
 from execute import subprocess_interface
 from schema import Optional, Or
-from tools import parser_interface
-from tools import system_interface
+from tools import parser_interface, system_interface
 from utils.error_interface import msg_except_handle
 from utils.logger_interface import Logger
 from utils.schema_interface import validate_opts
+
+from cylc.exceptions import CylcEngineError
 
 # ----
 
@@ -126,8 +126,7 @@ class CylcEngine:
         """
 
         # Define the base-class attributes.
-        self.yaml_obj = YAML().read_yaml(yaml_file=yaml_file,
-                                         return_obj=True)
+        self.yaml_obj = YAML().read_yaml(yaml_file=yaml_file, return_obj=True)
         self.logger = Logger()
         self.get_cylc_app()
 
@@ -136,37 +135,6 @@ class CylcEngine:
         if cls_schema is not None:
             cls_opts = parser_interface.object_todict(object_in=self.yaml_obj)
             validate_opts(cls_schema=cls_schema, cls_opts=cls_opts)
-
-    def build_cylc(self):
-        """
-        Description
-        -----------
-
-        This method builds the respective experiment Cylc suite
-        components and defines the base-class attribute suite_path
-        which is the filename path for the respective experiment Cylc
-        suite.rc (e.g., Cylc suite) file.
-
-        Raises
-        ------
-
-        CylcRunError:
-
-            * raised if an exception is encountered while building the
-              respective experiment Cylc suite components.
-
-        """
-
-        # Build the experiment Cylc workflow orchestrator suite
-        # components; proceed accordingly.
-        try:
-            builder = suite_interface.CylcBuilder(yaml_obj=self.yaml_obj)
-            self.suite_path = builder.run()
-        except Exception as error:
-            msg = ('Building the respective experiment Cylc suite '
-                   f'components failed with error {error}. Aborting!!!'
-                   )
-            error(msg=msg)
 
     def get_cylc_app(self) -> None:
         """
@@ -193,16 +161,17 @@ class CylcEngine:
         self.cylc_app = system_interface.get_app_path(app="cylc")
 
         if self.cylc_app is None:
-            msg = ('The cylc executable could not be determined for your system; '
-                   'please check that the appropriate modules are loaded. '
-                   'Aborting!!!')
+            msg = (
+                "The cylc executable could not be determined for your system; "
+                "please check that the appropriate modules are loaded. "
+                "Aborting!!!"
+            )
             error(msg=msg)
 
-        msg = (f'The Cylc application path is {self.cylc_app}.')
+        msg = f"The Cylc application path is {self.cylc_app}."
         self.logger.info(msg=msg)
 
-    def run_task(self, cmd: list, errlog: str = None,
-                 outlog: str = None) -> int:
+    def run_task(self, cmd: list, errlog: str = None, outlog: str = None) -> int:
         """
         Description
         -----------
@@ -244,10 +213,11 @@ class CylcEngine:
 
         # Launch the command(s) specified in the commands list.
         returncode = subprocess_interface.run(
-            exe=self.cylc_app, job_type="app", args=cmd, errlog=errlog,
-            outlog=outlog)
+            exe=self.cylc_app, job_type="app", args=cmd, errlog=errlog, outlog=outlog
+        )
 
         return returncode
+
 
 # ----
 

@@ -1,0 +1,12 @@
+[[hello_world]]
+	script = sh ${EXPThomepath}/demo/JUFS_HELLO_WORLD
+	[[[job]]]
+	        batch system = {{ SCHEDULER }}
+	[[[directives]]]
+		{% include 'directives/hello_world.task' %}
+	[[[environment]]]
+		NTASKS = {{ hello_world_ntasks }}
+	[[[events]]]
+		mail from = "{{ CYLCemail }}"
+		mail to = "{{ CYLCemail }}"
+		mail events = {{ CYLCmailevents }}

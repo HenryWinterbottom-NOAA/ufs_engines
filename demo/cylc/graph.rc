@@ -10,5 +10,6 @@
    [[[{{ CYCLE_INTERVAL }}]]]
            graph = """
                  hello_world[-{{CYCLE_INTERVAL}}]: succeed => hello_world
+		 """		
 
 	   
