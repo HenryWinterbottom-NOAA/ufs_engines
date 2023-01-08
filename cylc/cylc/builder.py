@@ -326,17 +326,18 @@ class CylcBuilder:
 
         # Configure the Cylc application using the respective
         # experiment configuration attributes; proceed accordingly.
-        for (expt_file, cylc_file) in configure_file_dict.items():
+        for (expt_file, _) in configure_file_dict.items():
             srcfile = expt_file
-            dstfile = os.path.join(self.path, cylc_file)
+            dstfile = os.path.join(self.path, parser_interface.dict_key_value(
+                dict_in=configure_file_dict, key=expt_file, no_split=True)
 
-            msg = f"Copying file {srcfile} to {dstfile}."
+            msg=f"Copying file {srcfile} to {dstfile}."
             self.logger.info(msg=msg)
-            fileio_interface.copy(srcfile=srcfile, dstfile=dstfile)
+            fileio_interface.copyfile(srcfile=srcfile, dstfile=dstfile)
 
         quit()
 
-        configure_file_dict = {self.yaml_obj: None}
+        configure_file_dict={self.yaml_obj: None}
 
         # NEED TO ADD AN APPLICATION HOME PATH (i.e., AN APPLICATION
         # SUCH AS UFS-RNR) THAT CONTAINS THE CYLC ENGINE ATTRIBUTES.
@@ -350,8 +351,8 @@ class CylcBuilder:
                                    configure_file)
             dstfile = os.path.join(expt_path, 'cylc', configure_file)
             shutil.copy(srcfile, dstfile)
-        srcfile=self.CYLCrnr
-        dstfile=os.path.join(expt_path, 'cylc', 'graph.rc')
+        srcfile = self.CYLCrnr
+        dstfile = os.path.join(expt_path, 'cylc', 'graph.rc')
         shutil.copy(srcfile, dstfile)
         suite_path=os.path.join(expt_path, 'cylc', 'suite.rc')
         return suite_path
