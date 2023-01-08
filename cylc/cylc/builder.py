@@ -342,26 +342,9 @@ class CylcBuilder:
 
                 fileio_interface.copyfile(srcfile=srcfile, dstfile=dstfile)
 
-        quit()
+        # Define the Jinja2-formatted Cylc engine workflow suite.
+        suite_path = os.path.join(self.path, 'suite.rc')
 
-        configure_file_dict = {self.yaml_obj: None}
-
-        # NEED TO ADD AN APPLICATION HOME PATH (i.e., AN APPLICATION
-        # SUCH AS UFS-RNR) THAT CONTAINS THE CYLC ENGINE ATTRIBUTES.
-
-        quit()
-
-        expt_path = os.path.join(self.WORKrnr, self.experiment_name)
-        configure_file_list = ['environment.rc', 'runtime.rc', 'suite.rc']
-        for configure_file in configure_file_list:
-            srcfile = os.path.join(self.HOMErnr, 'cylc', 'parm',
-                                   configure_file)
-            dstfile = os.path.join(expt_path, 'cylc', configure_file)
-            shutil.copy(srcfile, dstfile)
-        srcfile = self.CYLCrnr
-        dstfile = os.path.join(expt_path, 'cylc', 'graph.rc')
-        shutil.copy(srcfile, dstfile)
-        suite_path = os.path.join(expt_path, 'cylc', 'suite.rc')
         return suite_path
 
     def run(self):
@@ -402,7 +385,4 @@ class CylcBuilder:
         # configure the Cylc experiment application accordingly.
         suite_path = self.configure_cylc()
 
-        quit()
-
-        #suite_path = self.configure_cylc()
-        # return suite_path
+        return suite_path
