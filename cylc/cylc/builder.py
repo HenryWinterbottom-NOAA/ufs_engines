@@ -330,6 +330,8 @@ class CylcBuilder:
             srcfile = parser_interface.object_getattr(
                 object_in=self.yaml_obj, key=expt_file)
 
+            print(srcfile)
+
             exist = fileio_interface.fileexist(path=srcfile)
             if not exist:
                 msg = f"The filepath {expt_file} does not exist. Aborting!!!"
