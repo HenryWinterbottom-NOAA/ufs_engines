@@ -331,13 +331,13 @@ class CylcBuilder:
             dstfile = os.path.join(self.path, parser_interface.dict_key_value(
                 dict_in=configure_file_dict, key=expt_file, no_split=True))
 
-            msg = f"Copying file {srcfile} to {dstfile}."
-            self.logger.info(msg=msg)
+#            msg = f"Copying file {srcfile} to {dstfile}."
+#            self.logger.info(msg=msg)
             fileio_interface.copyfile(srcfile=srcfile, dstfile=dstfile)
 
         quit()
 
-        configure_file_dict={self.yaml_obj: None}
+        configure_file_dict = {self.yaml_obj: None}
 
         # NEED TO ADD AN APPLICATION HOME PATH (i.e., AN APPLICATION
         # SUCH AS UFS-RNR) THAT CONTAINS THE CYLC ENGINE ATTRIBUTES.
