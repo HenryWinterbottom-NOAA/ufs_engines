@@ -329,9 +329,9 @@ class CylcBuilder:
         for (expt_file, _) in configure_file_dict.items():
             srcfile = expt_file
             dstfile = os.path.join(self.path, parser_interface.dict_key_value(
-                dict_in=configure_file_dict, key=expt_file, no_split=True)
+                dict_in=configure_file_dict, key=expt_file, no_split=True))
 
-            msg=f"Copying file {srcfile} to {dstfile}."
+            msg = f"Copying file {srcfile} to {dstfile}."
             self.logger.info(msg=msg)
             fileio_interface.copyfile(srcfile=srcfile, dstfile=dstfile)
 
