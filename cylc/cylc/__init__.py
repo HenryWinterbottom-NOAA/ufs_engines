@@ -126,8 +126,7 @@ class CylcEngine:
         """
 
         # Define the base-class attributes.
-        self.yaml_obj = YAML().read_yaml(yaml_file=yaml_file,
-                                         return_obj=True)
+        self.yaml_obj = YAML().read_yaml(yaml_file=yaml_file, return_obj=True)
         self.logger = Logger()
         self.get_cylc_app()
 
@@ -162,16 +161,17 @@ class CylcEngine:
         self.cylc_app = system_interface.get_app_path(app="cylc")
 
         if self.cylc_app is None:
-            msg = ('The cylc executable could not be determined for your system; '
-                   'please check that the appropriate modules are loaded. '
-                   'Aborting!!!')
+            msg = (
+                "The cylc executable could not be determined for your system; "
+                "please check that the appropriate modules are loaded. "
+                "Aborting!!!"
+            )
             error(msg=msg)
 
-        msg = (f'The Cylc application path is {self.cylc_app}.')
+        msg = f"The Cylc application path is {self.cylc_app}."
         self.logger.info(msg=msg)
 
-    def run_task(self, cmd: list, errlog: str = None,
-                 outlog: str = None) -> int:
+    def run_task(self, cmd: list, errlog: str = None, outlog: str = None) -> int:
         """
         Description
         -----------
@@ -213,10 +213,11 @@ class CylcEngine:
 
         # Launch the command(s) specified in the commands list.
         returncode = subprocess_interface.run(
-            exe=self.cylc_app, job_type="app", args=cmd, errlog=errlog,
-            outlog=outlog)
+            exe=self.cylc_app, job_type="app", args=cmd, errlog=errlog, outlog=outlog
+        )
 
         return returncode
+
 
 # ----
 
