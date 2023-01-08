@@ -140,8 +140,6 @@ class CylcLauncher(CylcEngine):
                )
         self.builder = CylcBuilder(yaml_obj=self.yaml_obj, path=self.run_dir)
 
-        self.suite_path = os.path.join(self.run_dir, 'cylc', 'suite.rc')
-
     def launch_suite(self) -> None:
         """
         Description
@@ -252,7 +250,7 @@ class CylcLauncher(CylcEngine):
         """
 
         # Build the Cylc experiment suite.
-        self.builder.run()
+        self.suite_path = self.builder.run()
 
         # Register the Cylc experiment suite.
         self.register_suite()
