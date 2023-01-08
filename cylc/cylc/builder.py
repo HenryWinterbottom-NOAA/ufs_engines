@@ -270,7 +270,7 @@ class CylcBuilder:
 
         # Collect all task attributes defined for the respective Cylc
         # experiment and application; proceed accordingly.
-        tasks_dict = YAML().read_yaml(yaml_file=self.yaml_obj.CYLCtasks)
+        tasks_dict = YAML().read_yaml(yaml_file=self.yaml_obj.EXPTtasks)
 
         instruct_dict = {}
         for (key, values) in tasks_dict.items():
