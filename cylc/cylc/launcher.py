@@ -126,18 +126,20 @@ class CylcLauncher(CylcEngine):
             Optional("CYLCemail"): str,
             Optional("CYLCmailevents"): str,
             Optional("EXPTenv"): str,
-            Optional("EXPTenvironment"): str
+            Optional("EXPTenvironment"): str,
         }
 
         super().__init__(yaml_file=yaml_file, cls_schema=cls_schema)
 
         # Build the working directory for the respective Cylc
         # application/experiment.
-        self.run_dir = os.path.join(self.yaml_obj.CYLCworkpath,
-                                    self.yaml_obj.CYLCexptname, 'cylc')
-        msg = ("The Cylc application/experiment will be executed from path "
-               f"{self.run_dir}."
-               )
+        self.run_dir = os.path.join(
+            self.yaml_obj.CYLCworkpath, self.yaml_obj.CYLCexptname, "cylc"
+        )
+        msg = (
+            "The Cylc application/experiment will be executed from path "
+            f"{self.run_dir}."
+        )
         self.logger.info(msg=msg)
 
         self.builder = CylcBuilder(yaml_obj=self.yaml_obj, path=self.run_dir)
@@ -232,7 +234,7 @@ class CylcLauncher(CylcEngine):
             self.yaml_obj.CYLCexptname,
             suite_path,
             "--run-dir",
-            self.run_dir
+            self.run_dir,
         ]
 
         # Register the Cylc application suite; proceed accordingly.
