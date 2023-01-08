@@ -348,30 +348,32 @@ class CylcBuilder:
         # Append the Cylc engine environment variable file with the
         # experiment application environment variables; proceed
         # accordingly.
-        print(self.yaml_obj.EXPTenv)
-        quit()
-
         if fileio_interface.fileexist(path=self.yaml_obj.EXPTenv):
 
             yaml_dict = YAML().read_yaml(yaml_file=self.yaml_obj.EXPTenv)
 
+            # Define the environment variable file for the Cylc
+            # application.
+            exptenv_file = os.path.join(self.path, parser_interface.dict_key_value(
+                dict_in=configure_file_dict, key="EXPTenvironment", no_split=True)
+
             # Append the experiment application environment variables
             # to Cylc engine environment variable file.
-            with open(self.yaml_obj.EXPTenvironment, "a", encoding="utf-8") as envfile:
+            with open(exptenv_file, "a", encoding="utf-8") as envfile:
                 for (envvar, _) in yaml_dict.items():
 
-                    value = parser_interface.dict_key_value(dict_in=yaml_dict,
+                    value=parser_interface.dict_key_value(dict_in=yaml_dict,
                                                             key=envvar, no_split=True)
 
                     envfile.write(f"{envvar} = {value}\n")
 
         # Define the Jinja2-formatted Cylc engine workflow suite.
-        suite_path = os.path.join(self.path, 'suite.rc')
+        suite_path=os.path.join(self.path, 'suite.rc')
 
         return suite_path
 
     def run(self):
-        """ 
+        """
         Description
         -----------
 
@@ -399,13 +401,13 @@ class CylcBuilder:
         self.build_expt_rc()
 
         # Build the Cylc experiment suite platform.rc file.
-        platform_obj = self.build_platform_rc()
+        platform_obj=self.build_platform_rc()
 
         # Collect and define the the Cylc experiment task attributes.
         self.build_tasks_rc(platform_obj=platform_obj)
 
         # Collect the experiment application configuration files and
         # configure the Cylc experiment application accordingly.
-        suite_path = self.configure_cylc()
+        suite_path=self.configure_cylc()
 
         return suite_path
