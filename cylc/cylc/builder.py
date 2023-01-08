@@ -298,10 +298,11 @@ class CylcBuilder:
                                       in_dict=instruct_dict)
 
     def configure_cylc(self) -> str:
-        """Description
+        """
+        Description
         -----------
 
-        This method builds the respective Cylc experiment
+        This method deals with the respective Cylc experiment
         configuration files.
 
         Returns
@@ -309,8 +310,8 @@ class CylcBuilder:
 
         suite_path: str
 
-            A Python string specifying the path to the experiment path
-            for the user-specified UFS-RNR Cylc suite.
+            A Python string specifying the path to the Cylc engine
+            suite.
 
         """
 
@@ -343,6 +344,23 @@ class CylcBuilder:
                     __error__(msg=msg)
 
                 fileio_interface.copyfile(srcfile=srcfile, dstfile=dstfile)
+
+        # Append the Cylc engine environment variable file with the
+        # experiment application environment variables; proceed
+        # accordingly.
+        if fileio_interface.fileexist(path=self.yaml_obj.EXPTenv):
+
+            yaml_dict = YAML().read_yaml(yaml_file=self.yaml_obj.EXPTenv)
+
+            # Append the experiment application environment variables
+            # to Cylc engine environment variable file.
+            with open(self.yaml_obj.EXPTenvironment, "a", encoding="utf-8") as envfile:
+                for (envvar, _) in yaml_dict.items():
+
+                    value = parser_interface.dict_key_value(dict_in=yaml_dict,
+                                                            key=envvar, no_split=True)
+
+                    envfile.write(f"{envvar} = {value}\n")
 
         # Define the Jinja2-formatted Cylc engine workflow suite.
         suite_path = os.path.join(self.path, 'suite.rc')
