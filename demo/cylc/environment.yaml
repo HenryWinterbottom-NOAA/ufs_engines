@@ -1,8 +1,6 @@
-#!Jinja2
-
 # =========================================================================
 
-# Jinja2: demo/cylc/graph.rc
+# YAML: demo/cylc/environment.yaml
 
 # Email: henry.winterbottom@noaa.gov
 
@@ -20,8 +18,11 @@
 # Description
 # -----------
 
-# This Jinja2-formatted file contains the Cylc application/experiment
-# workflow graph; this file is provided as an example.
+# This YAML-formatted file contains environment variables specific to
+# a specific Cylc engine application/experiment; the respective
+# environment variables will be appended to the Cylc engine
+# environment.rc Jinja2-formatted file; this file is provided as an
+# example.
 
 # Author
 # ------
@@ -37,20 +38,9 @@
 
 # ----
 
-[[dependencies]]
-
-   # Define the first cycle applications; this is often referred to as
-   # a "cold-start" application.
-   [[[R1]]]
-           graph = """
-	         hello_world
-		 """
-
-   # Define the subsequent cycle(s) applications; this is often
-   # referred to as a "cycling" or "warm-start" application.
-   [[[{{ CYCLE_INTERVAL }}]]]
-           graph = """
-                 hello_world[-{{CYCLE_INTERVAL}}]: succeed => hello_world
-		 """		
-
-	   
+# Define the Cylc engine application/experiment environment variables;
+# these variables will be appended to the Cylc engine environment.rc
+# Jinja2-formatted file.
+ENVVAR_ONE: 1
+ENVVAR_TWO: 2
+ENVVAR_THREE: 3

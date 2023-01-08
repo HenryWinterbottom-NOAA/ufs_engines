@@ -1,4 +1,45 @@
+!Jinja2
+
+# =========================================================================
+
+# Jinja2: demo/cylc/environment.rc
+
+# Email: henry.winterbottom@noaa.gov
+
+# This program is free software: you can redistribute it and/or modify
+# it under the terms of the respective public license published by the
+# Free Software Foundation and included with the repository within
+# which this application is contained.
+
+# This program is distributed in the hope that it will be useful, but
+# WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+
+# =========================================================================
+
+# Description
+# -----------
+
+# This Jinja2-formatted file contains default environment variables
+# for the respective Cylc application/experiment; this file is
+# provided as an example.
+
+# Author
+# ------
+# Henry R. Winterbottom
+
+# Date
+# ----
+# 08 January 2023
+
+# History
+# -------
+# 2023-01-08: Henry Winterbottom -- Original version.
+
+# ----
+
 CYCLE = $(cylc cyclepoint --template=%Y%m%d%H%M%S)
 EXPThomepath = {{ EXPThomepath }}
+EXPTworkpath = {{ EXPTworkpath }}
 CYLCemail = {{ CYLCemail }}
 CYLCmailevents = {{ CYLCmailevents }}
