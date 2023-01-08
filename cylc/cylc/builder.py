@@ -314,6 +314,28 @@ class CylcBuilder:
 
         """
 
+        # Define the Python dictionary containing the experiment
+        # attributes (keys) and the Cylc engine Jinja2-formatted files
+        # (values).
+        configure_file_dict = {
+            "EXPTenvironment": "environment.rc",
+            "EXPTgraph": "graph.rc",
+            "EXPTruntime": "runtime.rc",
+            "EXPTsuite": "suite.rc"
+        }
+
+        # Configure the Cylc application using the respective
+        # experiment configuration attributes; proceed accordingly.
+        for (expt_file, cylc_file) in configure_file_dict.keys():
+            srcfile = expt_file
+            dstfile = os.path.join(self.path, cylc_file)
+
+            msg = f"Copying file {srcfile} to {dstfile}."
+            self.logger.info(msg=msg)
+            fileio_interface.copy(srcfile=srcfile, dstfile=dstfile)
+
+        quit()
+
         configure_file_dict = {self.yaml_obj: None}
 
         # NEED TO ADD AN APPLICATION HOME PATH (i.e., AN APPLICATION
@@ -324,14 +346,14 @@ class CylcBuilder:
         expt_path = os.path.join(self.WORKrnr, self.experiment_name)
         configure_file_list = ['environment.rc', 'runtime.rc', 'suite.rc']
         for configure_file in configure_file_list:
-            srcfile = os.path.join(self.HOMErnr, 'cylc', 'parm',
+            srcfile=os.path.join(self.HOMErnr, 'cylc', 'parm',
                                    configure_file)
-            dstfile = os.path.join(expt_path, 'cylc', configure_file)
+            dstfile=os.path.join(expt_path, 'cylc', configure_file)
             shutil.copy(srcfile, dstfile)
-        srcfile = self.CYLCrnr
-        dstfile = os.path.join(expt_path, 'cylc', 'graph.rc')
+        srcfile=self.CYLCrnr
+        dstfile=os.path.join(expt_path, 'cylc', 'graph.rc')
         shutil.copy(srcfile, dstfile)
-        suite_path = os.path.join(expt_path, 'cylc', 'suite.rc')
+        suite_path=os.path.join(expt_path, 'cylc', 'suite.rc')
         return suite_path
 
     def run(self):
