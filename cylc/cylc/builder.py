@@ -348,6 +348,9 @@ class CylcBuilder:
         # Append the Cylc engine environment variable file with the
         # experiment application environment variables; proceed
         # accordingly.
+        print(self.yaml_obj.EXPTenv)
+        quit()
+
         if fileio_interface.fileexist(path=self.yaml_obj.EXPTenv):
 
             yaml_dict = YAML().read_yaml(yaml_file=self.yaml_obj.EXPTenv)
