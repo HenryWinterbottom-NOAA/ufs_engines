@@ -330,17 +330,17 @@ class CylcBuilder:
             srcfile = parser_interface.object_getattr(
                 object_in=self.yaml_obj, key=expt_file)
 
-            print(srcfile)
+            if srcfile is not None:
 
-            exist = fileio_interface.fileexist(path=srcfile)
-            if not exist:
-                msg = f"The filepath {expt_file} does not exist. Aborting!!!"
-                __error__(msg=msg)
+                exist = fileio_interface.fileexist(path=srcfile)
+                if not exist:
+                    msg = f"The filepath {expt_file} does not exist. Aborting!!!"
+                    __error__(msg=msg)
 
-            dstfile = os.path.join(self.path, parser_interface.dict_key_value(
-                dict_in=configure_file_dict, key=expt_file, no_split=True))
+                dstfile = os.path.join(self.path, parser_interface.dict_key_value(
+                    dict_in=configure_file_dict, key=expt_file, no_split=True))
 
-            fileio_interface.copyfile(srcfile=srcfile, dstfile=dstfile)
+                fileio_interface.copyfile(srcfile=srcfile, dstfile=dstfile)
 
         quit()
 
