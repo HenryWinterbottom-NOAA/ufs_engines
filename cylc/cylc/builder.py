@@ -328,7 +328,7 @@ class CylcBuilder:
         # experiment configuration attributes; proceed accordingly.
         for (expt_file, _) in configure_file_dict.items():
             srcfile = parser_interface.object_getattr(
-                object_in=self.yaml_obj, key=expt_file)
+                object_in=self.yaml_obj, key=expt_file, force=True)
 
             if srcfile is not None:
 
