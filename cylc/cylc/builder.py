@@ -408,10 +408,10 @@ class CylcBuilder:
         # Build the Cylc experiment suite experiment.rc file.
         self.build_expt_rc()
 
-        quit()
-
         # Build the Cylc experiment suite platform.rc file.
         platform_obj = self.build_platform_rc()
+
+        quit()
 
         # Collect and define the the Cylc experiment task attributes.
         self.build_tasks_rc(platform_obj=platform_obj)
