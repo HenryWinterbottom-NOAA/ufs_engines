@@ -126,7 +126,7 @@ class CylcLauncher(CylcEngine):
             Optional("CYLCemail"): str,
             Optional("CYLCmailevents"): str,
             Optional("EXPTenv"): str,
-            Optional("EXPTenvironment"):, str
+            Optional("EXPTenvironment"): str
         }
 
         super().__init__(yaml_file=yaml_file, cls_schema=cls_schema)
