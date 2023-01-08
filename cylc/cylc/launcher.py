@@ -27,7 +27,7 @@ Description
 -----------
 
     This module contains the base-class object to register and launch
-    a Cylc workflow suite.
+    a Cylc engine workflow suite.
 
 Classes
 -------
@@ -35,8 +35,8 @@ Classes
     CylcLauncher(yaml_obj, suite_path)
 
         This is the base-class object which registers and launches a
-        specified Cylc suite for the respective experiment; it is a
-        sub-class of CylcApplication.
+        specified Cylc engine suite for the respective experiment; it
+        is a sub-class of CylcApplication.
 
 Note(s)
 -------
@@ -72,11 +72,11 @@ __email__ = "henry.winterbottom@noaa.gov"
 
 import os
 
-from cylc import error as __error__
-from cylc import CylcEngine
-from cylc.builder import CylcBuilder
-from tools import fileio_interface
 from schema import Optional
+
+from cylc import CylcEngine
+from cylc import error as __error__
+from cylc.builder import CylcBuilder
 
 # ----
 
@@ -138,9 +138,11 @@ class CylcLauncher(CylcEngine):
         msg = ("The Cylc application/experiment will be executed from path "
                f"{self.run_dir}."
                )
+        self.logger.info(msg=msg)
+
         self.builder = CylcBuilder(yaml_obj=self.yaml_obj, path=self.run_dir)
 
-    def launch_suite(self) -> None:
+    def launch_suite(self, suite_path: str) -> None:
         """
         Description
         -----------
@@ -149,6 +151,14 @@ class CylcLauncher(CylcEngine):
         standard out(stdout) and error(stderr) are written to the
         respective experiment cylc sub-directory as cylc_run.out and
         cylc_run.err, respectively.
+
+        Parameters
+        ----------
+
+        suite_path: str
+
+            A Python string specifying the path to the Cylc engine
+            suite.
 
         Raises
         ------
@@ -172,19 +182,19 @@ class CylcLauncher(CylcEngine):
         returncode = self.run_task(cmd=cmd, errlog=errlog, outlog=outlog)
         if returncode == 0:
             msg = (
-                f"Cylc workflow suite {self.suite_path} launched as "
+                f"Cylc workflow suite {suite_path} launched as "
                 f"{self.yaml_obj.CYLCexptname}."
             )
             self.logger.info(msg=msg)
 
         if returncode != 0:
             msg = (
-                f"Launching Cylc workflow suite {self.suite_path} "
+                f"Launching Cylc workflow suite {suite_path} "
                 f"failed! Please refer to {errlog} for more information."
             )
             __error__(msg=msg)
 
-    def register_suite(self) -> None:
+    def register_suite(self, suite_path: str) -> None:
         """
         Description
         -----------
@@ -193,6 +203,14 @@ class CylcLauncher(CylcEngine):
         out (stdout) and error (stderr) are written to the respective
         experiment cylc sub-directory as cylc_register.out and
         cylc_register.err, respectively.
+
+        Parameters
+        ----------
+
+        suite_path: str
+
+            A Python string specifying the path to the Cylc engine
+            suite.
 
         Raises
         ------
@@ -212,7 +230,7 @@ class CylcLauncher(CylcEngine):
         cmd = [
             "register",
             self.yaml_obj.CYLCexptname,
-            self.suite_path,
+            suite_path,
             "--run-dir",
             self.run_dir
         ]
@@ -221,14 +239,14 @@ class CylcLauncher(CylcEngine):
         returncode = self.run_task(cmd=cmd, errlog=errlog, outlog=outlog)
         if returncode == 0:
             msg = (
-                f"Cylc workflow suite {self.suite_path} registered "
+                f"Cylc workflow suite {suite_path} registered "
                 f"to {self.yaml_obj.CYLCexptname}."
             )
             self.logger.info(msg=msg)
 
         if returncode != 0:
             msg = (
-                f"Registering Cylc workflow suite {self.suite_path} "
+                f"Registering Cylc workflow suite {suite_path} "
                 f"failed! Please refer to {errlog} for more information. "
                 "Aborting!!!"
             )
@@ -250,10 +268,10 @@ class CylcLauncher(CylcEngine):
         """
 
         # Build the Cylc experiment suite.
-        self.suite_path = self.builder.run()
+        suite_path = self.builder.run()
 
         # Register the Cylc experiment suite.
-        self.register_suite()
+        self.register_suite(suite_path=suite_path)
 
         # Launch the Cylc experiment suite.
-        self.launch_suite()
+        self.launch_suite(suite_path=suite_path)
