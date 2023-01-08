@@ -38,7 +38,7 @@ EXPThomepath: !ENV ${PWD}/../
 
 EXPTruntime: !ENV ${PWD}/../demo/cylc/runtime.rc
 
-EXPTenvironment: !ENV ${PWD}/../demo/cylc/environment.rc
+#EXPTenvironment: !ENV ${PWD}/../demo/cylc/environment.rc
 
 EXPTgraph: !ENV ${PWD}/../demo/cylc/graph.rc
 
