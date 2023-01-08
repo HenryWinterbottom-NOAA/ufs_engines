@@ -345,6 +345,8 @@ class CylcBuilder:
 
                 fileio_interface.copyfile(srcfile=srcfile, dstfile=dstfile)
 
+        quit()
+
         # Append the Cylc engine environment variable file with the
         # experiment application environment variables; proceed
         # accordingly.
