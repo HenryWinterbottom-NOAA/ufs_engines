@@ -355,14 +355,14 @@ class CylcBuilder:
             # Define the environment variable file for the Cylc
             # application.
             exptenv_file = os.path.join(self.path, parser_interface.dict_key_value(
-                dict_in=configure_file_dict, key="EXPTenvironment", no_split=True)
+                dict_in=configure_file_dict, key="EXPTenvironment", no_split=True))
 
             # Append the experiment application environment variables
             # to Cylc engine environment variable file.
             with open(exptenv_file, "a", encoding="utf-8") as envfile:
                 for (envvar, _) in yaml_dict.items():
 
-                    value=parser_interface.dict_key_value(dict_in=yaml_dict,
+                    value = parser_interface.dict_key_value(dict_in=yaml_dict,
                                                             key=envvar, no_split=True)
 
                     envfile.write(f"{envvar} = {value}\n")
