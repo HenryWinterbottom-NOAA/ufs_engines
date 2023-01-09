@@ -193,7 +193,7 @@ class CylcResetTasks(CylcEngine):
                 force=True, no_split=True)
             if depends_task is not None:
 
-                for task in depends_task:
+                for task in depends_task.split():
                     cmd.append(task)
 
         print(cmd)
