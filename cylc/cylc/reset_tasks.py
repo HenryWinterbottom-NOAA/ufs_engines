@@ -184,7 +184,7 @@ class CylcResetTasks(CylcEngine):
             msg = (
                 f"The resetting of experiment {self.yaml_obj.CYLCexptname} "
                 "task(s) {0} was successful.".format(
-                    ", ".join(self.options_obj.task.split(","))
+                    ", ".join(self.options_obj.task.split(",")))
             )
             self.logger.info(msg=msg)
 
