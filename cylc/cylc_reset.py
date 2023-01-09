@@ -71,7 +71,7 @@ def main() -> None:
     options_obj = Arguments().run(eval_schema=True, cls_schema=cls_schema)
 
     # Launch the task.
-    task = CylcResetTasks(options_obj)
+    task = CylcResetTasks(options_obj=options_obj)
     task.run()
 
     stop_time = time.time()
