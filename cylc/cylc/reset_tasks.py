@@ -199,6 +199,7 @@ class CylcResetTasks(CylcEngine):
                 force=True, no_split=True)
             if depends_task is not None:
 
+                # Update the subprocess command string.
                 for task in depends_task.split(","):
                     cmd.append(f"{task}.{self.cycle}".strip())
 
