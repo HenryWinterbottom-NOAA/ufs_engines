@@ -134,11 +134,6 @@ class CylcResetTasks(CylcEngine):
         reset_dict = parser_interface.object_todict(
             object_in=options_obj)
 
-        print(reset_dict)
-        print(reset_cls_schema)
-
-        quit()
-
         schema_interface.validate_opts(
             cls_schema=reset_cls_schema, cls_opts=reset_dict)
 
