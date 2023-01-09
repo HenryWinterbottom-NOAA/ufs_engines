@@ -5,7 +5,7 @@ workflow application. The example corresponds to a HELLO WORLD
 application and may be used to construct more complicated Cylc engine
 application workflows.
 
-## Configuration Files
+## HELLO WORLD Demo Configuration Files
 
 <div align="center">
 
