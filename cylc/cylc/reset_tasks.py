@@ -72,7 +72,7 @@ __email__ = "henry.winterbottom@noaa.gov"
 
 import os
 
-from schema import Optional
+from schema import Optional, Or
 
 from cylc import CylcEngine
 from cylc.launcher import CylcLauncher
@@ -124,7 +124,7 @@ class CylcResetTasks(CylcEngine):
                          cls_schema=launcher_cls_schema
                          )
 
-        reset_cls_schema = {'cycle': str,
+        reset_cls_schema = {'cycle': Or(str, int),
                             'status': str,
                             'task': str,
                             'yaml_file': str,
