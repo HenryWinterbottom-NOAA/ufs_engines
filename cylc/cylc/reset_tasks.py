@@ -200,7 +200,7 @@ class CylcResetTasks(CylcEngine):
             if depends_task is not None:
 
                 for task in depends_task.split(","):
-                    cmd.append(f"{task}.{self.cycle}")
+                    cmd.append(f"{task}.{self.cycle}".strip())
 
         print(cmd)
         quit()
