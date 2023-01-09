@@ -114,13 +114,10 @@ class CylcResetTasks(CylcEngine):
 
         """
 
-        cls_schema = CylcLauncher(yaml_file=options_obj.yaml_file).cls_schema
-
-        print(cls_schema)
-
-        quit()
-
         # Define the base-class attributes.
+        launcher_cls_schema = CylcLauncher(
+            yaml_file=options_obj.yaml_file).cls_schema
+
         cls_schema = {'cycle': str,
                       'status': str,
                       'task': str,
@@ -128,7 +125,12 @@ class CylcResetTasks(CylcEngine):
                       Optional('depends'): str
                       }
 
-        super().__init__(yaml_obj=yaml_obj)
+        super().__init__(yaml_file=options_obj.yaml_file,
+                         cls_schema=self.cls_schema
+                         )
+
+        quit()
+
         self.get_cylc_app()
         self.expt_obj = expt_obj
 
