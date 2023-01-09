@@ -117,10 +117,11 @@ class CylcResetTasks(CylcEngine):
         """
 
         # Define the base-class attributes.
+        self.options_obj = options_obj
         launcher_cls_schema = CylcLauncher(
             yaml_file=options_obj.yaml_file).cls_schema
 
-        super().__init__(yaml_file=options_obj.yaml_file,
+        super().__init__(yaml_file=self.options_obj.yaml_file,
                          cls_schema=launcher_cls_schema
                          )
 
@@ -134,7 +135,7 @@ class CylcResetTasks(CylcEngine):
                             }
 
         reset_dict = parser_interface.object_todict(
-            object_in=options_obj)
+            object_in=self.options_obj)
 
         schema_interface.validate_opts(
             cls_schema=reset_cls_schema, cls_opts=reset_dict)
@@ -163,14 +164,14 @@ class CylcResetTasks(CylcEngine):
         # Define the file paths for the standard output and standard
         # error.
         errlog = os.path.join(
-            self.run_dir, f"cylc_reset.{self.expt_obj.cycle}.err")
+            self.run_dir, f"cylc_reset.{self.options_obj.cycle}.err")
         outlog = os.path.join(
-            self.run_dir, f"cylc_reset.{self.expt_obj.cycle}.out")
+            self.run_dir, f"cylc_reset.{self.options_obj.cycle}.out")
 
         # Define the subprocess command string.
         cmd = [
             "reset",
-            f"--state={self.expt_obj.status}",
+            f"--state={self.options_obj.status}",
             self.yaml_obj.experiment_name,
         ]
 
