@@ -74,6 +74,7 @@ import os
 
 from schema import Optional, Or
 
+from confs.yaml_interface import YAML
 from cylc import CylcEngine
 from cylc.launcher import CylcLauncher
 from tools import parser_interface
@@ -140,9 +141,6 @@ class CylcResetTasks(CylcEngine):
         schema_interface.validate_opts(
             cls_schema=reset_cls_schema, cls_opts=reset_dict)
 
-        print(self.options_obj.depends)
-        quit()
-
         # Define the working directory for the respective Cylc
         # application/experiment.
         self.run_dir = os.path.join(
@@ -178,8 +176,28 @@ class CylcResetTasks(CylcEngine):
             self.yaml_obj.CYLCexptname,
         ]
 
-        for task in self.options_obj.task.split(","):
+        for task in self.options_obj.task.split():
             cmd.append(task)
+
+        # Determine whether down-stream (i.e., dependent) tasks have
+        # been defined; proceed accordingly.
+        depends_yaml = parser_interface.object_getattr(
+            object_in=self.options_obj, key="depends", force=True)
+        if depends_yaml is not None:
+
+            # Parse the YAML-formatted file containing the task
+            # dependencies.
+            depends_dict = YAML().read_yaml(yaml_file=depends_yaml)
+
+            # Check for the respective task attributes within the
+            # YAML-formatted file; proceed accordingly.
+            depends_task = parser_interface.dict_key_value(
+                dict_in=depends_dict, key=self.options_obj.task.split(),
+                force=True, no_split=True)
+            if depends_task is not None:
+
+                for task in depends_task:
+                    cmd.append(task)
 
         # Run the Cylc application suite; proceed accordingly.
         returncode = self.run_task(cmd=cmd, errlog=errlog, outlog=outlog)
@@ -187,7 +205,7 @@ class CylcResetTasks(CylcEngine):
             msg = (
                 f"The resetting of experiment {self.yaml_obj.CYLCexptname} "
                 "task(s) {0} was successful.".format(
-                    ", ".join(self.options_obj.task.split(",")))
+                    ", ".join(self.options_obj.task.split()))
             )
             self.logger.info(msg=msg)
 
