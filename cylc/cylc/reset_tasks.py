@@ -76,6 +76,7 @@ from schema import Optional
 
 from cylc import CylcEngine
 from cylc.launcher import CylcLauncher
+from tools import parser_interface
 from utils import schema_interface
 
 # ----
