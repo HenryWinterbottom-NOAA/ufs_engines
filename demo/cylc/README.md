@@ -11,6 +11,6 @@ application workflows.
 
 | Configuration File | Description |
 | :-------------: | :-------------: |
-| [`environment.rc`](experiment.c) | TEST |
+| [`environment.rc`](experiment.rc) | <div align="left">This Jinja2-formatted file contains default environment variables for the respective Cylc application/experiment. </div> |
 
 </div>
