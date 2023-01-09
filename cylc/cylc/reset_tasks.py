@@ -172,7 +172,7 @@ class CylcResetTasks(CylcEngine):
         cmd = [
             "reset",
             f"--state={self.options_obj.status}",
-            self.yaml_obj.experiment_name,
+            self.yaml_obj.CYLCexptname,
         ]
 
         for task in self.expt_obj.tasks:
