@@ -124,6 +124,8 @@ class CylcResetTasks(CylcEngine):
                          cls_schema=launcher_cls_schema
                          )
 
+        # Define and valid the options for the Cylc task reset
+        # attributes.
         reset_cls_schema = {'cycle': Or(str, int),
                             'status': str,
                             'task': str,
@@ -137,10 +139,16 @@ class CylcResetTasks(CylcEngine):
         schema_interface.validate_opts(
             cls_schema=reset_cls_schema, cls_opts=reset_dict)
 
-        quit()
-
-        self.get_cylc_app()
-        self.expt_obj = expt_obj
+        # Define the working directory for the respective Cylc
+        # application/experiment.
+        self.run_dir = os.path.join(
+            self.yaml_obj.CYLCworkpath, self.yaml_obj.CYLCexptname, "cylc"
+        )
+        msg = (
+            "The Cylc application/experiment task status reset will be "
+            f"executed from path {self.run_dir}."
+        )
+        self.logger.info(msg=msg)
 
     def reset_suite(self) -> None:
         """
