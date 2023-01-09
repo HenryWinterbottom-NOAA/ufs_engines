@@ -26,6 +26,8 @@
 import os
 import time
 
+from schema import Optional, Or
+
 from cylc.reset_tasks import CylcResetTasks
 from utils.arguments_interface import Arguments
 from utils.logger_interface import Logger
@@ -54,7 +56,14 @@ def main() -> None:
     """
 
     # Define the schema attributes.
-    cls_schema = {"yaml_file": str}
+    cls_schema = {"cycle": Or(str, int),
+                  "task": str,
+                  "yaml_file": str,
+                  Optional("depends"): str
+                  }
+        "
+
+    }
 
     # Collect the command line arguments.
     script_name = os.path.basename(__file__)
