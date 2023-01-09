@@ -21,8 +21,15 @@
 # -----------
 
 # This Jinja2-formatted file contains the runtime instructions for all
-# applications available to a Cylc application/experiment; this file
-# is provided as an example.
+# applications available to a Cylc engine application/experiment; this
+# file is provided as an example.
+
+# Notes
+# -----
+
+# Cylc documentation concerning the construction of Cylc engine
+# application run-time task attributes can be found at
+# https://tinyurl.com/cylc-runtime.
 
 # Author
 # ------
@@ -38,7 +45,12 @@
 
 # ----
 
-# Run the HELLO WORLD application.
+# Run the HELLO WORLD application; the attribute NTASKS defines the
+# number of tasks (e.g., compute nodes/cores) to be used for a
+# specific application; this is specific to the UFS engines
+# applications and should not be changed; further, this environment
+# variable should be sourced by the respective application(s) within
+# the respective applications scripts/workflow.
 [[hello_world]]
 	script = sh ${EXPThomepath}/demo/JUFS_HELLO_WORLD
 	[[[job]]]

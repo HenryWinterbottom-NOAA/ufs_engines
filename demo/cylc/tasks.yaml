@@ -37,7 +37,7 @@
 
 # ----
 
-# Define the HELLO WORLD attributes.
+# Define the HELLO WORLD application attributes.
 hello_world:
      ntasks: 1
      account: gsienkf

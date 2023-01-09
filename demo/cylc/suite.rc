@@ -24,6 +24,15 @@
 # this file is provided as an example; this file is (most likely)
 # generic for all Cylc engine applications.
 
+# Notes
+# -----
+
+# Additional documentation regarding how to configure Cylc engine
+# suites can be found at https://tinyurl.com/cylc-suite.
+
+# The Cylc engine suite defined below is specific to the UFS engines
+# Cylc applications and should not be modified or changed.
+
 # Author
 # ------
 # Henry R. Winterbottom

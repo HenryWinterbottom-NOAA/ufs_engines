@@ -38,7 +38,13 @@
 
 # ----
 
+# This defines the Cylc engine cycle attribute; the template (e.g.,
+# format) is specific to the UFS engines Cylc engine applications and
+# should not be changed.
 CYCLE = $(cylc cyclepoint --template=%Y%m%d%H%M%S)
+
+# Define the environment variables to be inherited by the Cylc engine
+# workflow.
 EXPThomepath = {{ EXPThomepath }}
 EXPTworkpath = {{ EXPTworkpath }}
 CYLCemail = {{ CYLCemail }}

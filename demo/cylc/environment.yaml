@@ -40,7 +40,7 @@
 
 # Define the Cylc engine application/experiment environment variables;
 # these variables will be appended to the Cylc engine environment.rc
-# Jinja2-formatted file.
+# Jinja2-formatted file; these are provided as an example.
 ENVVAR_ONE: 1
 ENVVAR_TWO: 2
 ENVVAR_THREE: 3
