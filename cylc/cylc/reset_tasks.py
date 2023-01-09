@@ -105,7 +105,7 @@ class CylcResetTasks(CylcEngine):
 
     """
 
-    def __init__(self, yaml_file: str, opts_obj: object):
+    def __init__(self, options_obj: object):
         """
         Description
         -----------
@@ -114,7 +114,7 @@ class CylcResetTasks(CylcEngine):
 
         """
 
-        cls_schema = CylcLauncher(yaml_file=yaml_file).cls_schema
+        cls_schema = CylcLauncher(yaml_file=options_obj.yaml_file).cls_schema
 
         print(cls_schema)
 

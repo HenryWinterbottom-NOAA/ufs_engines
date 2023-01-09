@@ -26,6 +26,7 @@
 import os
 import time
 
+from cylc.reset_tasks import CylcResetTasks
 from utils.arguments_interface import Arguments
 from utils.logger_interface import Logger
 
@@ -63,8 +64,8 @@ def main() -> None:
     options_obj = Arguments().run(eval_schema=True, cls_schema=cls_schema)
 
     # Launch the task.
-    #cylc_launcher = CylcLauncher(yaml_file=options_obj.yaml_file)
-    # cylc_launcher.run()
+    task = CylcResetTasks(options_obj)
+    task.run()
 
     stop_time = time.time()
     msg = f"Completed application {script_name}."
