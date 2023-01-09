@@ -126,7 +126,7 @@ class CylcResetTasks(CylcEngine):
                       }
 
         super().__init__(yaml_file=options_obj.yaml_file,
-                         cls_schema=launcher.cls_schema
+                         cls_schema=launcher_cls_schema
                          )
 
         quit()
