@@ -173,11 +173,8 @@ class CylcResetTasks(CylcEngine):
         cmd = [
             "reset",
             f"--state={self.options_obj.status}",
-            self.yaml_obj.CYLCexptname,
+            self.yaml_obj.CYLCexptname, self.options_obj.task
         ]
-
-        for task in self.options_obj.task.split():
-            cmd.append(task)
 
         # Determine whether down-stream (i.e., dependent) tasks have
         # been defined; proceed accordingly.
@@ -192,7 +189,7 @@ class CylcResetTasks(CylcEngine):
             # Check for the respective task attributes within the
             # YAML-formatted file; proceed accordingly.
             depends_task = parser_interface.dict_key_value(
-                dict_in=depends_dict, key=self.options_obj.task.split(),
+                dict_in=depends_dict, key=self.options_obj.task,
                 force=True, no_split=True)
             if depends_task is not None:
 
