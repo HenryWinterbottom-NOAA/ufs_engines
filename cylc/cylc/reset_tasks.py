@@ -140,6 +140,9 @@ class CylcResetTasks(CylcEngine):
         schema_interface.validate_opts(
             cls_schema=reset_cls_schema, cls_opts=reset_dict)
 
+        print(self.options_obj.depends)
+        quit()
+
         # Define the working directory for the respective Cylc
         # application/experiment.
         self.run_dir = os.path.join(
