@@ -28,7 +28,7 @@ CYLCexptname: CYLC_DEMO_RDHPCS_HERA
 CYLCworkpath: /scratch2/BMC/gsienkf/Henry.Winterbottom/work
 
 # Define the path to the platform configuration file.
-CYLCplatform: !ENV ${PWD}/parm/platform.yaml
+CYLCplatform: !ENV ${PWD}/parm/platform.rdhpcs-hera.yaml
 
 # ----
 
@@ -48,6 +48,6 @@ EXPTsuite: !ENV ${PWD}/../demo/cylc/suite.rc
 EXPTtasks: !ENV ${PWD}/../demo/cylc/tasks.yaml
 
 # Define the path to the environment variable configuration file.
-EXPTenv: !ENV ${PWD}/../demo/cylc/env.yaml
+EXPTenv: !ENV ${PWD}/../demo/cylc/environment.yaml
 
 EXPTworkpath: /scratch2/BMC/gsienkf/Henry.Winterbottom/work

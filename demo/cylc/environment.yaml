@@ -1,6 +1,6 @@
 # =========================================================================
 
-# YAML: demo/cylc/tasks.rdhpcs-hera.yaml
+# YAML: demo/cylc/environment.yaml
 
 # Email: henry.winterbottom@noaa.gov
 
@@ -18,10 +18,11 @@
 # Description
 # -----------
 
-# This YAML-formatted file contains the respective task attributes as
-# a function of the respective platform scheduler (e.g., SLURM, PBS,
-# SGE, etc.,); this example configuration is specific to the
-# RDHPCS-Hera platform.
+# This YAML-formatted file contains environment variables specific to
+# a specific Cylc engine application/experiment; the respective
+# environment variables will be appended to the Cylc engine
+# environment.rc Jinja2-formatted file; this file is provided as an
+# example.
 
 # Author
 # ------
@@ -37,10 +38,9 @@
 
 # ----
 
-# Define the HELLO WORLD application attributes.
-hello_world:
-     ntasks: 1
-     account: gsienkf
-     partition: service
-     time: '3:00'
-     exclusive: ''
+# Define the Cylc engine application/experiment environment variables;
+# these variables will be appended to the Cylc engine environment.rc
+# Jinja2-formatted file; these are provided as an example.
+ENVVAR_ONE: 1
+ENVVAR_TWO: 2
+ENVVAR_THREE: 3
