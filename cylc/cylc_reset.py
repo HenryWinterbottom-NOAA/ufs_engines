@@ -61,9 +61,6 @@ def main() -> None:
                   "yaml_file": str,
                   Optional("depends"): str
                   }
-        "
-
-    }
 
     # Collect the command line arguments.
     script_name = os.path.basename(__file__)
