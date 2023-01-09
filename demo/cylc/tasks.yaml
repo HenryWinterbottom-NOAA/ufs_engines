@@ -20,8 +20,8 @@
 
 # This YAML-formatted file contains the respective task attributes as
 # a function of the respective platform scheduler (e.g., SLURM, PBS,
-# SGE, etc.,); this configuration is specific to the RDHPCS-Hera
-# platform.
+# SGE, etc.,); this example configuration is specific to the
+# RDHPCS-Hera platform.
 
 # Author
 # ------
