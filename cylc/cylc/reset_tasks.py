@@ -77,8 +77,10 @@ from schema import Optional, Or
 from confs.yaml_interface import YAML
 from cylc import CylcEngine
 from cylc.launcher import CylcLauncher
+from tools import datetime_interface
 from tools import parser_interface
 from utils import schema_interface
+from utils import timestamp_interface
 
 # ----
 
@@ -152,6 +154,10 @@ class CylcResetTasks(CylcEngine):
         )
         self.logger.info(msg=msg)
 
+        self.cycle = datetime_interface.datestrupdate(
+            datestr=self.options_obj.cycle, in_frmttyp=timestamp_interface.GLOBAL,
+            out_frmttyp=timestamp_interface.YmdTHMZ)
+
     def reset_suite(self) -> None:
         """
         Description
@@ -173,7 +179,7 @@ class CylcResetTasks(CylcEngine):
         cmd = [
             "reset",
             f"--state={self.options_obj.status}",
-            self.yaml_obj.CYLCexptname, self.options_obj.task
+            self.yaml_obj.CYLCexptname, f"{self.options_obj.task}.{self.cycle}"
         ]
 
         # Determine whether down-stream (i.e., dependent) tasks have
@@ -194,7 +200,7 @@ class CylcResetTasks(CylcEngine):
             if depends_task is not None:
 
                 for task in depends_task.split():
-                    cmd.append(task)
+                    cmd.append(f"{task}.{self.cycle}")
 
         print(cmd)
         quit()
