@@ -171,7 +171,7 @@ class CylcResetTasks(CylcEngine):
         # Define the subprocess command string.
         cmd = [
             "reset",
-            f"--state={self.yaml_obj.status}",
+            f"--state={self.options_obj.status}",
             self.yaml_obj.experiment_name,
         ]
 
@@ -182,7 +182,7 @@ class CylcResetTasks(CylcEngine):
         returncode = self.run_task(cmd=cmd, errlog=errlog, outlog=outlog)
         if returncode == 0:
             msg = (
-                f"The resetting of experiment {self.yaml_obj.experiment_name} "
+                f"The resetting of experiment {self.yaml_obj.CYLCexptname} "
                 "task(s) {0} was successful.".format(
                     ", ".join(self.expt_obj.tasks))
             )
