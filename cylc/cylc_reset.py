@@ -57,6 +57,7 @@ def main() -> None:
 
     # Define the schema attributes.
     cls_schema = {"cycle": Or(str, int),
+                  "status": str,
                   "task": str,
                   "yaml_file": str,
                   Optional("depends"): str
