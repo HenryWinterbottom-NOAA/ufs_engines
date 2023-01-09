@@ -76,6 +76,7 @@ from schema import Optional
 
 from cylc import CylcEngine
 from cylc.launcher import CylcLauncher
+from utils import schema_interface
 
 # ----
 
@@ -118,16 +119,22 @@ class CylcResetTasks(CylcEngine):
         launcher_cls_schema = CylcLauncher(
             yaml_file=options_obj.yaml_file).cls_schema
 
-        cls_schema = {'cycle': str,
-                      'status': str,
-                      'task': str,
-                      'yaml': str,
-                      Optional('depends'): str
-                      }
-
         super().__init__(yaml_file=options_obj.yaml_file,
                          cls_schema=launcher_cls_schema
                          )
+
+        reset_cls_schema = {'cycle': str,
+                            'status': str,
+                            'task': str,
+                            'yaml_file': str,
+                            Optional('depends'): str
+                            }
+
+        reset_dict = parser_interface.object_todict(
+            object_in=options_obj)
+
+        schema_interface.validate_opts(
+            cls_schema=reset_cls_schema, cls_opts=reset_dict)
 
         quit()
 
