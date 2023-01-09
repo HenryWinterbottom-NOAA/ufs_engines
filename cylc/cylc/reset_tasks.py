@@ -175,7 +175,7 @@ class CylcResetTasks(CylcEngine):
             self.yaml_obj.CYLCexptname,
         ]
 
-        for task in self.expt_obj.tasks:
+        for task in self.options.task:
             cmd.append(task)
 
         # Run the Cylc application suite; proceed accordingly.
