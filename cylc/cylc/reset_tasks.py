@@ -171,7 +171,7 @@ class CylcResetTasks(CylcEngine):
         # Define the subprocess command string.
         cmd = [
             "reset",
-            f"--state={self.options_obj.status}",
+            f"--state={self.yaml_obj.status}",
             self.yaml_obj.experiment_name,
         ]
 
