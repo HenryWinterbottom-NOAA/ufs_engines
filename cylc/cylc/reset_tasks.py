@@ -72,7 +72,10 @@ __email__ = "henry.winterbottom@noaa.gov"
 
 import os
 
+from schema import Optional
+
 from cylc import CylcEngine
+from cylc.launcher import CylcLauncher
 
 # ----
 
@@ -102,7 +105,7 @@ class CylcResetTasks(CylcEngine):
 
     """
 
-    def __init__(self, yaml_obj: object, expt_obj: object):
+    def __init__(self, yaml_file: str, opts_obj: object):
         """
         Description
         -----------
@@ -111,7 +114,20 @@ class CylcResetTasks(CylcEngine):
 
         """
 
+        cls_schema = CylcLauncher(yaml_file=yaml_file).cls_schema
+
+        print(cls_schema)
+
+        quit()
+
         # Define the base-class attributes.
+        cls_schema = {'cycle': str,
+                      'status': str,
+                      'task': str,
+                      'yaml': str,
+                      Optional('depends'): str
+                      }
+
         super().__init__(yaml_obj=yaml_obj)
         self.get_cylc_app()
         self.expt_obj = expt_obj
