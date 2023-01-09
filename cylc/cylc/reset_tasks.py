@@ -202,9 +202,6 @@ class CylcResetTasks(CylcEngine):
                 for task in depends_task.split(","):
                     cmd.append(f"{task}.{self.cycle}".strip())
 
-        print(cmd)
-        quit()
-
         # Run the Cylc application suite; proceed accordingly.
         returncode = self.run_task(cmd=cmd, errlog=errlog, outlog=outlog)
         if returncode == 0:
