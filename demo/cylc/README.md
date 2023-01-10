@@ -11,6 +11,7 @@ application workflows.
 
 | Configuration File | Description |
 | :-------------: | :-------------: |
+| [`depends.yaml`](depends.yaml) | <div align="left">This YAML-formatted file contains downstream Cylc engine application task (i.e., dependent tasks) relative to a respective Cylc engine application task.</div> | 
 | [`environment.rc`](environment.rc) | <div align="left">This Jinja2-formatted file contains default environment variables for the respective Cylc application/experiment. </div> |
 | [`environment.yaml`](environment.yaml) | <div align="left">This YAML-formatted file contains environment variables specific to a specific Cylc engine application/experiment; the respective environment variables will be appended to the Cylc engine environment.rc Jinja2-formatted file. </div> |
 | [`graph.rc`](graph.rc) | <div align="left">This Jinja2-formatted file contains the Cylc application/experiment workflow graph; Cylc documentation concerning the construction of Cylc engine application workflows (i.e., graphs) can be found [here](https://tinyurl.com/cylc-graphs). </div> |
