@@ -1,10 +1,9 @@
-[![License](https://img.shields.io/badge/license-lgpl_v2.1-blue)](https://github.com/HenryWinterbottom-NOAA/ufs_engines/blob/develop/LICENSE)
-![Python Version](https://img.shields.io/badge/python-3.5|3.6|3.7-blue)
-
+[![License](https://img.shields.io/badge/license-LGPL_v2.1-lightgray)](https://github.com/HenryWinterbottom-NOAA/ufs_engines/blob/develop/LICENSE)
 ![Linux](https://img.shields.io/badge/linux-ubuntu%7Ccentos-black)
+![Python Version](https://img.shields.io/badge/python-3.5|3.6|3.7-blue)
+![Dependencies](https://img.shields.io/badge/dependencies-astropy_boto3_bs4_croniter_netcdf4_numpy_pyyaml_schema-orange)
 
-[![Dependencies](https://img.shields.io/badge/dependencies-ufs__pyutils-blueviolet)](https://github.com/HenryWinterbottom-NOAA/ufs_pyutils)
-[![Dependencies](https://img.shields.io/badge/dependencies-cylc__flow__7.9.3-blueviolet)](https://github.com/cylc/cylc-flow/releases/tag/7.9.3)
+[![Python Coding Standards](https://github.com/HenryWinterbottom-NOAA/ufs_engines/actions/workflows/pycodestyle.yaml/badge.svg)](https://github.com/HenryWinterbottom-NOAA/ufs_engines/actions/workflows/pycodestyle.yaml)
 
 # Disclaimer
 
@@ -30,6 +29,20 @@ obtain the entire system, do as follows.
 
 ~~~
 user@host:$ git clone https://github.com/HenryWinterbottom-NOAA/ufs_engines
+~~~
+
+# Build Cylc-flow
+
+The Cylc engine version supported by this application is
+[v7.9.3](https://github.com/cylc/cylc-flow/releases/tag/7.9.3). The
+Cylc engine is provided for supportted RDHPCS platforms and may be
+loaded for the respective (supported) platforms as follows.
+
+### RDHPCS-Hera
+
+~~~
+
+
 ~~~
 
 # Forking
