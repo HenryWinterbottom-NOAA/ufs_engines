@@ -33,6 +33,12 @@ obtain the entire system, do as follows.
 user@host:$ git clone https://github.com/HenryWinterbottom-NOAA/ufs_engines
 ~~~
 
+# Supported Workflow Engines
+
+The following workflow engines are currently supported.
+
+- [Cylc-flow](https://cylc.github.io/)
+
 # Forking
 
 If a user wishes to contribute modifications done within their
