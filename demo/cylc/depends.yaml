@@ -1,8 +1,6 @@
-#!Jinja2
-
 # =========================================================================
 
-# Jinja2: demo/cylc/environment.rc
+# YAML: demo/cylc/depends.yaml
 
 # Email: henry.winterbottom@noaa.gov
 
@@ -20,9 +18,10 @@
 # Description
 # -----------
 
-# This Jinja2-formatted file contains default environment variables
-# for the respective Cylc application/experiment; this file is
-# provided as an example.
+# This YAML-formatted file contains the downstream tasks dependent on
+# a given Cylc engine application task; this YAML-formatted file is to
+# be used for resetting Cylc engine application tasks via
+# cylc_reset.py.
 
 # Author
 # ------
@@ -30,22 +29,13 @@
 
 # Date
 # ----
-# 08 January 2023
+# 09 January 2023
 
 # History
 # -------
-# 2023-01-08: Henry Winterbottom -- Original version.
+# 2023-01-09: Henry Winterbottom -- Original version.
 
 # ----
 
-# This defines the Cylc engine cycle attribute; the template (e.g.,
-# format) is specific to the UFS engines Cylc engine applications and
-# should not be changed.
-CYCLE = $(cylc cyclepoint --template=%Y%m%d%H%M%S)
-
-# Define the environment variables to be inherited by the Cylc engine
-# workflow.
-EXPThomepath = {{ EXPThomepath }}
-EXPTworkpath = {{ EXPTworkpath }}
-CYLCemail = {{ CYLCemail }}
-CYLCmailevents = {{ CYLCmailevents }}
+# Define the HELLO WORLD application dependent tasks; comma-delimited.
+hello_world: spam, ham, eggs

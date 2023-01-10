@@ -62,12 +62,10 @@ History
 import os
 import time
 
-from cylc.launcher import CylcLauncher
-from tools import fileio_interface
-from tools import parser_interface
 from utils.arguments_interface import Arguments
-from utils.error_interface import msg_except_handle
 from utils.logger_interface import Logger
+
+from cylc.launcher import CylcLauncher
 
 # ----
 
@@ -79,16 +77,21 @@ __email__ = "henry.winterbottom@noaa.gov"
 
 logger = Logger()
 
-
 # ----
 
+
 def main() -> None:
-    """ """
+    """
+    Description
+    -----------
+
+    This is the driver-level function to invoke the tasks within this
+    script.
+
+    """
 
     # Define the schema attributes.
-    cls_schema = {
-        "yaml_file": str
-    }
+    cls_schema = {"yaml_file": str}
 
     # Collect the command line arguments.
     script_name = os.path.basename(__file__)
@@ -111,5 +114,6 @@ def main() -> None:
 
 # ----
 
-if __name__ == '__main__':
+
+if __name__ == "__main__":
     main()

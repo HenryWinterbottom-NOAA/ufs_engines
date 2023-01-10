@@ -110,7 +110,7 @@ class CylcLauncher(CylcEngine):
         """
 
         # Define the base-class attributes.
-        cls_schema = {
+        self.cls_schema = {
             "CYLCexptname": str,
             "CYLCinterval": int,
             "CYLCplatform": str,
@@ -129,7 +129,7 @@ class CylcLauncher(CylcEngine):
             Optional("EXPTenvironment"): str,
         }
 
-        super().__init__(yaml_file=yaml_file, cls_schema=cls_schema)
+        super().__init__(yaml_file=yaml_file, cls_schema=self.cls_schema)
 
         # Build the working directory for the respective Cylc
         # application/experiment.
