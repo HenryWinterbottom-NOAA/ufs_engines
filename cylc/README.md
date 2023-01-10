@@ -117,16 +117,13 @@ types/outputs are listed in the following table.
 
 | Cylc Logger Command | Cylc Task File | Usage |
 | :-------------: | :-----------: | :-----------: |
-| a | `job-activity.log` | ~~~
-                           user@host:$ cylc log -f <logger_flag> <experiment_name> <task_name>.<DTG>
-                           ~~~
-			   |
-| d | `job-edit.diff` | |
-| e | `job.err` | |
-| j | `job` | | 
-| o | `job.out` | |
-| s | `job.status` | | 
-| x | `job.xtrace` | |
+| a | `job-activity.log` | `user@host:$ cylc log -f a <experiment_name> <task_name>.<DTG>` | 
+| d | `job-edit.diff` | `user@host:$ cylc log -f d <experiment_name> <task_name>.<DTG>` |
+| e | `job.err` | `user@host:$ cylc log -f e <experiment_name> <task_name>.<DTG>` |
+| j | `job` | `user@host:$ cylc log -f d <experiment_name> <task_name>.<DTG>` | 
+| o | `job.out` | `user@host:$ cylc log -f o <experiment_name> <task_name>.<DTG>` |
+| s | `job.status` | `user@host:$ cylc log -f s <experiment_name> <task_name>.<DTG>` | 
+| x | `job.xtrace` | `user@host:$ cylc log -f x <experiment_name> <task_name>.<DTG>` |
  
 </div>
 
