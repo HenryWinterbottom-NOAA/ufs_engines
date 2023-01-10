@@ -27,10 +27,10 @@ import os
 import time
 
 from schema import Optional, Or
-
-from cylc.reset_tasks import CylcResetTasks
 from utils.arguments_interface import Arguments
 from utils.logger_interface import Logger
+
+from cylc.reset_tasks import CylcResetTasks
 
 # ----
 
