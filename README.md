@@ -1,8 +1,9 @@
 [![License](https://img.shields.io/badge/license-LGPL_v2.1-lightgray)](https://github.com/HenryWinterbottom-NOAA/ufs_engines/blob/develop/LICENSE)
-![Linux](https://img.shields.io/badge/linux-ubuntu%7Ccentos-black)
+![Linux](https://img.shields.io/badge/linux-ubuntu%7Ccentos-lightgrey)
 ![Python Version](https://img.shields.io/badge/python-3.5|3.6|3.7-blue)
 
-[![Dependencies](https://img.shields.io/badge/dependencies-ufs__pyutils-orange)](https://github.com/HenryWinterbottom-NOAA/ufs_pyutils)![(https://img.shields.io/badge/dependencies-cylc--flow-orange)](https://github.com/cylc/cylc-flow/releases/tag/7.9.3)
+[![Dependencies](https://img.shields.io/badge/dependencies-ufs__pyutils-orange)](https://github.com/HenryWinterbottom-NOAA/ufs_pyutils)
+[![](https://img.shields.io/badge/dependencies-cylc--flow-orange)](https://github.com/cylc/cylc-flow/releases/tag/7.9.3)
 
 [![Python Coding Standards](https://github.com/HenryWinterbottom-NOAA/ufs_engines/actions/workflows/pycodestyle.yaml/badge.svg)](https://github.com/HenryWinterbottom-NOAA/ufs_engines/actions/workflows/pycodestyle.yaml)
 
