@@ -32,39 +32,6 @@ obtain the entire system, do as follows.
 user@host:$ git clone https://github.com/HenryWinterbottom-NOAA/ufs_engines
 ~~~
 
-# Using Cylc-flow
-
-The Cylc engine version supported by this application is
-[v7.9.3](https://github.com/cylc/cylc-flow/releases/tag/7.9.3). The
-Cylc engine is install for supportted RDHPCS platforms and may be
-loaded for the respective (supported) platforms as follows.
-
-### RDHPCS-Hera
-
-~~~
-user@host:$ module use -a /scratch2/BMC/gsienkf/UFS-RNR/UFS-RNR-stack/modules
-user@host:$ module load cylc-flow
-~~~
-
-### RDHPCS-Orion
-
-~~~
-user@host:$ module use -a /work/noaa/gsienkf/UFS-RNR/UFS-RNR-stack/modules
-user@host:$ module load cylc-flow
-~~~
-
-### Installing Cylc-flow
-
-The Cylc-flow package may be collected and installed as follows for
-non-supported machines.
-
-~~~
-user@host:$ git clone https://github.com/cylc/cylc.git /path/to/cylc
-user@host:$ cd /path/to/cylc
-user@host:$ git checkout tags/7.9.3
-user@host:$ export PATH=/path/to/cylc/bin:$PATH
-~~~
-
 # Forking
 
 If a user wishes to contribute modifications done within their
