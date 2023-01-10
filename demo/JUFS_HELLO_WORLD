@@ -1,0 +1,54 @@
+#!/bin/bash --posix
+
+################################################################################
+## 
+## Script name:         JUFS_HELLO_WORLD
+##
+## Script description:  Launch the HELLO WORLD application/example.
+##
+## Author:              Henry R. Winterbottom 
+##
+## Date:                2023-01-08        
+##
+## Script history log:  
+##
+##   2023-01-08: Henry R. Winterbottom -- Original version.
+##
+## Usage: sh JUFS_HELLO_WORLD
+##
+##   Imported Shell Variables:
+##
+##   Exported Shell Variables:
+##
+##     pid:              UNIX system processes identifier.  
+##
+## Remarks:
+##
+##   Condition codes:
+##
+##      0 - no problem encountered
+##     >0 - some problem encountered
+##
+## Attributes:
+##
+##   Language: POSIX shell
+##   Machine:  Linux
+##
+################################################################################
+
+set -e
+
+#----
+
+# Launch the application.
+echo "HELLO UFS ENGINES WORLD"
+echo "ENVVAR_ONE = ${ENVVAR_ONE}"
+echo "ENVVAR_TWO = ${ENVVAR_TWO}"
+echo "ENVVAR_THREE = ${ENVVAR_THREE}"
+sleep 30
+
+#----
+
+# Collect (any) error information and exit.
+export ERR=$?
+exit ${ERR}

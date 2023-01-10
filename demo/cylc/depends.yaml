@@ -1,0 +1,41 @@
+# =========================================================================
+
+# YAML: demo/cylc/depends.yaml
+
+# Email: henry.winterbottom@noaa.gov
+
+# This program is free software: you can redistribute it and/or modify
+# it under the terms of the respective public license published by the
+# Free Software Foundation and included with the repository within
+# which this application is contained.
+
+# This program is distributed in the hope that it will be useful, but
+# WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+
+# =========================================================================
+
+# Description
+# -----------
+
+# This YAML-formatted file contains the downstream tasks dependent on
+# a given Cylc engine application task; this YAML-formatted file is to
+# be used for resetting Cylc engine application tasks via
+# cylc_reset.py.
+
+# Author
+# ------
+# Henry R. Winterbottom
+
+# Date
+# ----
+# 09 January 2023
+
+# History
+# -------
+# 2023-01-09: Henry Winterbottom -- Original version.
+
+# ----
+
+# Define the HELLO WORLD application dependent tasks; comma-delimited.
+hello_world: spam, ham, eggs
