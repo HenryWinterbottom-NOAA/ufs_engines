@@ -1,7 +1,8 @@
 [![License](https://img.shields.io/badge/license-LGPL_v2.1-lightgray)](https://github.com/HenryWinterbottom-NOAA/ufs_engines/blob/develop/LICENSE)
 ![Linux](https://img.shields.io/badge/linux-ubuntu%7Ccentos-black)
 ![Python Version](https://img.shields.io/badge/python-3.5|3.6|3.7-blue)
-![Dependencies](https://img.shields.io/badge/dependencies-astropy_boto3_bs4_croniter_netcdf4_numpy_pyyaml_schema-orange)
+
+[![Dependencies](https://img.shields.io/badge/dependencies-ufs__pyutils-orange)](https://github.com/HenryWinterbottom-NOAA/ufs_pyutils)
 
 [![Python Coding Standards](https://github.com/HenryWinterbottom-NOAA/ufs_engines/actions/workflows/pycodestyle.yaml/badge.svg)](https://github.com/HenryWinterbottom-NOAA/ufs_engines/actions/workflows/pycodestyle.yaml)
 
@@ -31,18 +32,37 @@ obtain the entire system, do as follows.
 user@host:$ git clone https://github.com/HenryWinterbottom-NOAA/ufs_engines
 ~~~
 
-# Build Cylc-flow
+# Using Cylc-flow
 
 The Cylc engine version supported by this application is
 [v7.9.3](https://github.com/cylc/cylc-flow/releases/tag/7.9.3). The
-Cylc engine is provided for supportted RDHPCS platforms and may be
+Cylc engine is install for supportted RDHPCS platforms and may be
 loaded for the respective (supported) platforms as follows.
 
 ### RDHPCS-Hera
 
 ~~~
+user@host:$ module use -a /scratch2/BMC/gsienkf/UFS-RNR/UFS-RNR-stack/modules
+user@host:$ module load cylc-flow
+~~~
 
+### RDHPCS-Orion
 
+~~~
+user@host:$ module use -a /work/noaa/gsienkf/UFS-RNR/UFS-RNR-stack/modules
+user@host:$ module load cylc-flow
+~~~
+
+### Installing Cylc-flow
+
+The Cylc-flow package may be collected and installed as follows for
+non-supported machines.
+
+~~~
+user@host:$ git clone https://github.com/cylc/cylc.git /path/to/cylc
+user@host:$ cd /path/to/cylc
+user@host:$ git checkout tags/7.9.3
+user@host:$ export PATH=/path/to/cylc/bin:$PATH
 ~~~
 
 # Forking
@@ -52,7 +72,7 @@ respective fork(s) to the authoritative repository, we request that
 the user first submit an issue and that the fork naming conventions
 follow those listed below.
 
-- `docs/user_branch_name`: Documenation additions and/or corrections for the application(s).
+- `docs/user_branch_name`: Documentation additions and/or corrections for the application(s).
 
 - `feature/user_branch_name`: Additions, enhancements, and/or upgrades for the application(s).
 
