@@ -70,57 +70,64 @@ where `task_name` is the respective Cylc task (or
 [family](https://metomi.github.io/rose/2019.01.2/html/tutorial/cylc/runtime/configuration-consolidation/families.html))
 and `DTG` is the respective cycle timestamp, formatted as (assuming
 the POSIX convention) `%Y%m%dT%H%MZ`. Wildcard characters are also
-permitted for Cylc engine workflow application tasks. Finally, to
+permitted for Cylc workflow application tasks. Finally, to
 release or run jobs that had been put on hold, do as follows.
 
+~~~
 `user@host:$ cylc release <experiment_name>`
+~~~
 
 ### Stopping a Running Cylc Engine Workflow Suite
 
-An active UFS-RNR Cylc workflow suite may be shut down by doing the
-following:
+An active Cylc engine workflow suite may be shut down as follows.
 
 ~~~
 user@host:$ cylc stop <experiment_name>
 ~~~
 
-This will allow all currently launched tasks (including those in
-queue) to complete. To stop all Cylc workflow suite tasks, including
-those in the queue, do as follows:
+This will allow only currently launched tasks (including those in
+queue) to complete. To immediately stop the entirety of the Cylc
+engine workflow suite, including those in the queue, do as follows.
 
-`user@host:$ cylc stop --now --now <experiment_name>`
+~~~
+user@host:$ cylc stop --now --now <experiment_name>
+~~~
 
-### Addressing Failed UFS-RNR Cylc Tasks
+### Addressing Failed Cylc Engine Workflow Tasks
 
-If configured accordingly, the Cylc suite may inform the user of
-failed tasks via email. Also, doing:
+If configured accordingly, the Cylc engine workflow suite may inform
+the user of failed tasks via email. Also the following command will
+allow the user to see failed tasks.
 
-`user@host:$ cylc mon <experiment_name>`
+~~~
+user@host:$ cylc mon <experiment_name>
+~~~
 
-(as shown above) will allow the user to see failed statuses. To
-investigate why a specific task failed, the user may do:
+To investigate why a specific task failed, the user may view the
+run-time log as follows.
 
-`user@host:$ cylc log <experiment_name> <task_name>.<DTG>`
+~~~
+user@host:$ cylc log -f <logger_flag> <experiment_name> <task_name>.<DTG>
+~~~
 
-A practical UFS-RNR example of this would be:
+Here `-f` denotes the type of logger output. The available logger
+types/outputs are listed in the following table.
 
-`user@host:$ cylc log -f e UFSRNR_FORECAST bkgrd_forecast.20180101T0000Z`
+<div align="center">
 
-where `-f` is the type of logger output which may be any one of the
-following:
-
-<div align="left">
-
-| Cylc Logger Command | Cylc Task File |
-| :-------------: | :-----------: |
-| a | `job-activity.log` |
-| d | `job-edit.diff` |
-| e | `job.err` |
-| j | `job` |
-| o | `job.out` |
-| s | `job.status` |
-| x | `job.xtrace` |
-
+| Cylc Logger Command | Cylc Task File | Usage |
+| :-------------: | :-----------: | :-----------: |
+| a | `job-activity.log` | ~~~
+                           user@host:$ cylc log -f <logger_flag> <experiment_name> <task_name>.<DTG>
+                           ~~~
+			   |
+| d | `job-edit.diff` | |
+| e | `job.err` | |
+| j | `job` | | 
+| o | `job.out` | |
+| s | `job.status` | | 
+| x | `job.xtrace` | |
+ 
 </div>
 
 In the above example, the `e` allows the user to evaluate the
