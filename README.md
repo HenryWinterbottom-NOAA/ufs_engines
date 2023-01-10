@@ -1,10 +1,10 @@
-[![License](https://img.shields.io/badge/license-lgpl_v2.1-blue)](https://github.com/HenryWinterbottom-NOAA/ufs_engines/blob/develop/LICENSE)
+[![License](https://img.shields.io/badge/license-LGPL_v2.1-lightgray)](https://github.com/HenryWinterbottom-NOAA/ufs_engines/blob/develop/LICENSE)
+![Linux](https://img.shields.io/badge/linux-ubuntu%7Ccentos-black)
 ![Python Version](https://img.shields.io/badge/python-3.5|3.6|3.7-blue)
 
-![Linux](https://img.shields.io/badge/linux-ubuntu%7Ccentos-black)
+[![Dependencies](https://img.shields.io/badge/dependencies-ufs__pyutils-orange)](https://github.com/HenryWinterbottom-NOAA/ufs_pyutils)
 
-[![Dependencies](https://img.shields.io/badge/dependencies-ufs__pyutils-blueviolet)](https://github.com/HenryWinterbottom-NOAA/ufs_pyutils)
-[![Dependencies](https://img.shields.io/badge/dependencies-cylc__flow__7.9.3-blueviolet)](https://github.com/cylc/cylc-flow/releases/tag/7.9.3)
+[![Python Coding Standards](https://github.com/HenryWinterbottom-NOAA/ufs_engines/actions/workflows/pycodestyle.yaml/badge.svg)](https://github.com/HenryWinterbottom-NOAA/ufs_engines/actions/workflows/pycodestyle.yaml)
 
 # Disclaimer
 
@@ -39,7 +39,7 @@ respective fork(s) to the authoritative repository, we request that
 the user first submit an issue and that the fork naming conventions
 follow those listed below.
 
-- `docs/user_branch_name`: Documenation additions and/or corrections for the application(s).
+- `docs/user_branch_name`: Documentation additions and/or corrections for the application(s).
 
 - `feature/user_branch_name`: Additions, enhancements, and/or upgrades for the application(s).
 
