@@ -166,8 +166,9 @@ class CylcGraph:
         """
 
         # Read the contents of the experiment attributes suite file.
-        with open(os.path.join(self.suite_path, "experiment.rc"),
-                  "r", encoding="utf-8") as file:
+        with open(
+            os.path.join(self.suite_path, "experiment.rc"), "r", encoding="utf-8"
+        ) as file:
             attrs_list = file.read().split("\n")
 
         # Define the respective attributes to construct the Cylc
@@ -192,17 +193,19 @@ class CylcGraph:
                     value = attr.split()[4]
 
                     if mand_attr.lower() == "cycle_interval":
-                        value = int(re.sub("[PTS\'\"]", "", value))
+                        value = int(re.sub("[PTS'\"]", "", value))
                     else:
-                        value = re.sub("[\'\"]", "", value)
+                        value = re.sub("['\"]", "", value)
                     exptattrs_obj = parser_interface.object_setattr(
-                        object_in=exptattrs_obj, key=mand_attr, value=value)
+                        object_in=exptattrs_obj, key=mand_attr, value=value
+                    )
 
             if mand_attr not in vars(exptattrs_obj):
-                msg = (f"The mandatory attribute {mand_attr} could not be "
-                       f"determined from file {self.options_obj.exptattrs}. "
-                       "Aborting!!!"
-                       )
+                msg = (
+                    f"The mandatory attribute {mand_attr} could not be "
+                    f"determined from file {self.options_obj.exptattrs}. "
+                    "Aborting!!!"
+                )
                 __error__(msg=msg)
 
         return exptattrs_obj
@@ -240,38 +243,35 @@ class CylcGraph:
         # Cylc graphs to be created; the Python dictionary keys are
         # the respective graph types to be created.
         cylc_graph_dict = {
-
             # Cycling (i.e., warm-started) applications.
             "cycling": {
                 "initial_cycle_point": exptattrs_obj.INITIAL_CYCLE_POINT,
-                "final_cycle_point":
-                datetime_interface.datestrupdate(
+                "final_cycle_point": datetime_interface.datestrupdate(
                     datestr=exptattrs_obj.INITIAL_CYCLE_POINT,
                     in_frmttyp=timestamp_interface.YmdTHMS,
                     out_frmttyp=timestamp_interface.YmdTHMS,
-                    offset_seconds=exptattrs_obj.CYCLE_INTERVAL),
-                "output_file":
-                os.path.join(self.output_path,
-                             f"{exptattrs_obj.CYLCexptname}.graph.cycling.png")
+                    offset_seconds=exptattrs_obj.CYCLE_INTERVAL,
+                ),
+                "output_file": os.path.join(
+                    self.output_path, f"{exptattrs_obj.CYLCexptname}.graph.cycling.png"
+                ),
             },
-
             # Initial (i.e., cold-started) applications.
             "initial": {
                 "initial_cycle_point": exptattrs_obj.INITIAL_CYCLE_POINT,
                 "final_cycle_point": exptattrs_obj.INITIAL_CYCLE_POINT,
-                "output_file":
-                os.path.join(self.output_path,
-                             f"{exptattrs_obj.CYLCexptname}.graph.initial.png")
+                "output_file": os.path.join(
+                    self.output_path, f"{exptattrs_obj.CYLCexptname}.graph.initial.png"
+                ),
             },
-
             # Final (i.e., last warm-started) applications.
             "final": {
                 "initial_cycle_point": exptattrs_obj.FINAL_CYCLE_POINT,
                 "final_cycle_point": exptattrs_obj.FINAL_CYCLE_POINT,
-                "output_file":
-                os.path.join(self.output_path,
-                             f"{exptattrs_obj.CYLCexptname}.graph.final.png")
-            }
+                "output_file": os.path.join(
+                    self.output_path, f"{exptattrs_obj.CYLCexptname}.graph.final.png"
+                ),
+            },
         }
 
         # Build the Cylc graph image for each specified graph
@@ -286,29 +286,39 @@ class CylcGraph:
                 # Define the arguments for the respective Cylc engine
                 # graph image type.
                 output_file_path = parser_interface.dict_key_value(
-                    dict_in=cylc_graph_dict[cylc_graph], key="output_file",
-                    no_split=True)
+                    dict_in=cylc_graph_dict[cylc_graph],
+                    key="output_file",
+                    no_split=True,
+                )
 
                 msg = f"Output image path for workflow type {cylc_graph} is {output_file_path}."
                 self.logger.info(msg=msg)
 
                 # Create the respective Cylc engine graph image type.
-                cmd = ["graph", os.path.join(self.suite_path, "suite.rc"),
-                       parser_interface.dict_key_value(
-                           dict_in=cylc_graph_dict[cylc_graph], key="initial_cycle_point",
-                           no_split=True),
-                       parser_interface.dict_key_value(
-                           dict_in=cylc_graph_dict[cylc_graph], key="final_cycle_point",
-                           no_split=True),
-                       "--output-file", output_file_path
-                       ]
+                cmd = [
+                    "graph",
+                    os.path.join(self.suite_path, "suite.rc"),
+                    parser_interface.dict_key_value(
+                        dict_in=cylc_graph_dict[cylc_graph],
+                        key="initial_cycle_point",
+                        no_split=True,
+                    ),
+                    parser_interface.dict_key_value(
+                        dict_in=cylc_graph_dict[cylc_graph],
+                        key="final_cycle_point",
+                        no_split=True,
+                    ),
+                    "--output-file",
+                    output_file_path,
+                ]
 
-                subprocess_interface.run(
-                    exe=self.cylc_app, job_type="app", args=cmd)
+                subprocess_interface.run(exe=self.cylc_app, job_type="app", args=cmd)
 
             except Exception as error:
-                msg = (f"Cylc graph application for type {cylc_graph} failed with error ",
-                       f"{error}. Aborting!!!")
+                msg = (
+                    f"Cylc graph application for type {cylc_graph} failed with error ",
+                    f"{error}. Aborting!!!",
+                )
                 __error__(msg=msg)
 
     def run(self) -> None:
@@ -347,6 +357,7 @@ class CylcGraphError(Error):
 
     """
 
+
 # ----
 
 
@@ -368,6 +379,7 @@ def __error__(msg: str = None) -> None:
 
     """
 
+
 # ----
 
 
@@ -382,9 +394,7 @@ def main() -> None:
     """
 
     # Define the schema attributes.
-    cls_schema = {'suite_path': str,
-                  'output_path': str
-                  }
+    cls_schema = {"suite_path": str, "output_path": str}
 
     # Collect the command line arguments.
     script_name = os.path.basename(__file__)
@@ -403,6 +413,7 @@ def main() -> None:
     total_time = stop_time - start_time
     msg = f"Total Elapsed Time: {total_time} seconds."
     Logger().info(msg=msg)
+
 
 # ----
 
