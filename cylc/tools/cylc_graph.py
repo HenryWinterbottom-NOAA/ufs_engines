@@ -285,6 +285,10 @@ class CylcGraph:
 
                 # Define the arguments for the respective Cylc engine
                 # graph image type.
+                dict_in = parser_interface.dict_key_value(
+                    dict_in=cylc_graph_dict, key=cylc_graph, no_split=True
+                )
+
                 output_file_path = parser_interface.dict_key_value(
                     dict_in=cylc_graph_dict[cylc_graph],
                     key="output_file",
@@ -299,21 +303,28 @@ class CylcGraph:
                     "graph",
                     os.path.join(self.suite_path, "suite.rc"),
                     parser_interface.dict_key_value(
-                        dict_in=cylc_graph_dict[cylc_graph],
-                        key="initial_cycle_point",
-                        no_split=True,
+                        dict_in=dict_in, key="initial_cycle_point", no_split=True
                     ),
                     parser_interface.dict_key_value(
-                        dict_in=cylc_graph_dict[cylc_graph],
-                        key="final_cycle_point",
-                        no_split=True,
+                        dict_in=dict_in, key="final_cycle_point", no_split=True
                     ),
                     "--output-file",
                     output_file_path,
                 ]
 
-                subprocess_interface.run(exe=self.cylc_app, job_type="app", args=cmd)
-
+                subprocess_interface.run(
+                    exe=self.cylc_app,
+                    job_type="app",
+                    args=cmd,
+                    errlog=os.path.join(
+                        os.getcwd(),
+                        f"err.{exptattrs_obj.CYLCexptname}.graph.{cylc_graph}.log",
+                    ),
+                    outlog=os.path.join(
+                        os.getcwd(),
+                        f"out.{exptattrs_obj.CYLCexptname}.graph.{cylc_graph}.log",
+                    ),
+                )
             except Exception as error:
                 msg = (
                     f"Cylc graph application for type {cylc_graph} failed with error ",
