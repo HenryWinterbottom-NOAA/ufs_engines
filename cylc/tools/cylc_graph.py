@@ -373,7 +373,7 @@ class CylcGraphError(Error):
 
 
 @msg_except_handle(CylcGraphError)
-def __error__(msg: str = None) -> None:
+def __error__(msg: str) -> None:
     """
     Description
     -----------
