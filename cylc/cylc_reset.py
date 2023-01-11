@@ -18,6 +18,43 @@
 # =========================================================================
 
 """
+Script
+------
+
+    cylc_reset.py
+
+Description
+-----------
+
+    This script is the driver script for all active Cylc engine
+    workflow suite task status manipulations; all Cylc versions <=
+    7.9.3 are supported, however Cylc versions >= 8.x.x is not
+    supported.
+
+Functions
+---------
+
+    main()
+
+        This is the driver-level function to invoke the tasks within
+        this script.
+
+Note(s)
+-------
+
+    This module does not support Cylc 8.0.x; please download and
+    install the Cylc applications contained in
+    https://github.com/cylc/cylc-flow/archive/refs/tags/7.9.3.tar.gz.
+
+Author(s)
+---------
+
+    Henry R. Winterbottom; 10 January 2023
+
+History
+-------
+
+    2023-01-10: Henry Winterbottom -- Initial implementation.
 
 """
 
