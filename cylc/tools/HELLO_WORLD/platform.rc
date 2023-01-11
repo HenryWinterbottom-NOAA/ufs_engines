@@ -1,0 +1,5 @@
+#!Jinja2
+{% set SCHEDULER = "slurm" %}
+{% set EXEC_RETRIES_COUNT = 3 %}
+{% set EXEC_RETRIES_INTERVAL_SECONDS = 30 %}
+{% set EXEC_RETRIES = "3*PT30S" %}

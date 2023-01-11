@@ -1,0 +1,5 @@
+--ntasks = 1
+--account = gsienkf
+--partition = service
+--time = 3:00
+--exclusive = 
