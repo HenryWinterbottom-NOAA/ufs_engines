@@ -85,6 +85,7 @@ History
 # ----
 
 # pylint: disable=broad-except
+# pylint: disable=unnecessary-dict-index-lookup
 # pylint: disable=unused-argument
 
 # ----

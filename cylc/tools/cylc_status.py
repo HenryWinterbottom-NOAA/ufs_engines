@@ -89,6 +89,12 @@ History
 
 # ----
 
+# pylint: disable=too-many-locals
+# pylint: disable=unnecessary-dict-index-lookup
+# pylint: disable=unused-argument
+
+# ----
+
 import json
 import operator
 import os
@@ -152,10 +158,12 @@ class CylcStatus:
 
         # Define the output files; these will only be used if the
         # command line option to_output is True upon entry.
-        self.stats_output_file = os.path.join(self.options_obj.output_path,
-                                              "cylc-engine.stats")
-        self.status_output_file = os.path.join(self.options_obj.output_path,
-                                               "cylc-engine.status")
+        self.stats_output_file = os.path.join(
+            self.options_obj.output_path, "cylc-engine.stats"
+        )
+        self.status_output_file = os.path.join(
+            self.options_obj.output_path, "cylc-engine.status"
+        )
 
         # Format the boolean string provided upon entry.
         self.to_output = json.loads(self.options_obj.to_output.lower())
@@ -208,9 +216,13 @@ class CylcStatus:
         for (_, task_attrs) in database_obj.task_jobs.items():
 
             # Define the relevant task attributes.
-            (cycle, name, attempts, start, stop) = \
-                (task_attrs[0], task_attrs[1], task_attrs[4], task_attrs[8],
-                 task_attrs[9])
+            (cycle, name, attempts, start, stop) = (
+                task_attrs[0],
+                task_attrs[1],
+                task_attrs[4],
+                task_attrs[8],
+                task_attrs[9],
+            )
 
             # Define the current status for the task; proceed
             # accordingly.
@@ -225,9 +237,11 @@ class CylcStatus:
             # task; proceed accordingly.
             try:
                 seconds = datetime_interface.elapsed_seconds(
-                    start_datestr=start, stop_datestr=stop,
+                    start_datestr=start,
+                    stop_datestr=stop,
                     start_frmttyp=timestamp_interface.Y_m_dTHMSZ,
-                    stop_frmttyp=timestamp_interface.Y_m_dTHMSZ)
+                    stop_frmttyp=timestamp_interface.Y_m_dTHMSZ,
+                )
 
             except TypeError:
                 seconds = str()
@@ -235,21 +249,27 @@ class CylcStatus:
             # Define the time attributes for the respective task;
             # proceed accordingly.
             cycle = datetime_interface.datestrupdate(
-                datestr=cycle, in_frmttyp=timestamp_interface.YmdTHMZ,
-                out_frmttyp=timestamp_interface.YmdTHMZ)
+                datestr=cycle,
+                in_frmttyp=timestamp_interface.YmdTHMZ,
+                out_frmttyp=timestamp_interface.YmdTHMZ,
+            )
 
             try:
                 start = datetime_interface.datestrupdate(
-                    datestr=start, in_frmttyp=timestamp_interface.Y_m_dTHMSZ,
-                    out_frmttyp=timestamp_interface.INFO)
+                    datestr=start,
+                    in_frmttyp=timestamp_interface.Y_m_dTHMSZ,
+                    out_frmttyp=timestamp_interface.INFO,
+                )
 
             except TypeError:
                 start = str()
 
             try:
                 stop = datetime_interface.datestrupdate(
-                    datestr=stop, in_frmttyp=timestamp_interface.Y_m_dTHMSZ,
-                    out_frmttyp=timestamp_interface.INFO)
+                    datestr=stop,
+                    in_frmttyp=timestamp_interface.Y_m_dTHMSZ,
+                    out_frmttyp=timestamp_interface.INFO,
+                )
 
             except TypeError:
                 stop = str()
@@ -270,7 +290,8 @@ class CylcStatus:
         # table.
         for (cylc_app, _) in cylc_stats_dict.items():
             cylc_stats = parser_interface.dict_key_value(
-                dict_in=cylc_stats_dict, key=cylc_app)
+                dict_in=cylc_stats_dict, key=cylc_app
+            )
 
             row = [cylc_stats[idx] for idx in range(4)]
             row.insert(0, cylc_app)
@@ -330,8 +351,9 @@ class CylcStatus:
 
                 # Compute the statistical attributes for the
                 # respective application
-                seconds_list = numpy.array(
-                    list(filter(None, seconds_list))).astype(float)
+                seconds_list = numpy.array(list(filter(None, seconds_list))).astype(
+                    float
+                )
                 mean = numpy.mean(seconds_list)
                 median = numpy.median(seconds_list)
                 vari = numpy.sqrt(numpy.var(seconds_list))
@@ -382,7 +404,8 @@ class CylcStatus:
             # Read the contents of the respective Cylc engine
             # application database table.
             cylc_table_dict = sqlite3_interface.read_table(
-                path=self.options_obj.database_path, table_name=cylc_table)
+                path=self.options_obj.database_path, table_name=cylc_table
+            )
 
             # Build the Python dictionary.
             for (element, _) in cylc_table_dict.items():
@@ -393,7 +416,8 @@ class CylcStatus:
 
             # Update the local Python object.
             database_obj = parser_interface.object_setattr(
-                object_in=database_obj, key=cylc_table, value=table_parse_dict)
+                object_in=database_obj, key=cylc_table, value=table_parse_dict
+            )
 
         return database_obj
 
@@ -433,15 +457,15 @@ class CylcStatus:
         reset = colorama.Back.RESET
 
         # Status of tasks which have succeeded.
-        if status.lower() == 'succeeded':
+        if status.lower() == "succeeded":
             color = colorama.Back.CYAN
 
         # Status of tasks that are currently running.
-        elif status.lower() == 'running':
+        elif status.lower() == "running":
             color = colorama.Back.GREEN
 
         # Status of tasks that have failed.
-        elif status.lower() == 'failed':
+        elif status.lower() == "failed":
             color = colorama.Back.RED
 
         # All other status returns.
@@ -450,7 +474,7 @@ class CylcStatus:
 
         # Assign the table cell color with respect to the task status.
         if color is not None:
-            status = (color+status+reset)
+            status = color + status + reset
 
         return status
 
@@ -483,13 +507,15 @@ class CylcStatus:
         """
 
         # Define the current timestamp.
-        current_date = datetime_interface.current_date(
-            frmttyp=timestamp_interface.INFO)
-        current_date_str = (f"\n\nLast Updated: {current_date}\n")
+        current_date = datetime_interface.current_date(frmttyp=timestamp_interface.INFO)
+        current_date_str = f"\n\nLast Updated: {current_date}\n"
 
         # Define the generic table attributes.
-        table_kwargs = {'tablefmt': 'fancy_grid', 'numalign': 'center', 'stralign':
-                        'center'}
+        table_kwargs = {
+            "tablefmt": "fancy_grid",
+            "numalign": "center",
+            "stralign": "center",
+        }
 
         # Write the respective table accordingly.
         if run_stats:
@@ -499,11 +525,18 @@ class CylcStatus:
             output_file = self.stats_output_file
 
             # Define the tabulate attributes.
-            headers = ['Task', 'Mean Run Time (s)', 'Median Run Time (s)',
-                       'Run Time Variability (s)', 'Total Number of Executions']
-            disclaimer = ('\n\nCAUTION: Run-time statistics may not be accurate '
-                          'representations of certain tasks depending upon the '
-                          'user experiment configuration.')
+            headers = [
+                "Task",
+                "Mean Run Time (s)",
+                "Median Run Time (s)",
+                "Run Time Variability (s)",
+                "Total Number of Executions",
+            ]
+            disclaimer = (
+                "\n\nCAUTION: Run-time statistics may not be accurate "
+                "representations of certain tasks depending upon the "
+                "user experiment configuration."
+            )
 
         if not run_stats:
 
@@ -512,8 +545,15 @@ class CylcStatus:
             output_file = self.status_output_file
 
             # Define the tabulate attributes.
-            headers = ['Cycle', 'Task', 'Status', 'Start Time', 'Stop Time',
-                       'Run Time (s)', 'Attempts']
+            headers = [
+                "Cycle",
+                "Task",
+                "Status",
+                "Start Time",
+                "Stop Time",
+                "Run Time (s)",
+                "Attempts",
+            ]
 
         # Write the table.
         table_obj = tabulate.tabulate(table, headers, **table_kwargs)
@@ -527,17 +567,16 @@ class CylcStatus:
         # Write the respective table to the specified output file
         # path.
         if self.to_output:
-            msg = (
-                f"The output file containing Cylc task information is {output_file}.")
+            msg = f"The output file containing Cylc task information is {output_file}."
             self.logger.info(msg=msg)
 
             # Write the respective table to the specified output file;
             # proceed accordingly.
-            with open(output_file, "w", encoding="utf-8") as f:
-                f.write(table_obj)
+            with open(output_file, "w", encoding="utf-8") as file:
+                file.write(table_obj)
                 if run_stats:
-                    f.write("\n" + disclaimer)
-                f.write(current_date_str)
+                    file.write("\n" + disclaimer)
+                file.write(current_date_str)
 
     def run(self) -> None:
         """
@@ -588,7 +627,7 @@ class CylcStatusError(Error):
 # ----
 
 
-@ msg_except_handle(CylcStatusError)
+@msg_except_handle(CylcStatusError)
 def __error__(msg: str) -> None:
     """
     Description
@@ -640,9 +679,7 @@ def main() -> None:
     """
 
     # Define the schema attributes.
-    cls_schema = {"database_path": str,
-                  "output_path": str,
-                  "to_output": bool}
+    cls_schema = {"database_path": str, "output_path": str, "to_output": bool}
 
     # Collect the command line arguments.
     script_name = os.path.basename(__file__)
