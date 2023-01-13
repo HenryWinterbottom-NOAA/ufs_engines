@@ -167,7 +167,7 @@ CAUTION: Run-time statistics may not be accurate representations of certain task
 Last Updated: 16:44:54 UTC 13 January 2023
 ~~~
 
-The `cylc_statur.py` application can also be run within the Singularity
+The `cylc_status.py` application can also be run within the Singularity
 container noted above as follows.
 
 ~~~
