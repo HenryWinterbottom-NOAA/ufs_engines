@@ -65,7 +65,7 @@ user@host:$ python cylc_status.py --<database_path> --<output_path> --<to_output
 ~~~
 
 In the above example `<database_path>` is the full-path to the Cylc
-engine worklow application SQLite3 database file. This file is
+engine workflow application SQLite3 database file. This file is
 typically found beneath
 `/path/to/experiment/cylc/<experiment_name>/cylc-suite.db` or
 `/path/to/experiment/cylc/<experiment_name>/log/db`. The
