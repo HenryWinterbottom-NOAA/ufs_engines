@@ -32,7 +32,7 @@ Cylc engine application experiment workflow is as follows.
 
 | Cold-start Cycles | Warm-start Cycles | Final Cycle | 
 | :-------------: | :-------------: | :-------------: |
-| ![](.figures/CYLC_ENGINE.graph.initial.png) | ![](.figures/CYLC_ENGINE.graph.cycling.png | ![](.figures/CYLC_ENGINE.graph.final.png |
+| ![](.figures/CYLC_ENGINE.graph.initial.png) | ![](.figures/CYLC_ENGINE.graph.cycling.png) | ![](.figures/CYLC_ENGINE.graph.final.png) |
 
 </div>
 
