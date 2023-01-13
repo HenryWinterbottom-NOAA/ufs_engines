@@ -77,7 +77,7 @@ tasks. Finally, to release or run jobs that had been put on hold, do
 the following.
 
 ~~~
-`user@host:$ cylc release SPAM`
+user@host:$ cylc release SPAM
 ~~~
 
 ### Stopping an Active Cylc Engine Workflow Suite

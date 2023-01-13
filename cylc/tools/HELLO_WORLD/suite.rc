@@ -1,0 +1,80 @@
+#!Jinja2
+
+# =========================================================================
+
+# Jinja2: demo/cylc/suite.rc
+
+# Email: henry.winterbottom@noaa.gov
+
+# This program is free software: you can redistribute it and/or modify
+# it under the terms of the respective public license published by the
+# Free Software Foundation and included with the repository within
+# which this application is contained.
+
+# This program is distributed in the hope that it will be useful, but
+# WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+
+# =========================================================================
+
+# Description
+# -----------
+
+# This Jinja2-formatted file contains Cylc engine suite configuration;
+# this file is provided as an example; this file is (most likely)
+# generic for all Cylc engine applications.
+
+# Notes
+# -----
+
+# Additional documentation regarding how to configure Cylc engine
+# suites can be found at https://tinyurl.com/cylc-suite.
+
+# The Cylc engine suite defined below is specific to the UFS engines
+# Cylc applications and should not be modified or changed.
+
+# Author
+# ------
+# Henry R. Winterbottom
+
+# Date
+# ----
+# 08 January 2023
+
+# History
+# -------
+# 2023-01-08: Henry Winterbottom -- Original version.
+
+# ----
+
+# Define the Cylc suite environment
+%include experiment.rc
+%include platform.rc
+%include tasks.rc
+
+# Define the Cylc timing attributes.
+[cylc]
+	UTC mode = True
+
+# Build the Cylc workflow period of interest and the application
+# dependency attributes.
+[scheduling]
+
+	# The experiment period of interest.	
+	initial cycle point = {{ INITIAL_CYCLE_POINT }}
+	final cycle point = {{ FINAL_CYCLE_POINT }}
+
+	# Include the user experiment applications and dependencies.
+	{% include 'graph.rc' %}
+
+# Define the Cylc workflow tasks.
+[runtime]
+
+	# Define the environment variables to be inherited by all
+        # tasks.
+	[[root]]
+		[[[environment]]]
+			{% include 'environment.rc' %}
+
+	# Define all workflow tasks.
+	{% include 'runtime.rc' %}

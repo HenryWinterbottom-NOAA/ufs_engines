@@ -1,0 +1,11 @@
+#!Jinja2
+{% set INITIAL_CYCLE_POINT = "20160101T000000" %}
+{% set FINAL_CYCLE_POINT = "20160101T120000" %}
+{% set CYCLE_INTERVAL = "PT21600S" %}
+{% set CYLCemail = "Henry.Winterbottom@noaa.gov" %}
+{% set CYLCexptname = "HELLO_WORLD" %}
+{% set CYLCmailevents = "failed" %}
+{% set CYLCworkpath = "/scratch2/BMC/gsienkf/Henry.Winterbottom/work" %}
+{% set EXPTenv = "/scratch2/BMC/gsienkf/Henry.Winterbottom/ufs_engines/cylc/../demo/cylc/environment.yaml" %}
+{% set EXPThomepath = "/scratch2/BMC/gsienkf/Henry.Winterbottom/ufs_engines/cylc/../" %}
+{% set EXPTworkpath = "/scratch2/BMC/gsienkf/Henry.Winterbottom/work" %}
