@@ -1,5 +1,13 @@
 # Cylc Engine Workflow Application Evaluation Tools
 
+A Singularity container is provided for all of the tools described
+below and instructions are provided for the respective tools. The
+Singularity container may be collected as follows.
+
+~~~
+user@host:$ singularity pull --arch amd64 library://noaaufsrnr/noaaufsrnr/ubuntu18.04-miniconda_ufs_pyutils.cylc_tools:latest CYLC_TOOLS.sif
+~~~
+
 ### Cylc Engine Workflow Application Graph
 
 The `cylc_graph.py` application allows a user to create an image of
@@ -35,6 +43,13 @@ Cylc engine application experiment workflow is as follows.
 | ![](.figures/CYLC_ENGINE.graph.initial.png) | ![](.figures/CYLC_ENGINE.graph.cycling.png) | ![](.figures/CYLC_ENGINE.graph.final.png) |
 
 </div>
+
+The `cylc_graph.py` application can also be run within the Singularity
+container noted above as follows.
+
+~~~
+user@host:$ singularity exec CYLC_TOOLS.sif --bind /path/to/cylc/<experiment_name/:/run --bind /path/to/ufs_engines/cylc/tools/:/tools --bind  /path/to/ufs_engines/cylc/output/:/output /miniconda/bin/python /tools/cylc_graph.py --suite_path=/run --output_path=/output
+~~~
 
 ### Cylc Engine Workflow Application Status
 
@@ -150,6 +165,13 @@ Last Updated: 16:44:54 UTC 13 January 2023
 CAUTION: Run-time statistics may not be accurate representations of certain tasks depending upon the user experiment configuration.
 
 Last Updated: 16:44:54 UTC 13 January 2023
+~~~
+
+The `cylc_statur.py` application can also be run within the Singularity
+container noted above as follows.
+
+~~~
+user@host:$ singularity exec CYLC_TOOLS.sif --bind /path/to/cylc/<experiment_name/:/run --bind /path/to/ufs_engines/cylc/tools/:/tools --bind  /path/to/ufs_engines/cylc/output/:/output /miniconda/bin/python /tools/cylc_status.py --database_path=/run/log/db --output_path=/output
 ~~~
 
 #
