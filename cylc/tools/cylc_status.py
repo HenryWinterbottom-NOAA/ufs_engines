@@ -95,7 +95,6 @@ History
 
 # ----
 
-import json
 import operator
 import os
 import sys
@@ -166,7 +165,8 @@ class CylcStatus:
         )
 
         # Format the boolean string provided upon entry.
-        self.to_output = json.loads(self.options_obj.to_output.lower())
+        self.to_output = parser_interface.str_to_bool(
+            self.options_obj.to_output.lower())
 
     def build_tables(self, database_obj: object) -> Tuple[list, list, list]:
         """
@@ -507,7 +507,8 @@ class CylcStatus:
         """
 
         # Define the current timestamp.
-        current_date = datetime_interface.current_date(frmttyp=timestamp_interface.INFO)
+        current_date = datetime_interface.current_date(
+            frmttyp=timestamp_interface.INFO)
         current_date_str = f"\n\nLast Updated: {current_date}\n"
 
         # Define the generic table attributes.
