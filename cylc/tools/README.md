@@ -1,5 +1,30 @@
 # Cylc Engine Workflow Application Evaluation Tools
 
+### Cylc Engine Workflow Application Graph
+
+The `cylc_graph.py` application allows a user to create an image of
+the Cylc engine application workflow suite. The application may be
+executed as follows.
+
+~~~
+user@host:$ python cylc_graph.py --<suite_path> --<output_path>
+~~~
+
+In the above example, the `<suite_path>` is the path below which the
+Cylc engine application workflow suite exists.. This is typically
+found beneath `/path/to/experiment/cylc/<experiment_name>/`. The
+`<output_path>` argument is the path to where the Cylc engine
+application workflow suite images will be created. The following are
+images generated from the `HELLO_WORLD` example.
+
+<div align="center">
+
+| Cold-start Cycles | Warm-start Cycles | Final Cycle | 
+| :-------------: | :-------------: | :-------------: |
+| ![](./figures/HELLO_WORLD.graph.initial.png) | ![](./figures/HELLO_WORLD.graph.cycling.png) | ![](./figures/HELLO_WORLD.graph.final.png) |
+
+</div>
+
 ### Cylc Engine Workflow Application Status
 
 The `cylc_status.py` application allows a user to parse a Cylc engine
@@ -15,10 +40,12 @@ user@host:$ python cylc_status.py --<database_path> --<output_path> --<to_output
 
 In the above example `<database_path>` is the full-path to the Cylc
 engine worklow application SQLite3 database file. This file is
-typically found beneath `cylc/<experiment_name>/cylc-suite.db` or
-`cylc/<experiment_name>/log/db`. The `<output_path>` is the path to
-which the status and diagnostic statistics tables will be written if
-`<to_output>` is `True`.
+typically found beneath
+`/path/to/experiment/cylc/<experiment_name>/cylc-suite.db` or
+`/path/to/experiment/cylc/<experiment_name>/log/db`. The
+`<output_path>` argument is the path to which the status and
+diagnostic statistics tables will be written if the `<to_output>`
+argument is `True`.
 
 Examples of the status and diagnostic statistics are the respectively
 following.
