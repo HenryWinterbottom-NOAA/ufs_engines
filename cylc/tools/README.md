@@ -21,7 +21,7 @@ images generated from the `HELLO_WORLD` example.
 
 | Cold-start Cycles | Warm-start Cycles | Final Cycle | 
 | :-------------: | :-------------: | :-------------: |
-| ![](./figures/HELLO_WORLD.graph.initial.png) | ![](./figures/HELLO_WORLD.graph.cycling.png) | ![](./figures/HELLO_WORLD.graph.final.png) |
+| ![](./figures/hello_world.graph.initial.png) | ![](./figures/HELLO_WORLD.graph.cycling.png) | ![](./figures/HELLO_WORLD.graph.final.png) |
 
 </div>
 
