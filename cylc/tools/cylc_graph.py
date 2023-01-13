@@ -118,6 +118,14 @@ class CylcGraph:
     This is the base-class object for all Cylc engine Cylc engine
     graph applications.
 
+    Parameters
+    ----------
+
+    options_obj: object
+
+        A Python object containing the command line argument
+        attributes.
+
     """
 
     def __init__(self, options_obj: object):

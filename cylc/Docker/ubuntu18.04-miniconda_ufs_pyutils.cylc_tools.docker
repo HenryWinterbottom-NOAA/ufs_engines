@@ -88,7 +88,8 @@ RUN git clone https://github.com/cylc/cylc.git /cylc-flow && \
 # ----
 
 # Patch the Miniconda install for the respective application.
-RUN /miniconda/bin/pip install tabulate
+RUN /miniconda/bin/pip install colorama && \
+    /miniconda/bin/pip install tabulate 
 
 # ----
 
