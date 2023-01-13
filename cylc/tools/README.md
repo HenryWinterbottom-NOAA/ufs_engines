@@ -25,6 +25,17 @@ images generated from the `HELLO_WORLD` example.
 
 </div>
 
+More complicated Cylc engine application workflow suite images, from a
+Cylc engine application experiment workflow is as follows.
+
+<div align="center">
+
+| Cold-start Cycles | Warm-start Cycles | Final Cycle | 
+| :-------------: | :-------------: | :-------------: |
+| ![](.figures/CYLC_ENGINE.graph.initial.png) | ![](.figures/CYLC_ENGINE.graph.cycling.png | ![](.figures/CYLC_ENGINE.graph.final.png |
+
+</div>
+
 ### Cylc Engine Workflow Application Status
 
 The `cylc_status.py` application allows a user to parse a Cylc engine
