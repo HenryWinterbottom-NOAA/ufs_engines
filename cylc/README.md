@@ -15,7 +15,7 @@ user@host:$ git checkout tags/7.9.3
 user@host:$ export PATH=/path/to/cylc/bin:$PATH
 ~~~
 
-The Cylc engine has been installed for supportted RDHPCS platforms and
+The Cylc engine has been installed for supported RDHPCS platforms and
 may be loaded for the respective platforms as follows.
 
 ### RDHPCS-Hera
