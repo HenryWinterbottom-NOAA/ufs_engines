@@ -10,7 +10,7 @@ on:
 
 env:
   DOCKER_BUILD_CLIENT: "sylabsio/scs-build"
-  DEF_FILE: "noaaufsrnr/ubuntu20.04.hello_world" # REPLACE with Def file in a repo.
+  DEF_FILE: ".github/workflows/test.sylabs" # REPLACE with Def file in a repo.
   OUTPUT_SIF: "test.sif" # REPLACE with SIF name
   LIBRARY_PATH: "library:noaaufsrnr/noaaufsrnr/test:latest" # REPLACE with library path to store sif.
 
