@@ -1,0 +1,134 @@
+# =========================================================================
+
+# Docker Recipe File: Docker/ubuntu20.04-miniconda_ufs_pyutils.cylc_tools.docker
+
+# Email: henry.winterbottom@noaa.gov
+
+# This program is free software: you can redistribute it and/or modify
+# it under the terms of the respective public license published by the
+# Free Software Foundation and included with the repository within
+# which this application is contained.
+
+# This program is distributed in the hope that it will be useful, but
+# WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+
+# =========================================================================
+
+# Description
+# -----------
+
+#    This Docker recipe file builds a Docker image containing the
+#    Ubuntu 20.04 base-Linux platform and ufs_pyutils package required
+#    for the respective cylc_tools applications.
+
+# Docker Instructions
+# -------------------
+
+#    The Docker container image should be built as follows.
+
+#    user@host:$ docker build -f ubuntu20.04-miniconda_ufs_pyutils.cylc_tools.docker --tag ubuntu20.04-miniconda_ufs_pyutils.cylc_tools:<TAG> .
+
+#    user@host:$ docker tag ubuntu20.04-miniconda_ufs_pyutils.cylc_tools:<TAG> <DOCKER LOGIN>/ubuntu20.04-miniconda_ufs_pyutils.cylc_tools:<TAG>
+
+#    user@host:$ docker push <DOCKER LOGIN>/ubuntu20.04-miniconda_ufs_pyutils.cylc_tools:<TAG>
+
+#    where <TAG> is the tag identifier/name for the respective image
+#    and <DOCKER LOGIN> is the user Docker Hub login name.
+
+# Singularity Instructions
+# ------------------------
+
+#    To build the respective Singularity image file (i.e., container),
+#    do as follows.
+
+#    user@host:$ singularity build ubuntu20.04-miniconda_ufs_pyutils.cylc_tools_<TAG>.sif docker://noaaufsrnr/ubuntu20.04-miniconda_ufs_pyutils.cylc_tools:<TAG>
+
+#    In order to execute and application within the Singularity
+#    container, do as follows.
+
+#    user@host:$ singularity exec ubuntu20.04-miniconda_ufs_pyutils.cylc_tools_<TAG>.sif <X> <Y>
+
+#    where <X> is an executable or application within the Singularity
+#    container (e.g., Python) and <Y> is an application exist on the
+#    local host disk (i.e., a Python script/application).
+
+# Author(s)
+# ---------
+
+#    Henry R. Winterbottom; 10 January 2023 
+
+# History
+# -------
+
+#    2023-01-10: Henry R. Winterbottom -- Initial implementation.
+
+# Base Image Attributes
+# ---------------------
+
+#    Image and Tag: noaaufsrnr/ubuntu20.04-miniconda.ufs_pyutils:latest
+
+# Latest Container Image Downloads
+# --------------------------------
+
+#    Docker Hub: docker pull noaaufsrnr/ubuntu20.04-miniconda_ufs_pyutils.cylc_tools:<TAG>
+
+#    Sylabs: singularity pull library://noaaufsrnr/noaaufsrnr/ubuntu20.04-miniconda_ufs_pyutils.cylc_tools:<TAG>
+
+# ----
+
+# Define the container base information.
+FROM noaaufsrnr/ubuntu20.04-miniconda-ufs_pyutils:latest
+MAINTAINER "Henry R. Winterbottom (Henry.Winterbottom@noaa.gov)"
+
+# ----
+
+# Build the Linux platform.
+ARG DEBIAN_FRONTEND=noninteractive
+ENV TZ=Europe/Moscow
+RUN apt-get update -y && \
+    apt-get upgrade -y && \
+    apt-get install -y tzdata && \
+    apt-get install -y python2 && \
+    apt-get install -y python-dev && \
+    apt-get install -y curl && \
+    curl https://bootstrap.pypa.io/pip/2.7/get-pip.py --output get-pip.py && \
+    python2 get-pip.py && \
+    rm get-pip.py >& /dev/null && \
+    apt-get install -y libcanberra-gtk-module && \
+    apt-get install -y libcanberra-gtk3-module && \
+    apt-get install -y pkg-config && \
+    apt-get install -y graphviz && \
+    apt-get install -y graphviz-dev && \
+    apt-get install -y libgraphviz-dev && \
+    apt-get install -y sqlite && \
+    wget -c http://archive.ubuntu.com/ubuntu/pool/universe/p/pygtk/python-gtk2_2.24.0-5.1ubuntu2_amd64.deb && \
+    wget -c http://archive.ubuntu.com/ubuntu/pool/universe/p/pygtk/python-gtk2-dev_2.24.0-5.1ubuntu2_all.deb && \
+    apt-get install -y ./python-gtk2-dev_2.24.0-5.1ubuntu2_all.deb ./python-gtk2_2.24.0-5.1ubuntu2_amd64.deb && \
+    python2 -m pip install pygraphviz && \
+    apt-get install -y imagemagick && \
+    apt-get install -y php-imagick && \
+    apt-get install -y packagekit-gtk3-module && \
+    apt-get install -y at && \
+    apt-get install -y sudo && \
+    apt-get install -y systemd && \
+    apt-get install -y vim && \
+    rm -rf /var/lib/apt/lists/*
+
+# ----
+
+# Download and setup Cylc.
+RUN git clone https://github.com/cylc/cylc.git /cylc-flow && \
+    cd cylc-flow && \
+    git checkout tags/7.9.3 2> /dev/null
+
+# ----
+
+# Patch the Miniconda install for the respective application.
+RUN /miniconda/bin/pip install colorama && \
+    /miniconda/bin/pip install tabulate 
+
+# ----
+
+# Define the container environment.
+ENV PATH="/cylc-flow/bin:${PATH}"
