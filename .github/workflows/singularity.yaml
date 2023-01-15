@@ -1,9 +1,6 @@
 name: Singularity
-on: [workflow_dispatch]
-     
-#  push:
-#    branches:
-#      - "main"
+on:
+     workflow_dispatch:
 env:
   DOCKER_BUILD_CLIENT: "sylabsio/scs-build"
   DEF_FILE: "alpine.def" # REPLACE with Def file in a repo.

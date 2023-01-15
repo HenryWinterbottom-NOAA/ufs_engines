@@ -10,7 +10,7 @@ on:
 
 env:
   DOCKER_BUILD_CLIENT: "sylabsio/scs-build"
-  DEF_FILE: ".github/workflows/test.sylabs" # REPLACE with Def file in a repo.
+  DEF_FILE: "./cylc/Docker/ubuntu20.04-miniconda_ufs_pyutils.cylc_tools.docker" # REPLACE with Def file in a repo.
   OUTPUT_SIF: "test.sif" # REPLACE with SIF name
   LIBRARY_PATH: "library:noaaufsrnr/noaaufsrnr/test:latest" # REPLACE with library path to store sif.
 
