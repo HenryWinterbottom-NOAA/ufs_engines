@@ -10,9 +10,9 @@ on:
 
 env:
   DOCKER_BUILD_CLIENT: "sylabsio/scs-build"
-  DEF_FILE: "alpine.def" # REPLACE with Def file in a repo.
-  OUTPUT_SIF: "alpine.sif" # REPLACE with SIF name
-  LIBRARY_PATH: "library:<PROJECT>/<REPO>/<IMG>:<TAG>" # REPLACE with library path to store sif.
+  DEF_FILE: "noaaufsrnr/ubuntu20.04.hello_world" # REPLACE with Def file in a repo.
+  OUTPUT_SIF: "test.sif" # REPLACE with SIF name
+  LIBRARY_PATH: "library:noaaufsrnr/noaaufsrnr/test:latest" # REPLACE with library path to store sif.
 
 jobs:
 
