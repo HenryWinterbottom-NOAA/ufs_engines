@@ -86,6 +86,6 @@ jobs:
     - name: Build the Docker images.
       run: |
            cd $GITHUB_WORKSPACE/ufs_engines/cylc/Docker
-           docker build -f ubuntu20.04-miniconda_ufs_pyutils.cylc_tools.docker --tag ubuntu20.04-miniconda_ufs_pyutils.cylc_tools:latest .
+           docker build -f ubuntu20.04-miniconda-ufs_pyutils.cylc.docker --tag ubuntu20.04-miniconda-ufs_pyutils.cylc:latest .
 
            
