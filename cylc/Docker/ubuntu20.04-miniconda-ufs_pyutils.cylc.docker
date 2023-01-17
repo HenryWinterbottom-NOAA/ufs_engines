@@ -1,6 +1,6 @@
 # =========================================================================
 
-# Docker Recipe File: Docker/ubuntu20.04-miniconda_ufs_pyutils.cylc_tools.docker
+# Docker Recipe File: Docker/ubuntu20.04-miniconda-ufs_pyutils.cylc.docker
 
 # Email: henry.winterbottom@noaa.gov
 
@@ -34,11 +34,11 @@
 
 #    The Docker container image should be built as follows.
 
-#    user@host:$ docker build -f ubuntu20.04-miniconda_ufs_pyutils.cylc_tools.docker --tag ubuntu20.04-miniconda_ufs_pyutils.cylc_tools:<TAG> .
+#    user@host:$ docker build -f ubuntu20.04-miniconda-ufs_pyutils.cylc.docker --tag ubuntu20.04-miniconda-ufs_pyutils.cylc:<TAG> .
 
-#    user@host:$ docker tag ubuntu20.04-miniconda_ufs_pyutils.cylc_tools:<TAG> <DOCKER LOGIN>/ubuntu20.04-miniconda_ufs_pyutils.cylc_tools:<TAG>
+#    user@host:$ docker tag ubuntu20.04-miniconda-ufs_pyutils.cylc:<TAG> <DOCKER LOGIN>/ubuntu20.04-miniconda-ufs_pyutils.cylc:<TAG>
 
-#    user@host:$ docker push <DOCKER LOGIN>/ubuntu20.04-miniconda_ufs_pyutils.cylc_tools:<TAG>
+#    user@host:$ docker push <DOCKER LOGIN>/ubuntu20.04-miniconda-ufs_pyutils.cylc:<TAG>
 
 #    where <TAG> is the tag identifier/name for the respective image
 #    and <DOCKER LOGIN> is the user Docker Hub login name.
@@ -61,7 +61,7 @@
 # Container Image Downloads
 # -------------------------
 
-#    Docker Hub: docker pull noaaufsrnr/ubuntu20.04-miniconda_ufs_pyutils.cylc_tools:<TAG>
+#    Docker Hub: docker pull noaaufsrnr/ubuntu20.04-miniconda-ufs_pyutils.cylc:<TAG>
 
 # ----
 

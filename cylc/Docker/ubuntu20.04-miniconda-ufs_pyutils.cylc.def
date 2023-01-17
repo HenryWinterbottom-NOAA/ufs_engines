@@ -1,6 +1,6 @@
 # =========================================================================
 
-# Singularity Definition File: Docker/ubuntu20.04-miniconda-ufs_pyutils.def
+# Singularity Definition File: Docker/ubuntu20.04-miniconda-ufs_pyutils.cylc.def
 
 # Email: henry.winterbottom@noaa.gov
 
@@ -35,12 +35,12 @@
 #    To build the respective Singularity image file (i.e., container),
 #    do as follows.
 
-#    user@host:$ singularity build ubuntu20.04-miniconda_ufs_pyutils.cylc_tools_<TAG>.sif ubuntu20.04-miniconda_ufs_pyutils.cylc_tools.def
+#    user@host:$ singularity build ubuntu20.04-miniconda-ufs_pyutils.cylc_<TAG>.sif ubuntu20.04-miniconda-ufs_pyutils.cylc.def
 
 #    In order to execute and application within the Singularity
 #    container, do as follows.
 
-#    user@host:$ singularity exec ubuntu20.04-miniconda_ufs_pyutils.cylc_tools_<TAG>.sif <X> <Y>
+#    user@host:$ singularity exec ubuntu20.04-miniconda-ufs_pyutils.cylc_<TAG>.sif <X> <Y>
 
 #    where <X> is an executable or application within the Singularity
 #    container (e.g., Python) and <Y> is an application exist on the
@@ -59,7 +59,7 @@
 # Base Image Attributes
 # ---------------------
 
-#    Image and Tag: noaaufsrnr/ubuntu20.04-miniconda_ufs_pyutils.cylc_tools:latest
+#    Image and Tag: noaaufsrnr/ubuntu20.04-miniconda-ufs_pyutils.cylc:latest
 
 # Container Image Downloads
 # -------------------------
@@ -70,7 +70,7 @@
 
 # Define the Singularity builder instructions.
 Bootstrap: docker
-From: noaaufsrnr/ubuntu20.04-miniconda_ufs_pyutils.cylc_tools:latest
+From: noaaufsrnr/ubuntu20.04-miniconda-ufs_pyutils.cylc:latest
 
 %labels
     Author Henry R. Winterbottom
@@ -80,7 +80,7 @@ From: noaaufsrnr/ubuntu20.04-miniconda_ufs_pyutils.cylc_tools:latest
 %help
     The Singularity container application may be executed as follows:
 
-    user@host: singularity exec ubuntu20.04-miniconda_ufs_pyutils.cylc_tools_<TAG>.sif <X> <Y>
+    user@host: singularity exec ubuntu20.04-miniconda-ufs_pyutils.cylc_<TAG>.sif <X> <Y>
 
     where <X> is an executable or application within the Singularity
     container (e.g., Python) and <Y> is an application exist on the
