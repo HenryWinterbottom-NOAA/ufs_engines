@@ -6,6 +6,7 @@
 [![](https://img.shields.io/badge/dependencies-cylc--flow-orange)](https://github.com/cylc/cylc-flow/releases/tag/7.9.3)
 
 [![Python Coding Standards](https://github.com/HenryWinterbottom-NOAA/ufs_engines/actions/workflows/pycodestyle.yaml/badge.svg)](https://github.com/HenryWinterbottom-NOAA/ufs_engines/actions/workflows/pycodestyle.yaml)
+[![Docker Images](https://github.com/HenryWinterbottom-NOAA/ufs_engines/actions/workflows/containers.yaml/badge.svg)](https://github.com/HenryWinterbottom-NOAA/ufs_engines/actions/workflows/containers.yaml)
 
 # Disclaimer
 
