@@ -1,0 +1,20 @@
+# The experiment applications and dependencies.
+[[dependencies]]
+
+        # Define the initial forecast cycle (e.g., cold-start) tasks.
+        [[[R1]]]
+                graph = """
+		      	<COLD_START_TASKS>
+		"""
+        # Define the warm-start (e.g., cycling) tasks.
+        [[[{{ CYCLE_INTERVAL }}]]]
+                graph = """
+		      	<WARM_START_TASKS>
+		"""
+        # Define tasks to completed following the final forecast
+        # warm-start cycle.
+       	[[[R1/$]]]
+                graph = """
+                       <FINAL_CYCLE_TASKS>
+                """
+		      
