@@ -30,26 +30,8 @@ Description
     suite graph images; all Cylc versions <= 7.9.3 are supported,
     however Cylc versions >= 8.x.x is not supported.
 
-Classes
--------
-
-    CylcGraph(options_obj)
-
-        This is the base-class object for all Cylc engine Cylc engine
-        graph applications.
-
-    CylcGraphError(msg)
-
-        This is the base-class for all exceptions; it is a sub-class
-        of Error.
-
 Functions
 ---------
-
-    __error__(msg)
-
-        This function is the exception handler for the respective
-        module.
 
     main()
 
