@@ -125,7 +125,6 @@ class CylcTools:
         self.logger = Logger()
         self.options_obj = options_obj
 
-
 # ----
 
 
@@ -138,7 +137,6 @@ class CylcToolsError(Error):
         of Error.
 
     """
-
 
 # ----
 

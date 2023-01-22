@@ -65,10 +65,13 @@ History
 
 # ----
 
+import os
+
 from collections import OrderedDict
 from typing import Union
 
 from confs.yaml_interface import YAML
+from tools import fileio_interface
 from tools import parser_interface
 
 from cylc_tools import CylcTools
@@ -490,7 +493,8 @@ class CylcWorkflow(CylcTools):
                     task_list.append(task_str)
 
             if len(task_list) > 0:
-                self.warm_start_dict[task] = "& ".join(set(task_list)) + f"=> {task}"
+                self.warm_start_dict[task] = "& ".join(
+                    set(task_list)) + f"=> {task}"
 
         if not warm_start:
             pass
@@ -537,9 +541,11 @@ class CylcWorkflow(CylcTools):
 
         # Write the Cylc workflow engine graph.
         # msg = f"Writing Cylc workflow engine graph to file {yaml_path}."
+        yaml_path = os.path.join(self.options_obj.output_path, "graph.rc")
+        fileio_interface.dirpath_tree(path=os.path.dirname(yaml_path))
         YAML().write_tmpl(
             yaml_dict=yaml_dict,
-            yaml_path="./graph.rc",
+            yaml_path=yaml_path,
             yaml_template=self.options_obj.graph_template,
         )
 
