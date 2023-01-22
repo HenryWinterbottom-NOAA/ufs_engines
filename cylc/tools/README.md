@@ -34,7 +34,7 @@ images generated from the `HELLO_WORLD` example.
 </div>
 
 More complicated Cylc engine application workflow suite images, from a
-Cylc engine application experiment workflow is as follows.
+Cylc engine application experiment workflow are as follows.
 
 <div align="center">
 
@@ -48,7 +48,7 @@ The `cylc_graph.py` application can also be run within the Singularity
 container noted above as follows.
 
 ~~~
-user@host:$ singularity exec CYLC_TOOLS.sif --bind /path/to/cylc/<experiment_name/:/run --bind /path/to/ufs_engines/cylc/tools/:/tools --bind  /path/to/ufs_engines/cylc/output/:/output /miniconda/bin/python /tools/cylc_graph.py --suite_path=/run --output_path=/output
+user@host:$ singularity exec CYLC_TOOLS.sif --bind /path/to/cylc/<experiment_name/:/run --bind /path/to/ufs_engines/cylc/tools/:/tools --bind  /path/to/ufs_engines/cylc/output/:/output /miniconda/bin/python /tools/cylc_graph.py --suite_path /run --output_path /output
 ~~~
 
 ### Cylc Engine Workflow Application Status
@@ -171,7 +171,7 @@ The `cylc_status.py` application can also be run within the Singularity
 container noted above as follows.
 
 ~~~
-user@host:$ singularity exec CYLC_TOOLS.sif --bind /path/to/cylc/<experiment_name/:/run --bind /path/to/ufs_engines/cylc/tools/:/tools --bind  /path/to/ufs_engines/cylc/output/:/output /miniconda/bin/python /tools/cylc_status.py --database_path=/run/log/db --output_path=/output
+user@host:$ singularity exec CYLC_TOOLS.sif --bind /path/to/cylc/<experiment_name/:/run --bind /path/to/ufs_engines/cylc/tools/:/tools --bind  /path/to/ufs_engines/cylc/output/:/output /miniconda/bin/python /tools/cylc_status.py --database_path /run/log/db --output_path /output
 ~~~
 
 #
