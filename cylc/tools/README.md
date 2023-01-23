@@ -213,5 +213,9 @@ An example `graph.rc` file for the example above is as follows.
                 """
 ~~~
 
+DISCLAIMER: Users are adviced to check that the Cylc engine workflow graph written to `/path/to/output/graph.rc` is accurate. No guarantees are made that the generated Cylc workflow engine is (entirely) accurate.
+
+#
+
 Please direct questions to [Henry
 R. Winterbottom](mailto:henry.winterbottom@noaa.gov?subject=[UFS-Engines)
