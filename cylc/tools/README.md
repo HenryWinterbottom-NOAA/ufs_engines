@@ -34,7 +34,7 @@ images generated from the `HELLO_WORLD` example.
 </div>
 
 More complicated Cylc engine application workflow suite images, from a
-Cylc engine application experiment workflow is as follows.
+Cylc engine application experiment workflow are as follows.
 
 <div align="center">
 
@@ -48,7 +48,7 @@ The `cylc_graph.py` application can also be run within the Singularity
 container noted above as follows.
 
 ~~~
-user@host:$ singularity exec CYLC_TOOLS.sif --bind /path/to/cylc/<experiment_name/:/run --bind /path/to/ufs_engines/cylc/tools/:/tools --bind  /path/to/ufs_engines/cylc/output/:/output /miniconda/bin/python /tools/cylc_graph.py --suite_path=/run --output_path=/output
+user@host:$ singularity exec CYLC_TOOLS.sif --bind /path/to/cylc/<experiment_name/:/run --bind /path/to/ufs_engines/cylc/tools/:/tools --bind  /path/to/ufs_engines/cylc/output/:/output /miniconda/bin/python /tools/cylc_graph.py --suite_path /run --output_path /output
 ~~~
 
 ### Cylc Engine Workflow Application Status
@@ -171,8 +171,56 @@ The `cylc_status.py` application can also be run within the Singularity
 container noted above as follows.
 
 ~~~
-user@host:$ singularity exec CYLC_TOOLS.sif --bind /path/to/cylc/<experiment_name/:/run --bind /path/to/ufs_engines/cylc/tools/:/tools --bind  /path/to/ufs_engines/cylc/output/:/output /miniconda/bin/python /tools/cylc_status.py --database_path=/run/log/db --output_path=/output
+user@host:$ singularity exec CYLC_TOOLS.sif --bind /path/to/cylc/<experiment_name/:/run --bind /path/to/ufs_engines/cylc/tools/:/tools --bind  /path/to/ufs_engines/cylc/output/:/output /miniconda/bin/python /tools/cylc_status.py --database_path /run/log/db --output_path /output
 ~~~
+
+### Cylc Engine Workflow Graph Generation
+
+A Python utility to generate Cylc engine workflow graph files (i.e., `graph.rc`) is provided by `cylc_workflow.py`. To execute the application do as follows.
+
+~~~
+user@host:$ python cylc_workflow.py --<yaml_file> --<graph_template> --<output_path>
+~~~
+
+Here `yaml_file` is the path to a Cylc engine workflow configuration file. An example can be found [here](./HELLO_WORLD/workflow.yaml). The `graph_template` attribute provides a template for the construction of the Cylc engine workflow graph. An example can be found [here](./HELLO_WORLD/graph_template.rc). Finally the `output_path` attribute is to where the `graph.rc` file is to be written.
+
+An example `graph.rc` file for the example above is as follows.
+
+~~~
+# The experiment applications and dependencies.
+[[dependencies]]
+
+        # Define the initial forecast cycle (e.g., cold-start) tasks.
+        [[[R1]]]
+                graph = """
+                        HAM1c: succeed-all & ham2c: succeed => ham
+                        spam2c: succeed & SPAM1c: succeed-all => spam
+                        
+                """
+        # Define the warm-start (e.g., cycling) tasks.
+        [[[{{ CYCLE_INTERVAL }}]]]
+                graph = """
+                        spam2c: succeed & spam2p[-{{ CYCLE_INTERVAL }}]: succeed & SPAM1c: succeed-all => spam
+                        spam2p[-{{ CYCLE_INTERVAL }}]: succeed => eggs
+                        
+                """
+        # Define tasks to completed following the final forecast
+        # warm-start cycle.
+        [[[R1/$]]]
+                graph = """
+                       spam2p[-{{ CYCLE_INTERVAL }}]: succeed => eggs
+                        
+                """
+~~~
+
+The `cylc_worklow.py` application can also be run within the Singularity
+container noted above as follows.
+
+~~~
+user@host:$ singularity exec CYLC_TOOLS.sif --bind /path/to/cylc/<experiment_name/:/run --bind /path/to/ufs_engines/cylc/tools/:/tools --bind  /path/to/ufs_engines/cylc/output/:/output /miniconda/bin/python /tools/workflow_status.py --yaml_file /run/cylc_workflow.py --graph_template /run/workflow.yaml --output_path /output
+~~~
+
+DISCLAIMER: Users are adviced to check that the Cylc engine workflow graph written to `/path/to/output/graph.rc` is accurate. No guarantees are made that the generated Cylc workflow engine is (entirely) accurate.
 
 #
 

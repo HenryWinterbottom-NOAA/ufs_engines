@@ -1,0 +1,68 @@
+#!Jinja2
+
+# =========================================================================
+
+# Jinja2: demo/cylc/graph_template.rc
+
+# Email: henry.winterbottom@noaa.gov
+
+# This program is free software: you can redistribute it and/or modify
+# it under the terms of the respective public license published by the
+# Free Software Foundation and included with the repository within
+# which this application is contained.
+
+# This program is distributed in the hope that it will be useful, but
+# WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+
+# =========================================================================
+
+# Description
+# -----------
+
+# This Jinja2-formatted file contains the Cylc application/experiment
+# workflow graph template; this file is provided as an example and
+# corresponds to a Cylc graph used for the UFS reanalysis project that
+# can be found here https://github.com/NOAA-PSL/UFS-RNR.
+
+# Notes
+# -----
+
+# Cylc documentation concerning the construction of Cylc engine
+# application workflows (i.e., graphs) can be found at
+# https://tinyurl.com/cylc-graphs.
+
+# Author
+# ------
+# Henry R. Winterbottom
+
+# Date
+# ----
+# 23 January 2023
+
+# History
+# -------
+# 2023-01-23: Henry Winterbottom -- Original version.
+
+# ----
+
+# The experiment applications and dependencies.
+[[dependencies]]
+
+        # Define the initial forecast cycle (e.g., cold-start) tasks.
+        [[[R1]]]
+                graph = """
+		      	<COLD_START_TASKS>
+		"""
+        # Define the warm-start (e.g., cycling) tasks.
+        [[[{{ CYCLE_INTERVAL }}]]]
+                graph = """
+		      	<WARM_START_TASKS>
+		"""
+        # Define tasks to completed following the final forecast
+        # warm-start cycle.
+       	[[[R1/$]]]
+                graph = """
+                       <FINAL_CYCLE_TASKS>
+                """
+		      

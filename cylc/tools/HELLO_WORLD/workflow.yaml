@@ -1,0 +1,97 @@
+# Define the Cylc workflow engine application task.
+ham:
+
+     # Specify whether the respective Cylc workflow engine task is to
+     # be executed for the cold-start (i.e., the first) cycle.
+     cold_start: True
+
+     # Specify whether the respective Cylc workflow engine task is to
+     # be executed for warm-start (i.e., cycling) cycles.
+     warm_start: False
+
+     # Specify whether the respective Cylc workflow engine task is to
+     # be executed following the last experiment cycle.
+     final_cycle: False
+
+     # Define current cycle upstream tasks that are required for the
+     # current task application to be executed.
+     currcycle_tasks:
+
+          # Define whether the respective Cylc workflow engine tasks
+          # are Cylc family-type applications; note that Cylc
+          # convention for Cylc family-type application names is
+          # capitalization.
+          HAM1c:
+               family: True
+          ham2c:
+               family: False
+
+     # Define previous cycle upstream tasks that are required for the
+     # current task application to be executed.
+     prevcycle_tasks:
+
+          # Define whether the respective Cylc workflow engine tasks
+          # are Cylc family-type applications; note that Cylc
+          # convention for Cylc family-type application names is
+          # capitalization.
+          ham1p:
+               family: False
+          HAM2p:
+               family: True
+
+# ----
+
+# Define the Cylc workflow engine application task.
+spam:
+
+     # Specify whether the respective Cylc workflow engine task is to
+     # be executed for the cold-start (i.e., the first) cycle.
+     cold_start: True
+
+     # Specify whether the respective Cylc workflow engine task is to
+     # be executed for warm-start (i.e., cycling) cycles.
+     warm_start: True
+
+     # Specify whether the respective Cylc workflow engine task is to
+     # be executed following the last experiment cycle.     
+     final_cycle: False
+     
+     # Define whether the respective Cylc workflow engine tasks are
+     # Cylc family-type applications; note that Cylc convention for
+     # Cylc family-type application names is capitalization.
+     currcycle_tasks:
+          SPAM1c:
+               family: True
+          spam2c:
+               family: False
+
+     # Define whether the respective Cylc workflow engine tasks are
+     # Cylc family-type applications; note that Cylc convention for
+     # Cylc family-type application names is capitalization.
+     prevcycle_tasks:
+          spam2p:
+               family: False
+
+# ----
+
+# Define the Cylc workflow engine application task.
+eggs:
+
+     # Specify whether the respective Cylc workflow engine task is to
+     # be executed for the cold-start (i.e., the first) cycle.
+     cold_start: True
+
+     # Specify whether the respective Cylc workflow engine task is to
+     # be executed for warm-start (i.e., cycling) cycles.
+     warm_start: True
+
+     # Specify whether the respective Cylc workflow engine task is to
+     # be executed following the last experiment cycle.     
+     final_cycle: True
+
+     # Define whether the respective Cylc workflow engine tasks are
+     # Cylc family-type applications; note that Cylc convention for
+     # Cylc family-type application names is capitalization.
+     prevcycle_tasks:
+          spam2p:
+               family: False

@@ -1,6 +1,6 @@
 # =========================================================================
 
-# Script: tools/cylc_status.py
+# Script: tools/cylc_workflow.py
 
 # Author: Henry R. Winterbottom
 
@@ -21,15 +21,27 @@
 Script
 ------
 
-    cylc_status.py
+    cylc_workflow.py
 
 Description
 -----------
 
-    This script is the driver script for all Cylc engine application
-    task status; all Cylc versions <= 7.9.3 are supported, however
-    Cylc versions >= 8.x.x is not supported.
+    This script is the driver script for all Cylc engine workflow
+    suite file generations and creations; all Cylc versions <= 7.9.3
+    are supported, however Cylc versions >= 8.x.x is not supported.
 
+Classes
+-------
+
+    CylcWorkflow(options_obj)
+
+        This is the base-class object for all Cylc engine workflow
+        Jinja2 formatted file generation and creations.
+
+    CylcWorkflowError(msg)
+
+        This is the base-class for all exceptions; it is a sub-class
+        of Error.
 
 Functions
 ---------
@@ -42,7 +54,7 @@ Functions
 Usage
 -----
 
-    user@host:$ python cylc_status.py --<database_path> --<output_path> --<to_output>
+    user@host:$ python cylc_workflow.py --<yaml_file> --<graph_template> --<output_path>
 
 Note(s)
 -------
@@ -61,12 +73,12 @@ Requirements
 Author(s)
 ---------
 
-    Henry R. Winterbottom; 12 January 2023
+    Henry R. Winterbottom; 21 January 2023
 
 History
 -------
 
-    2023-01-12: Henry Winterbottom -- Initial implementation.
+    2023-01-21: Henry Winterbottom -- Initial implementation.
 
 """
 
@@ -78,7 +90,7 @@ import time
 from utils.arguments_interface import Arguments
 from utils.logger_interface import Logger
 
-from cylc_tools.status import CylcStatus
+from cylc_tools.workflow import CylcWorkflow
 
 # ----
 
@@ -97,29 +109,10 @@ def main() -> None:
     This is the driver-level function to invoke the tasks within this
     script.
 
-    Parameters
-    ----------
-
-    database_path: str
-
-        A Python string specifying the path to the Cylc engine
-        application database.
-
-    output_path: str
-
-        A Python string specifying the path to which all output files
-        will be written (if applicable).
-
-    to_output: bool
-
-        A Python boolean valued variable specifying whether to write
-        the Cylc engine application task attributes to files beneath
-        the output_path attribute.
-
     """
 
     # Define the schema attributes.
-    cls_schema = {"database_path": str, "output_path": str, "to_output": bool}
+    cls_schema = {"yaml_file": str, "graph_template": str, "output_path": str}
 
     # Collect the command line arguments.
     script_name = os.path.basename(__file__)
@@ -129,7 +122,7 @@ def main() -> None:
     options_obj = Arguments().run(eval_schema=True, cls_schema=cls_schema)
 
     # Launch the task.
-    task = CylcStatus(options_obj=options_obj)
+    task = CylcWorkflow(options_obj=options_obj)
     task.run()
 
     stop_time = time.time()
