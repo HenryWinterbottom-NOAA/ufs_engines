@@ -46,15 +46,15 @@ Classes
 Functions
 ---------
 
-    __error__(msg)
-
-        This function is the exception handler for the respective
-        module.
-
     main()
 
         This is the driver-level function to invoke the tasks within
         this script.
+
+Usage
+-----
+
+    user@host:$ python cylc_workflow.py --<yaml_file> --<graph_template> --<output_path>
 
 Note(s)
 -------

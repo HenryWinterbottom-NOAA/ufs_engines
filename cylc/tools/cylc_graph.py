@@ -38,6 +38,11 @@ Functions
         This is the driver-level function to invoke the tasks within
         this script.
 
+Usage
+-----
+
+    user@host:$ python cylc_graph.py --<suite_path> --<output_path>
+
 Note(s)
 -------
 
