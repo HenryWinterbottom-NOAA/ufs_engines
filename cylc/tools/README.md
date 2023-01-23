@@ -213,6 +213,13 @@ An example `graph.rc` file for the example above is as follows.
                 """
 ~~~
 
+The `cylc_worklow.py` application can also be run within the Singularity
+container noted above as follows.
+
+~~~
+user@host:$ singularity exec CYLC_TOOLS.sif --bind /path/to/cylc/<experiment_name/:/run --bind /path/to/ufs_engines/cylc/tools/:/tools --bind  /path/to/ufs_engines/cylc/output/:/output /miniconda/bin/python /tools/workflow_status.py --yaml_file /run/cylc_workflow.py --graph_template /run/workflow.yaml --output_path /output
+~~~
+
 DISCLAIMER: Users are adviced to check that the Cylc engine workflow graph written to `/path/to/output/graph.rc` is accurate. No guarantees are made that the generated Cylc workflow engine is (entirely) accurate.
 
 #
