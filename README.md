@@ -4,6 +4,7 @@
 
 [![Dependencies](https://img.shields.io/badge/dependencies-ufs__pyutils-orange)](https://github.com/HenryWinterbottom-NOAA/ufs_pyutils)
 [![](https://img.shields.io/badge/dependencies-cylc--flow-orange)](https://github.com/cylc/cylc-flow/releases/tag/7.9.3)
+[![](https://img.shields.io/badge/dependencies-rocoto--flow-orange)](https://github.com/christopherwharrop/rocoto)
 
 [![Python Coding Standards](https://github.com/HenryWinterbottom-NOAA/ufs_engines/actions/workflows/pycodestyle.yaml/badge.svg)](https://github.com/HenryWinterbottom-NOAA/ufs_engines/actions/workflows/pycodestyle.yaml)
 [![Docker Images](https://github.com/HenryWinterbottom-NOAA/ufs_engines/actions/workflows/containers.yaml/badge.svg)](https://github.com/HenryWinterbottom-NOAA/ufs_engines/actions/workflows/containers.yaml)
@@ -39,6 +40,8 @@ user@host:$ git clone https://github.com/HenryWinterbottom-NOAA/ufs_engines
 The following workflow engines are currently supported.
 
 - [Cylc-flow](https://cylc.github.io/)
+
+- [Rocoto](https://christopherwharrop.github.io/rocoto/)
 
 # Forking
 
