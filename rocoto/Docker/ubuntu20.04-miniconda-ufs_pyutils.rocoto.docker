@@ -1,0 +1,104 @@
+# =========================================================================
+
+# Docker Recipe File: Docker/ubuntu20.04-miniconda-ufs_pyutils.rocoto.docker
+
+# Email: henry.winterbottom@noaa.gov
+
+# This program is free software: you can redistribute it and/or modify
+# it under the terms of the respective public license published by the
+# Free Software Foundation and included with the repository within
+# which this application is contained.
+
+# This program is distributed in the hope that it will be useful, but
+# WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+
+# =========================================================================
+
+# Description
+# -----------
+
+#    This Docker recipe file builds a Docker image containing the
+#    following packages.
+
+#    - Ubuntu 20.08 base Linux image;
+
+#    - Miniconda Python 3.9+ stack;
+
+#    - ufs_pyutils applications;
+
+#    - rocoto applications (https://github.com/christopherwharrop/rocoto).
+
+# Docker Instructions
+# -------------------
+
+#    The Docker container image should be built as follows.
+
+#    user@host:$ docker build -f ubuntu20.04-miniconda-ufs_pyutils.rocoto.docker --tag ubuntu20.04-miniconda-ufs_pyutils.rocoto:<TAG> .
+
+#    user@host:$ docker tag ubuntu20.04-miniconda-ufs_pyutils.rocoto:<TAG> <DOCKER LOGIN>/ubuntu20.04-miniconda-ufs_pyutils.rocoto:<TAG>
+
+#    user@host:$ docker push <DOCKER LOGIN>/ubuntu20.04-miniconda-ufs_pyutils.rocoto:<TAG>
+
+#    where <TAG> is the tag identifier/name for the respective image
+#    and <DOCKER LOGIN> is the user Docker Hub login name.
+
+# Author(s)
+# ---------
+
+#    Henry R. Winterbottom; 03 February 2023 
+
+# History
+# -------
+
+#    2023-02-03: Henry R. Winterbottom -- Initial implementation.
+
+# Base Image Attributes
+# ---------------------
+
+#    Image and Tag: noaaufsrnr/ubuntu20.04-miniconda.ufs_pyutils:latest
+
+# Container Image Downloads
+# -------------------------
+
+#    Docker Hub: docker pull noaaufsrnr/ubuntu20.04-miniconda-ufs_pyutils.rocoto:<TAG>
+
+# ----
+
+# Define the container base information.
+FROM noaaufsrnr/ubuntu20.04-miniconda-ufs_pyutils:latest
+MAINTAINER "Henry R. Winterbottom (Henry.Winterbottom@noaa.gov)"
+
+# ----
+
+# Build the Linux platform.
+ARG DEBIAN_FRONTEND=noninteractive
+RUN apt-get update -y && \
+    apt-get upgrade -y && \
+    apt-get install -y tzdata && \
+    apt-get install -y python2 && \
+    apt-get install -y sudo && \
+    apt-get install -y systemd && \
+    apt-get install -y vim && \
+    apt update && \
+    apt install -y build-essential && \
+    apt install -y ruby-full && \
+    rm -rf /var/lib/apt/lists/* 
+
+# ----
+
+# Download and setup Rocoto.
+RUN git clone https://github.com/christopherwharrop/rocoto && \
+    cd rocoto && \
+    sh INSTALL
+
+# ----
+
+# Patch the Miniconda install for the respective application.
+RUN /miniconda/bin/pip install colorama && \
+    /miniconda/bin/pip install tabulate 
+
+# ----
+
+# Define the container environment.
+ENV PATH="/rocoto/bin:${PATH}"
