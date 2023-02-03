@@ -82,10 +82,16 @@ jobs:
       with:
         path: ufs_engines
 
-    # Build the Docker image.
-    - name: Build the Docker images.
+    # Build the Cylc Docker image.
+    - name: Build the Cylc Docker images.
       run: |
            cd $GITHUB_WORKSPACE/ufs_engines/cylc/Docker
            docker build -f ubuntu20.04-miniconda-ufs_pyutils.cylc.docker --tag ubuntu20.04-miniconda-ufs_pyutils.cylc:latest .
+
+    # Build the Rocoto Docker image.
+    - name: Build the Rocoto Docker images.
+      run: |
+           cd $GITHUB_WORKSPACE/ufs_engines/rocoto/Docker
+           docker build -f ubuntu20.04-miniconda-ufs_pyutils.rocoto.docker --tag ubuntu20.04-miniconda-ufs_pyutils.rocoto:latest .
 
            
