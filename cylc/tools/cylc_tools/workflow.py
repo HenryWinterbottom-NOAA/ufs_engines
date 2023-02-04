@@ -1,6 +1,6 @@
 # =========================================================================
 
-# Module: tools/cylc_tools/workflow.py
+# Module: cylc/tools/cylc_tools/workflow.py
 
 # Author: Henry R. Winterbottom
 

@@ -1,6 +1,6 @@
 # =========================================================================
 
-# Module: tools/cylc_tools/status.py
+# Module: cylc/tools/cylc_tools/status.py
 
 # Author: Henry R. Winterbottom
 

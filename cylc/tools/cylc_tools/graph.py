@@ -1,6 +1,6 @@
 # =========================================================================
 
-# Module: tools/cylc_tools/graph.py
+# Module: cylc/tools/cylc_tools/graph.py
 
 # Author: Henry R. Winterbottom
 

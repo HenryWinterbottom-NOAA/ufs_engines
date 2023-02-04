@@ -1,6 +1,6 @@
 # =========================================================================
 
-# Module: tools/cylc_tools/__init__.py
+# Module: cylc/tools/cylc_tools/__init__.py
 
 # Author: Henry R. Winterbottom
 
