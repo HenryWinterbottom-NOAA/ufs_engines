@@ -1,6 +1,6 @@
 # =========================================================================
 
-# Script: tools/cylc_graph.py
+# Script: cylc/tools/cylc_graph.py
 
 # Author: Henry R. Winterbottom
 

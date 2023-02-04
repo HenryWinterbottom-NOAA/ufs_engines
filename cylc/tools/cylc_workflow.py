@@ -1,6 +1,6 @@
 # =========================================================================
 
-# Script: tools/cylc_workflow.py
+# Script: cylc/tools/cylc_workflow.py
 
 # Author: Henry R. Winterbottom
 

@@ -1,6 +1,6 @@
 # =========================================================================
 
-# Script: tools/cylc_status.py
+# Script: cylc/tools/cylc_status.py
 
 # Author: Henry R. Winterbottom
 
